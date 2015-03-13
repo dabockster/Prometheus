@@ -33,36 +33,77 @@ public class MainMenuView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        userNameLabel = new javax.swing.JLabel();
+        javax.swing.JTextField passwordField = new javax.swing.JTextField();
+        passwordLabel = new javax.swing.JLabel();
+        javax.swing.JTextField nameField = new javax.swing.JTextField();
+        registerButton = new javax.swing.JButton();
+        loginButton = new javax.swing.JButton();
+        anonButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Prometheus & Bob");
-        setBackground(new java.awt.Color(0, 0, 0));
+        getContentPane().setLayout(null);
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("User Name");
+        userNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        userNameLabel.setText("User Name");
+        getContentPane().add(userNameLabel);
+        userNameLabel.setBounds(177, 143, 68, 16);
+        getContentPane().add(passwordField);
+        passwordField.setBounds(144, 245, 134, 28);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(143, 143, 143)
-                .addComponent(jLabel1)
-                .addContainerGap(541, Short.MAX_VALUE))
-        );
+        passwordLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        passwordLabel.setText("Password");
+        getContentPane().add(passwordLabel);
+        passwordLabel.setBounds(176, 223, 68, 16);
+        getContentPane().add(nameField);
+        nameField.setBounds(144, 177, 134, 28);
+
+        registerButton.setText("Register");
+        registerButton.setToolTipText("");
+        registerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(registerButton);
+        registerButton.setBounds(6, 310, 95, 29);
+
+        loginButton.setText("Login");
+        getContentPane().add(loginButton);
+        loginButton.setBounds(315, 310, 79, 29);
+
+        anonButton.setText("Anonymous");
+        getContentPane().add(anonButton);
+        anonButton.setBounds(144, 382, 134, 29);
+
+        jButton1.setText("Play Offline");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1);
+        jButton1.setBounds(144, 429, 134, 48);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_registerButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton anonButton;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton loginButton;
+    private javax.swing.JLabel passwordLabel;
+    private javax.swing.JButton registerButton;
+    private javax.swing.JLabel userNameLabel;
     // End of variables declaration//GEN-END:variables
 }
