@@ -10,7 +10,6 @@ For more information on Gomoku:
 [http://en.wikipedia.org/wiki/Gomoku](http://en.wikipedia.org/wiki/Gomoku)
 
 ---
-
 ### Setup
 
 1. Open a Terminal in the ```src/edu/plu/cs``` folder.
