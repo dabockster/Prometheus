@@ -23,6 +23,8 @@
  */
 package edu.plu.cs.controllers;
 
+import edu.plu.cs.models.GameModel;
+
 /**
  * GameController class
  * @author dabockster
@@ -31,12 +33,14 @@ public class GameController {
     
     private MainMenuController mainMenu;
     private OfflineController offline;
+    private GameModel model;
     
     /**
      * GameController constructor
      */
     public GameController(){
         mainMenu = new MainMenuController(this);
+        model = new GameModel();
     }
     
     /**
