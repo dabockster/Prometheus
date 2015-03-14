@@ -26,7 +26,7 @@ package edu.plu.cs.views;
 import edu.plu.cs.controllers.MainMenuController;
 
 /**
- *
+ * MainMenuView class
  * @author dabockster
  */
 public class MainMenuView extends javax.swing.JFrame {

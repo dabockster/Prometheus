@@ -27,7 +27,7 @@ import edu.plu.cs.controllers.GameController;
 import edu.plu.cs.controllers.MainMenuController;
 
 /**
- *
+ * Prometheus main class
  * @author dabockster
  */
 public class Prometheus {

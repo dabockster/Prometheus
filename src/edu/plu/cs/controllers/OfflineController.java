@@ -24,15 +24,17 @@
 package edu.plu.cs.controllers;
 
 import edu.plu.cs.views.OfflineView;
+import edu.plu.cs.views.SurrenderDialog;
 
 /**
- *
+ * OfflineController class
  * @author dabockster
  */
 public class OfflineController {
     
     private OfflineView view;
     private GameController controller;
+    private SurrenderDialog surrender;
     
     /**
      * OfflineController constructor
@@ -57,5 +59,12 @@ public class OfflineController {
      */
     public void openView(String view){
         controller.openView(view);
+    }
+    
+    /**
+     * Opens the Surrender Dialog
+     */
+    public void surrender(){
+        surrender = new SurrenderDialog(this);
     }
 }

@@ -24,7 +24,7 @@
 package edu.plu.cs.controllers;
 
 /**
- *
+ * GameController class
  * @author dabockster
  */
 public class GameController {

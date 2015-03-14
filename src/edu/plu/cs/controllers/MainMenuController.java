@@ -26,7 +26,7 @@ package edu.plu.cs.controllers;
 import edu.plu.cs.views.MainMenuView;
 
 /**
- *
+ * MainMenuController class
  * @author dabockster
  */
 public class MainMenuController {
