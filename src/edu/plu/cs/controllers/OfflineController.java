@@ -21,23 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package edu.plu.cs;
+package edu.plu.cs.controllers;
 
-import edu.plu.cs.controllers.GameController;
-import edu.plu.cs.controllers.MainMenuController;
+import edu.plu.cs.views.OfflineView;
 
 /**
  *
  * @author dabockster
  */
-public class Prometheus {
-
+public class OfflineController {
+    
+    private OfflineView view;
+    private GameController controller;
+    
     /**
-     * @param args the command line arguments
+     * OfflineController constructor
+     * @param ctrl GameController inheritance
      */
-    public static void main(String[] args) {
-        // TODO code application logic here
-        GameController controller = new GameController();
+    public OfflineController(GameController ctrl){
+        view = new OfflineView(this);
+        view.setVisible(true);
+        controller = ctrl;
     }
     
+    /**
+     * Closes the view
+     */
+    public void dispose(){
+        view.dispose();
+    }
+    
+    /**
+     * Opens a new view outside of the current view
+     * @param view The view to be opened (eg "Offline" for the offline mode).
+     */
+    public void openView(String view){
+        controller.openView(view);
+    }
 }

@@ -21,9 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package edu.plu.cs;
-
-import edu.plu.cs.controllers.MainMenuController;
+package edu.plu.cs.controllers;
 
 /**
  *
@@ -32,9 +30,43 @@ import edu.plu.cs.controllers.MainMenuController;
 public class GameController {
     
     private MainMenuController mainMenu;
+    private OfflineController offline;
     
+    /**
+     * GameController constructor
+     */
     public GameController(){
-        mainMenu = new MainMenuController();
+        mainMenu = new MainMenuController(this);
+    }
+    
+    /**
+     * Opens a view
+     * @param view The view to be opened (eg "Offline" for the offline mode).
+     */
+    public void openView(String view){
+        switch(view){
+            case "Main Menu":
+                mainMenu = new MainMenuController(this);
+                break;
+            case "Offline":
+                offline = new OfflineController(this);
+                break;
+        }
+    }
+    
+    /**
+     * Closes a view
+     * @param view The view to be closed (eg "Offline" for the offline mode).
+     */
+    public void closeView(String view){
+        switch(view){
+            case "Main Menu":
+                mainMenu.dispose();
+                break;
+            case "Offline":
+                offline.dispose();
+                break;
+        }
     }
     
 }

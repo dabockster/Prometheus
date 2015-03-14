@@ -35,6 +35,7 @@ public class MainMenuView extends javax.swing.JFrame {
     
     /**
      * Creates new form MainMenuView
+     * @param ctrl MainMenuController inheritance
      */
     public MainMenuView(MainMenuController ctrl) {
         controller = ctrl;
@@ -62,10 +63,11 @@ public class MainMenuView extends javax.swing.JFrame {
         loginButton = new javax.swing.JButton();
         modesPanel = new javax.swing.JPanel();
         anonButotn = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        offlineButton = new javax.swing.JButton();
         backgroundLayer = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Prometheus & Bob");
         setResizable(false);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
@@ -150,10 +152,10 @@ public class MainMenuView extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Play Offline");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        offlineButton.setText("Play Offline");
+        offlineButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                offlineButtonActionPerformed(evt);
             }
         });
 
@@ -165,7 +167,7 @@ public class MainMenuView extends javax.swing.JFrame {
                 .addGap(94, 94, 94)
                 .addGroup(modesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(anonButotn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(offlineButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(93, Short.MAX_VALUE))
         );
         modesPanelLayout.setVerticalGroup(
@@ -174,7 +176,7 @@ public class MainMenuView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(anonButotn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(offlineButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -222,19 +224,20 @@ public class MainMenuView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_anonButotnActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void offlineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_offlineButtonActionPerformed
+        controller.openView("Offline");
+        controller.dispose();
+    }//GEN-LAST:event_offlineButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton anonButotn;
     private javax.swing.JLabel backgroundLayer;
     private javax.swing.JPanel fieldsPanel;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton loginButton;
     private javax.swing.JPanel loginPanel;
     private javax.swing.JPanel modesPanel;
     private javax.swing.JPanel objectsLayer;
+    private javax.swing.JButton offlineButton;
     private javax.swing.JLabel passswordLabel;
     private javax.swing.JPasswordField passwordTF;
     private javax.swing.JButton registerButton;

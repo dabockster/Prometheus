@@ -35,6 +35,7 @@ public class OfflineView extends javax.swing.JFrame {
     
     /**
      * Creates new form OfflineView
+     * @param ctrl OffllineController inheritance
      */
     public OfflineView(OfflineController ctrl) {
         controller = ctrl;
@@ -55,6 +56,11 @@ public class OfflineView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         backgroundPanel.setBackground(new java.awt.Color(0, 0, 0));
@@ -95,6 +101,12 @@ public class OfflineView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        //TODO: Add JDialog for confirming game close
+        controller.openView("Main Menu");
+        controller.dispose();
+    }//GEN-LAST:event_formWindowClosed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundPanel;
