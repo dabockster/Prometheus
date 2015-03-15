@@ -29,12 +29,12 @@ import edu.plu.cs.controllers.OfflineController;
  *
  * @author dabockster
  */
-public class OfflineDefeatDialog extends javax.swing.JDialog {
+public class OfflineDefeatDialog extends javax.swing.JFrame {
     
     private OfflineController controller;
 
     /**
-     * Creates new form DefeatDialog
+     * Creates new form OfflineDefeatDialog
      */
     public OfflineDefeatDialog(OfflineController ctrl) {
         controller = ctrl;
@@ -54,53 +54,62 @@ public class OfflineDefeatDialog extends javax.swing.JDialog {
 
         backgroundPanel = new javax.swing.JPanel();
         layoutPanel = new javax.swing.JPanel();
-        labelPanel = new javax.swing.JPanel();
-        defeatLabel = new javax.swing.JLabel();
+        messagePanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         buttonPanel = new javax.swing.JPanel();
         playButton = new javax.swing.JButton();
-        lobbyButton = new javax.swing.JButton();
+        loginButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Defeat");
         setResizable(false);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         backgroundPanel.setBackground(new java.awt.Color(0, 0, 0));
         backgroundPanel.setPreferredSize(new java.awt.Dimension(300, 150));
-        backgroundPanel.setSize(new java.awt.Dimension(300, 150));
 
-        layoutPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 0)));
+        layoutPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(55, 255, 0)));
         layoutPanel.setOpaque(false);
 
-        labelPanel.setOpaque(false);
+        messagePanel.setOpaque(false);
 
-        defeatLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        defeatLabel.setForeground(new java.awt.Color(51, 255, 0));
-        defeatLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        defeatLabel.setText("Defeat");
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(55, 255, 0));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Defeat");
 
-        javax.swing.GroupLayout labelPanelLayout = new javax.swing.GroupLayout(labelPanel);
-        labelPanel.setLayout(labelPanelLayout);
-        labelPanelLayout.setHorizontalGroup(
-            labelPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(labelPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout messagePanelLayout = new javax.swing.GroupLayout(messagePanel);
+        messagePanel.setLayout(messagePanelLayout);
+        messagePanelLayout.setHorizontalGroup(
+            messagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(messagePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(defeatLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        labelPanelLayout.setVerticalGroup(
-            labelPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(labelPanelLayout.createSequentialGroup()
+        messagePanelLayout.setVerticalGroup(
+            messagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(messagePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(defeatLabel)
+                .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         buttonPanel.setOpaque(false);
 
         playButton.setText("Play Again");
-        playButton.setToolTipText("");
+        playButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playButtonActionPerformed(evt);
+            }
+        });
 
-        lobbyButton.setText("Back to Login");
+        loginButton.setText("Back to Login");
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
         buttonPanel.setLayout(buttonPanelLayout);
@@ -110,16 +119,16 @@ public class OfflineDefeatDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(playButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addComponent(lobbyButton)
+                .addComponent(loginButton)
                 .addContainerGap())
         );
         buttonPanelLayout.setVerticalGroup(
             buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(23, Short.MAX_VALUE)
                 .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(playButton)
-                    .addComponent(lobbyButton))
+                    .addComponent(loginButton))
                 .addContainerGap())
         );
 
@@ -130,7 +139,7 @@ public class OfflineDefeatDialog extends javax.swing.JDialog {
             .addGroup(layoutPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(messagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(buttonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -138,8 +147,8 @@ public class OfflineDefeatDialog extends javax.swing.JDialog {
             layoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layoutPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addComponent(messagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -170,13 +179,25 @@ public class OfflineDefeatDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
+        controller.openView("Offline");
+        this.dispose();
+        System.gc();
+    }//GEN-LAST:event_playButtonActionPerformed
+
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+        controller.openView("Main Menu");
+        this.dispose();
+        System.gc();
+    }//GEN-LAST:event_loginButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JPanel buttonPanel;
-    private javax.swing.JLabel defeatLabel;
-    private javax.swing.JPanel labelPanel;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel layoutPanel;
-    private javax.swing.JButton lobbyButton;
+    private javax.swing.JButton loginButton;
+    private javax.swing.JPanel messagePanel;
     private javax.swing.JButton playButton;
     // End of variables declaration//GEN-END:variables
 }
