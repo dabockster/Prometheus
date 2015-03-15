@@ -34,6 +34,7 @@ public class GameController {
     private MainMenuController mainMenu;
     private OfflineController offline;
     private GameModel model;
+    private LobbyController lobby;
     
     /**
      * GameController constructor
@@ -55,7 +56,9 @@ public class GameController {
             case "Offline":
                 offline = new OfflineController(this);
                 break;
-
+            case "Lobby":
+                lobby = new LobbyController(this);
+                break;
         }
     }
     

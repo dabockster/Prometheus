@@ -123,6 +123,11 @@ public class MainMenuView extends javax.swing.JFrame {
         registerButton.setText("Register");
 
         loginButton.setText("Login");
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout loginPanelLayout = new javax.swing.GroupLayout(loginPanel);
         loginPanel.setLayout(loginPanelLayout);
@@ -253,7 +258,8 @@ public class MainMenuView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void anonButotnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anonButotnActionPerformed
-        // TODO add your handling code here:
+        controller.openView("Lobby");
+        controller.dispose();
     }//GEN-LAST:event_anonButotnActionPerformed
 
     private void offlineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_offlineButtonActionPerformed
@@ -264,6 +270,11 @@ public class MainMenuView extends javax.swing.JFrame {
     private void quitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitButtonActionPerformed
         controller.quitProgram(0);
     }//GEN-LAST:event_quitButtonActionPerformed
+
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+        controller.openView("Lobby");
+        controller.dispose();
+    }//GEN-LAST:event_loginButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton anonButotn;
