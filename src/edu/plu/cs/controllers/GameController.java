@@ -55,6 +55,7 @@ public class GameController {
             case "Offline":
                 offline = new OfflineController(this);
                 break;
+
         }
     }
     
@@ -71,6 +72,14 @@ public class GameController {
                 offline.dispose();
                 break;
         }
+    }
+    
+    /**
+     * Exits the entire program
+     * @param exitStatus the status of the exit (0 for clean exit, 1 for errors, etc)
+     */
+    public void quitProgram(int exitStatus){
+        System.exit(exitStatus);
     }
     
 }

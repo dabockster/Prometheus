@@ -29,15 +29,14 @@ import edu.plu.cs.controllers.OfflineController;
  *
  * @author dabockster
  */
-public class SurrenderDialog extends javax.swing.JDialog {
-
-    private OfflineController controller; 
+public class OfflineDefeatDialog extends javax.swing.JDialog {
     
+    private OfflineController controller;
+
     /**
-     * Creates new form SurrenderDialog
-     * @param ctrl OfflineController inheritance
+     * Creates new form DefeatDialog
      */
-    public SurrenderDialog(OfflineController ctrl) {
+    public OfflineDefeatDialog(OfflineController ctrl) {
         controller = ctrl;
         this.setVisible(true);
         initComponents();
@@ -55,63 +54,53 @@ public class SurrenderDialog extends javax.swing.JDialog {
 
         backgroundPanel = new javax.swing.JPanel();
         layoutPanel = new javax.swing.JPanel();
-        messagePanel = new javax.swing.JPanel();
-        surrenderLabel = new javax.swing.JLabel();
+        labelPanel = new javax.swing.JPanel();
+        defeatLabel = new javax.swing.JLabel();
         buttonPanel = new javax.swing.JPanel();
-        yesButton = new javax.swing.JButton();
-        noButton = new javax.swing.JButton();
+        playButton = new javax.swing.JButton();
+        lobbyButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Surrender");
         setResizable(false);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         backgroundPanel.setBackground(new java.awt.Color(0, 0, 0));
         backgroundPanel.setPreferredSize(new java.awt.Dimension(300, 150));
+        backgroundPanel.setSize(new java.awt.Dimension(300, 150));
 
         layoutPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 0)));
         layoutPanel.setOpaque(false);
 
-        messagePanel.setOpaque(false);
+        labelPanel.setOpaque(false);
 
-        surrenderLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        surrenderLabel.setForeground(new java.awt.Color(51, 255, 0));
-        surrenderLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        surrenderLabel.setText("Surrender?");
+        defeatLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        defeatLabel.setForeground(new java.awt.Color(51, 255, 0));
+        defeatLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        defeatLabel.setText("Defeat");
 
-        javax.swing.GroupLayout messagePanelLayout = new javax.swing.GroupLayout(messagePanel);
-        messagePanel.setLayout(messagePanelLayout);
-        messagePanelLayout.setHorizontalGroup(
-            messagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(messagePanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout labelPanelLayout = new javax.swing.GroupLayout(labelPanel);
+        labelPanel.setLayout(labelPanelLayout);
+        labelPanelLayout.setHorizontalGroup(
+            labelPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(labelPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(surrenderLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(defeatLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        messagePanelLayout.setVerticalGroup(
-            messagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(messagePanelLayout.createSequentialGroup()
+        labelPanelLayout.setVerticalGroup(
+            labelPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(labelPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(surrenderLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(defeatLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         buttonPanel.setOpaque(false);
 
-        yesButton.setText("Yes");
-        yesButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                yesButtonActionPerformed(evt);
-            }
-        });
+        playButton.setText("Play Again");
+        playButton.setToolTipText("");
 
-        noButton.setText("No");
-        noButton.setToolTipText("");
-        noButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                noButtonActionPerformed(evt);
-            }
-        });
+        lobbyButton.setText("Back to Login");
 
         javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
         buttonPanel.setLayout(buttonPanelLayout);
@@ -119,18 +108,18 @@ public class SurrenderDialog extends javax.swing.JDialog {
             buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buttonPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(yesButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
-                .addComponent(noButton)
+                .addComponent(playButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addComponent(lobbyButton)
                 .addContainerGap())
         );
         buttonPanelLayout.setVerticalGroup(
             buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonPanelLayout.createSequentialGroup()
-                .addContainerGap(37, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(yesButton)
-                    .addComponent(noButton))
+                    .addComponent(playButton)
+                    .addComponent(lobbyButton))
                 .addContainerGap())
         );
 
@@ -141,7 +130,7 @@ public class SurrenderDialog extends javax.swing.JDialog {
             .addGroup(layoutPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(messagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(buttonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -149,9 +138,9 @@ public class SurrenderDialog extends javax.swing.JDialog {
             layoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layoutPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(messagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -181,24 +170,13 @@ public class SurrenderDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void yesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yesButtonActionPerformed
-        controller.defeat();
-        controller.dispose();
-        this.dispose();
-    }//GEN-LAST:event_yesButtonActionPerformed
-
-    private void noButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noButtonActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_noButtonActionPerformed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JPanel buttonPanel;
+    private javax.swing.JLabel defeatLabel;
+    private javax.swing.JPanel labelPanel;
     private javax.swing.JPanel layoutPanel;
-    private javax.swing.JPanel messagePanel;
-    private javax.swing.JButton noButton;
-    private javax.swing.JLabel surrenderLabel;
-    private javax.swing.JButton yesButton;
+    private javax.swing.JButton lobbyButton;
+    private javax.swing.JButton playButton;
     // End of variables declaration//GEN-END:variables
 }

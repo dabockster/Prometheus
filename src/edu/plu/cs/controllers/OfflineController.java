@@ -23,6 +23,7 @@
  */
 package edu.plu.cs.controllers;
 
+import edu.plu.cs.views.OfflineDefeatDialog;
 import edu.plu.cs.views.OfflineView;
 import edu.plu.cs.views.SurrenderDialog;
 
@@ -35,6 +36,7 @@ public class OfflineController {
     private OfflineView view;
     private GameController controller;
     private SurrenderDialog surrender;
+    private OfflineDefeatDialog defeat;
     
     /**
      * OfflineController constructor
@@ -66,5 +68,9 @@ public class OfflineController {
      */
     public void surrender(){
         surrender = new SurrenderDialog(this);
+    }
+    
+    public void defeat(){
+        defeat = new OfflineDefeatDialog(this);
     }
 }

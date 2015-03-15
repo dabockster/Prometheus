@@ -58,4 +58,12 @@ public class MainMenuController {
     public void openView(String view){
         controller.openView(view);
     }
+    
+    /**
+     * Exits the entire program
+     * @param exitStatus the status of the exit (0 for clean exit, 1 for errors, etc)
+     */
+    public void quitProgram(int exitStatus){
+        controller.quitProgram(exitStatus);
+    }
 }

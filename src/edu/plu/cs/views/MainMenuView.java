@@ -64,6 +64,8 @@ public class MainMenuView extends javax.swing.JFrame {
         modesPanel = new javax.swing.JPanel();
         anonButotn = new javax.swing.JButton();
         offlineButton = new javax.swing.JButton();
+        quitPanel = new javax.swing.JPanel();
+        quitButton = new javax.swing.JButton();
         backgroundLayer = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -180,6 +182,33 @@ public class MainMenuView extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        quitPanel.setLocation(new java.awt.Point(-32609, -32256));
+        quitPanel.setOpaque(false);
+
+        quitButton.setText("Quit Game");
+        quitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quitButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout quitPanelLayout = new javax.swing.GroupLayout(quitPanel);
+        quitPanel.setLayout(quitPanelLayout);
+        quitPanelLayout.setHorizontalGroup(
+            quitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(quitPanelLayout.createSequentialGroup()
+                .addGap(97, 97, 97)
+                .addComponent(quitButton)
+                .addContainerGap(99, Short.MAX_VALUE))
+        );
+        quitPanelLayout.setVerticalGroup(
+            quitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, quitPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(quitButton)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout objectsLayerLayout = new javax.swing.GroupLayout(objectsLayer);
         objectsLayer.setLayout(objectsLayerLayout);
         objectsLayerLayout.setHorizontalGroup(
@@ -189,7 +218,8 @@ public class MainMenuView extends javax.swing.JFrame {
                 .addGroup(objectsLayerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(fieldsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(loginPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(modesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(modesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(quitPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(47, 47, 47))
         );
         objectsLayerLayout.setVerticalGroup(
@@ -201,7 +231,9 @@ public class MainMenuView extends javax.swing.JFrame {
                 .addComponent(loginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(58, 58, 58)
                 .addComponent(modesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(206, Short.MAX_VALUE))
+                .addGap(77, 77, 77)
+                .addComponent(quitPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(88, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -229,6 +261,10 @@ public class MainMenuView extends javax.swing.JFrame {
         controller.dispose();
     }//GEN-LAST:event_offlineButtonActionPerformed
 
+    private void quitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitButtonActionPerformed
+        controller.quitProgram(0);
+    }//GEN-LAST:event_quitButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton anonButotn;
     private javax.swing.JLabel backgroundLayer;
@@ -240,6 +276,8 @@ public class MainMenuView extends javax.swing.JFrame {
     private javax.swing.JButton offlineButton;
     private javax.swing.JLabel passswordLabel;
     private javax.swing.JPasswordField passwordTF;
+    private javax.swing.JButton quitButton;
+    private javax.swing.JPanel quitPanel;
     private javax.swing.JButton registerButton;
     private javax.swing.JLabel usernameLabel;
     private javax.swing.JTextField usernameTF;
