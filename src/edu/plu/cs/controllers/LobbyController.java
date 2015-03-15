@@ -42,7 +42,13 @@ public class LobbyController {
         view.updatePlayers(onlinePlayers);
     }
     
+    public void openView(String view){
+        controller.openView(view);
+    }
     
+    public void dispose(){
+        view.dispose();
+    }
      
      
 }
