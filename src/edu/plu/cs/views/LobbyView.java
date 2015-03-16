@@ -52,13 +52,13 @@ public class LobbyView extends javax.swing.JFrame {
         optionInterfacePanel = new javax.swing.JPanel();
         challengeButton = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        logoutButton = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         onlinePlayersList = new javax.swing.JList();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1100, 700));
         setMinimumSize(new java.awt.Dimension(1100, 700));
         setResizable(false);
@@ -99,7 +99,12 @@ public class LobbyView extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Logout");
+        logoutButton.setText("Logout");
+        logoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutButtonActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Leaderboard");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -124,14 +129,14 @@ public class LobbyView extends javax.swing.JFrame {
         optionInterfacePanelLayout.setHorizontalGroup(
             optionInterfacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, optionInterfacePanelLayout.createSequentialGroup()
-                .addContainerGap(10, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(optionInterfacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
                     .addComponent(challengeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(logoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(3, 3, 3))
         );
         optionInterfacePanelLayout.setVerticalGroup(
@@ -147,7 +152,7 @@ public class LobbyView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(challengeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
+                .addComponent(logoutButton)
                 .addGap(231, 231, 231))
         );
 
@@ -198,6 +203,12 @@ public class LobbyView extends javax.swing.JFrame {
         GamePanel newGame = new GamePanel();
         GameInterfacePanel.addTab("Tab 1", newGame);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
+        controller.openView("Main Menu");
+        controller.dispose();
+        System.gc();
+    }//GEN-LAST:event_logoutButtonActionPerformed
     
     
     public void sendChallenge(String opponent){
@@ -208,10 +219,10 @@ public class LobbyView extends javax.swing.JFrame {
     private javax.swing.JTabbedPane GameInterfacePanel;
     private javax.swing.JButton challengeButton;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton logoutButton;
     private javax.swing.JList onlinePlayersList;
     private javax.swing.JPanel optionInterfacePanel;
     private javax.swing.JLabel titleLabel;

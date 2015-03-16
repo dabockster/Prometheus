@@ -2,7 +2,7 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="0"/>
     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[1100, 700]"/>
     </Property>
@@ -112,14 +112,14 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="10" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jButton4" alignment="1" max="32767" attributes="0"/>
                       <Component id="jButton2" alignment="0" max="32767" attributes="0"/>
                       <Component id="jScrollPane1" alignment="0" pref="0" max="32767" attributes="0"/>
                       <Component id="jLabel1" alignment="0" pref="187" max="32767" attributes="0"/>
                       <Component id="challengeButton" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jButton3" alignment="0" max="32767" attributes="0"/>
+                      <Component id="logoutButton" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
               </Group>
@@ -138,7 +138,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="challengeButton" min="-2" pref="48" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                  <Component id="logoutButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="231" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -168,10 +168,13 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton3">
+        <Component class="javax.swing.JButton" name="logoutButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Logout"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="logoutButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton4">
           <Properties>
