@@ -59,9 +59,9 @@ public class LobbyView extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1100, 700));
-        setMinimumSize(new java.awt.Dimension(1100, 700));
-        setResizable(false);
+        setMaximumSize(new java.awt.Dimension(1100, 800));
+        setMinimumSize(new java.awt.Dimension(1100, 800));
+        setPreferredSize(new java.awt.Dimension(1100, 800));
 
         GameInterfacePanel.setBackground(new java.awt.Color(255, 255, 255));
         GameInterfacePanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 4, true));
@@ -176,7 +176,7 @@ public class LobbyView extends javax.swing.JFrame {
                 .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(optionInterfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
+                    .addComponent(optionInterfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 712, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(GameInterfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
