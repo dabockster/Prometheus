@@ -85,4 +85,8 @@ public class GameController {
         System.exit(exitStatus);
     }
     
+    public void testMethod(String Joe){
+        
+    }
+    
 }
