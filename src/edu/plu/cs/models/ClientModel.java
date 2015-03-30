@@ -26,10 +26,10 @@ package edu.plu.cs.models;
 import java.util.LinkedList;
 
 /**
- * GameModel Class
+ * ClientModel Class
  * @author dabockster
  */
-public class GameModel {
+public class ClientModel {
     
     private LinkedList<String> opponentNames;
     private int gameNum;
@@ -37,7 +37,7 @@ public class GameModel {
     /**
      * GameModel constructor
      */
-    public GameModel(){
+    public ClientModel(){
         opponentNames = new LinkedList<>();
         gameNum = 0;
     }

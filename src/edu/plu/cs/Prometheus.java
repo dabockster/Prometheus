@@ -23,7 +23,7 @@
  */
 package edu.plu.cs;
 
-import edu.plu.cs.controllers.GameController;
+import edu.plu.cs.controllers.ClientController;
 
 /**
  * Prometheus main class
@@ -36,7 +36,7 @@ public class Prometheus {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        GameController controller = new GameController();
+        ClientController controller = new ClientController();
     }
     
 }

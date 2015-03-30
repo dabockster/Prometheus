@@ -34,15 +34,15 @@ import edu.plu.cs.views.SurrenderDialog;
 public class OfflineController {
     
     private OfflineView view;
-    private GameController controller;
+    private ClientController controller;
     private SurrenderDialog surrender;
     private OfflineDefeatDialog defeat;
     
     /**
      * OfflineController constructor
-     * @param ctrl GameController inheritance
+     * @param ctrl ClientController inheritance
      */
-    public OfflineController(GameController ctrl){
+    public OfflineController(ClientController ctrl){
         view = new OfflineView(this);
         view.setVisible(true);
         controller = ctrl;

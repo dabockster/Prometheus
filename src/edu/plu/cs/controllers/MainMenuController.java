@@ -32,13 +32,13 @@ import edu.plu.cs.views.MainMenuView;
 public class MainMenuController {
     
     private MainMenuView view;
-    private GameController controller;
+    private ClientController controller;
     
     /**
      * MainMenuController constructor
-     * @param ctrl GameController inheritance
+     * @param ctrl ClientController inheritance
      */
-    public MainMenuController(GameController ctrl){
+    public MainMenuController(ClientController ctrl){
         view = new MainMenuView(this);
         view.setVisible(true);
         controller = ctrl;

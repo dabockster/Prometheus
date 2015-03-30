@@ -15,9 +15,9 @@ import edu.plu.cs.views.LobbyView;
 public class LobbyController {
     
     private LobbyView view;
-    private GameController controller;
+    private ClientController controller;
     
-    public LobbyController(GameController ctrl){
+    public LobbyController(ClientController ctrl){
         view = new LobbyView(this);
         view.setVisible(true);
         controller = ctrl;

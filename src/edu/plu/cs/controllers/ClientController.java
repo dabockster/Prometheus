@@ -23,25 +23,25 @@
  */
 package edu.plu.cs.controllers;
 
-import edu.plu.cs.models.GameModel;
+import edu.plu.cs.models.ClientModel;
 
 /**
- * GameController class
+ * ClientController class
  * @author dabockster
  */
-public class GameController {
+public class ClientController {
     
     private MainMenuController mainMenu;
     private OfflineController offline;
-    private GameModel model;
+    private ClientModel model;
     private LobbyController lobby;
     
     /**
      * GameController constructor
      */
-    public GameController(){
+    public ClientController(){
         mainMenu = new MainMenuController(this);
-        model = new GameModel();
+        model = new ClientModel();
     }
     
     /**
