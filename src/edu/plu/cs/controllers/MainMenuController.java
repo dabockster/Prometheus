@@ -34,6 +34,7 @@ public class MainMenuController {
     private MainMenuView view;
     private ClientController controller;
     
+    
     /**
      * MainMenuController constructor
      * @param ctrl ClientController inheritance
@@ -73,6 +74,7 @@ public class MainMenuController {
      * @param password the specified password
      */
     public void login(String username, String password){
+        
         //Housekeeping - may delete later from ClientModel
         controller.setUsername(username);
         controller.setPassword(password);

@@ -32,6 +32,7 @@ import edu.plu.cs.controllers.MainMenuController;
 public class MainMenuView extends javax.swing.JFrame {
 
     private MainMenuController controller;
+    private LoginBlankDialog blank;
     
     /**
      * Creates new form MainMenuView
@@ -274,10 +275,21 @@ public class MainMenuView extends javax.swing.JFrame {
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         String username = usernameTF.getText();
         String password = new String(passwordTF.getPassword());
+        
+        if (username.isEmpty() | password.isEmpty()){
+            loginBlankError();
+            return;
+        }
+        
         controller.login(username, password);
+        controller.openView("Lobby");
         controller.dispose();
     }//GEN-LAST:event_loginButtonActionPerformed
 
+    private void loginBlankError(){
+        blank = new LoginBlankDialog(this);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton anonButotn;
     private javax.swing.JLabel backgroundLayer;
