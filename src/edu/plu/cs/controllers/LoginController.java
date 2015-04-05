@@ -29,6 +29,36 @@ package edu.plu.cs.controllers;
  */
 public class LoginController {
     
+    private String username;
+    private String password;
+    private String toTransmit;
+    private MainMenuController menuController;
     
+    public LoginController(String username, String password, MainMenuController controller){
+        this.username = username;
+        this.password = password;
+        this.menuController = controller;
+        constructTransmission();
+    }
     
+    private void constructTransmission(){
+        //Build what needs to be transmitted to server
+        StringBuilder sb = new StringBuilder();
+        sb.append(username);
+        sb.append("<&>");
+        
+        //TODO: Use hashing library here to hash password before transmit
+        //SHA-256 is preferred
+        
+        sb.append(password); //we will hash the password in a later deliverable      
+        
+        //set the transmit variable to what we've built
+        toTransmit = sb.toString();
+    }
+    
+    public void execute(){
+        //HELP!!!
+        
+        menuController.setLoginStatus(true);
+    }
 }

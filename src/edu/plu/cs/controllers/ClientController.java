@@ -90,5 +90,17 @@ public class ClientController {
     public boolean getLoginStatus(){
         return loginStatus;
     }
+
+    public void setUsername(String username) {
+        model.setUserName(username);
+    }
+
+    public void setPassword(String password) {
+        model.setPassword(password);
+    }
+
+    public void setLoginStatus(boolean status) {
+        this.loginStatus = status;
+    }
     
 }

@@ -67,7 +67,24 @@ public class MainMenuController {
         controller.quitProgram(exitStatus);
     }
     
+    /**
+     * Logs into the server
+     * @param username the specified username
+     * @param password the specified password
+     */
     public void login(String username, String password){
+        //Housekeeping - may delete later from ClientModel
+        controller.setUsername(username);
+        controller.setPassword(password);
         
+        //Login object for ease and simplicity
+        LoginController login = new LoginController(username, password, this);
+        
+        //execute login
+        login.execute();
+    }
+
+    public void setLoginStatus(boolean status) {
+        controller.setLoginStatus(status);
     }
 }
