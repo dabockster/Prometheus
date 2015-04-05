@@ -272,7 +272,9 @@ public class MainMenuView extends javax.swing.JFrame {
     }//GEN-LAST:event_quitButtonActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        controller.openView("Lobby");
+        String username = usernameTF.getText();
+        String password = new String(passwordTF.getPassword());
+        controller.login(username, password);
         controller.dispose();
     }//GEN-LAST:event_loginButtonActionPerformed
 

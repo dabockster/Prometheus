@@ -35,6 +35,7 @@ public class ClientController {
     private OfflineController offline;
     private ClientModel model;
     private LobbyController lobby;
+    private boolean loginStatus;
     
     /**
      * GameController constructor
@@ -42,6 +43,7 @@ public class ClientController {
     public ClientController(){
         mainMenu = new MainMenuController(this);
         model = new ClientModel();
+        loginStatus = false;
     }
     
     /**
@@ -85,8 +87,8 @@ public class ClientController {
         System.exit(exitStatus);
     }
     
-    public void testMethod(String Joe){
-        
+    public boolean getLoginStatus(){
+        return loginStatus;
     }
     
 }

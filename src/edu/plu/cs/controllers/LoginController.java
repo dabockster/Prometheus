@@ -23,51 +23,12 @@
  */
 package edu.plu.cs.controllers;
 
-import edu.plu.cs.views.MainMenuView;
-
 /**
- * MainMenuController class
+ *
  * @author dabockster
  */
-public class MainMenuController {
+public class LoginController {
     
-    private MainMenuView view;
-    private ClientController controller;
     
-    /**
-     * MainMenuController constructor
-     * @param ctrl ClientController inheritance
-     */
-    public MainMenuController(ClientController ctrl){
-        view = new MainMenuView(this);
-        view.setVisible(true);
-        controller = ctrl;
-    }
     
-    /**
-     * Closes the view
-     */
-    public void dispose(){
-        view.dispose();
-    }
-    
-    /**
-     * Opens a new view outside of the current view
-     * @param view The view to be opened (eg "Offline" for the offline mode).
-     */
-    public void openView(String view){
-        controller.openView(view);
-    }
-    
-    /**
-     * Exits the entire program
-     * @param exitStatus the status of the exit (0 for clean exit, 1 for errors, etc)
-     */
-    public void quitProgram(int exitStatus){
-        controller.quitProgram(exitStatus);
-    }
-    
-    public void login(String username, String password){
-        
-    }
 }
