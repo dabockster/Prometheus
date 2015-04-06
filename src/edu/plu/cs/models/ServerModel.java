@@ -71,7 +71,12 @@ public class ServerModel {
     private String USERSTATDB; //TODO
     private String MATCHDB; //TODO
     //constructor
-    public ServerModel(ServerController controller){this.scntrl = controller; accounts = new ArrayList<UserProfile>();this.initializeDB(); }
+    public ServerModel(ServerController controller){
+        this.scntrl = controller; 
+        accounts = new ArrayList<UserProfile>();
+        this.initializeDB(); 
+    }
+    
     /*
     initializeDB()
     Initializes the dataStructures by reading the csv files
@@ -89,7 +94,6 @@ public class ServerModel {
                 System.out.println("entires: "+entries[0] +":"+ entries[1] +":" + entries[2]);
                 UserProfile profile = new UserProfile(entries);
                 accounts.add(profile);
-                
             }
             
         } catch (FileNotFoundException ex) {
@@ -98,17 +102,26 @@ public class ServerModel {
             System.out.println("tuple read error");
         }
     }
+    
     /*
     isOnline(String username) : boolean
 	@return true if the specified user is online
     */
-    public boolean isOnline(String uname){System.out.println("isOnline UNIMPLEMENTED");return false;}
+    public boolean isOnline(String uname){
+        System.out.println("isOnline UNIMPLEMENTED");
+        return false;
+    }
+    
     /*
     usernameTaken(String username) : boolean
             @return true if the specified username is already taken
     */
     public boolean usernameTaken(String uname){
-        for(int i = 0; i < accounts.size(); i++){if(accounts.get(i).getUserProfile()[0].equals(uname)){return true;}}
+        for(int i = 0; i < accounts.size(); i++){
+            if(accounts.get(i).getUserProfile()[0].equals(uname)){
+                return true;
+            }
+        }
         return false;
     }
     /*
@@ -116,20 +129,29 @@ public class ServerModel {
             @return the UserConnection with the specified username
     */
     /*
+    
     getUserProfile(String username) : UserProfile
             returns the UserProfile with the specified username
             If profile is non-existent, will return UserProfile with "undefined"
     */
     public UserProfile getUserProfile(String uname){
         UserProfile profile = new UserProfile();
-        for(int i = 0; i < accounts.size(); i++){if(accounts.get(i).getUserProfile()[0].equals(uname)){profile = accounts.get(i);}}
+        for(int i = 0; i < accounts.size(); i++){
+            if(accounts.get(i).getUserProfile()[0].equals(uname)){
+                profile = accounts.get(i);
+            }
+        }
         return profile;
     }
     /*
     addRegisteredProfile(UserProfile newProfile) : void
             adds newProfile to the ArrayList of allRegisteredPlayers
     */
-    public void addRegisteredProfile(UserProfile profile){if(!usernameTaken(profile.getUserProfile()[0])){accounts.add(profile);}}
+    public void addRegisteredProfile(UserProfile profile){
+        if(!usernameTaken(profile.getUserProfile()[0])){
+            accounts.add(profile);
+        }
+    }
     /*
     flushACCOUNTDB()
     Writes the accounts data into the ACCOUNT Database
@@ -143,8 +165,7 @@ public class ServerModel {
                 out.write(content);
                 out.newLine();
             }
-            out.close();
-        
+            out.close();        
         }
         catch(IOException ex){System.out.println("ACCOUNTDB WRITE FAIL");}
         
@@ -159,20 +180,25 @@ public class ServerModel {
         //update Server View
         //this.updateViewConnections();
     }
-        /**
+    /**
      * handle()
      * Will be called from ServerThread instances
      * Forwards message to list of connections on THIS Server Thread
      * @param msg - the message to broadcast to clientSet
      * @param conID - the connection ID
      */
-    public synchronized void handle(String msg, String conID){try{
+    public synchronized void handle(String msg, String conID){
+        try{
             int clientIndex = findClient(Integer.parseInt(conID));
             if(clientIndex != -1){
-                if(clientSet[clientIndex].getID() == Integer.parseInt(conID)){}
+                if(clientSet[clientIndex].getID() == Integer.parseInt(conID)){
+                }
                     clientSet[clientIndex].sendMessage(msg);
             }
-    }catch(NullPointerException n){System.out.println("Fucked at Handle.");}}
+        }catch(NullPointerException n){
+            System.out.println("Fucked at Handle.");
+        }
+    }
     /**
      * remove()
      * Remove connection from the connection set
@@ -181,23 +207,22 @@ public class ServerModel {
     public synchronized void remove(int ID){
         int i = findClient(ID);
         System.out.println("iVal, Server.remove(): " + i);
-        if(i >= 0){clientSet[i].close(); //clientSet[i].stop();
+        if(i >= 0){
+            clientSet[i].close(); //clientSet[i].stop();
             System.out.println("Remove(): clientSet[i]: closed.");
         }
-        
-       
         if(i >= 0){ //there exists
             if(i < clientCount -1){ // there exists contents at +1 of index
-                for(int k = i+1; k < clientCount; k++){clientSet[k-1] = clientSet[k];} //shift values
-                
+                for(int k = i+1; k < clientCount; k++){
+                    clientSet[k-1] = clientSet[k];
+                } //shift values
             }
             clientCount--;
-           
         }
         //update Server View
         this.updateViewAccounts();
-        
     }
+    
     /**
      * updateViewConnections
      * Requests the controller to update the view to the current set of connections
@@ -207,7 +232,6 @@ public class ServerModel {
             String[] entries = accounts.get(p).getUserProfile();
             tempAggregate +=  entries[0]+" " +entries[1] + " " +entries[2] + "\n";}
         scntrl.updateAccountView(tempAggregate);
-        
     }
     
     /**
@@ -216,7 +240,13 @@ public class ServerModel {
      * @param ID - the ID to search for
      * @return index of the client within the array
      */
-    private int findClient(int ID){for(int i = 0; i <= clientCount; i++){if(clientSet[i].getID() == ID){return i;}}return -1;}
+    private int findClient(int ID){
+        for(int i = 0; i <= clientCount; i++){
+            if(clientSet[i].getID() == ID){
+                return i;
+            }
+        }return -1;
+    }
     
     /**
      * login()
@@ -227,9 +257,10 @@ public class ServerModel {
     public boolean login(String username, String password, String conID){
         
         if(!acctActive(username) && validCredentials(username, password)){
-                int clientIndex = findClient(Integer.parseInt(conID));;
+                int clientIndex = findClient(Integer.parseInt(conID));
                 clientSet[clientIndex].setAssociatedAcctName(username); 
-                return true;}
+                return true;
+        }
         return false;
     }
     /**
@@ -239,7 +270,19 @@ public class ServerModel {
      * @param email
      * @return 
      */
-    public boolean register(String username, String password, String email){if(email.equals("") || email == null){email = "undefined";}if(!validCredentials(username)){String[] entries = {username, password, email}; UserProfile tempProfile = new UserProfile(entries); accounts.add(tempProfile); this.updateViewAccounts(); return true;} return false;}
+    public boolean register(String username, String password, String email){
+        if(email.equals("") || email == null){
+            email = "undefined";
+        }if(!validCredentials(username)){
+            String[] entries = {username, password, email}; 
+            UserProfile tempProfile = new UserProfile(entries);
+            accounts.add(tempProfile); 
+            this.updateViewAccounts(); 
+            return true;
+        } 
+        return false;
+    }
+    
     /**
      * 
      * @param username
@@ -247,7 +290,9 @@ public class ServerModel {
      */
     private boolean acctActive(String username){
         for(int i = 0; i < clientCount; i++){
-            if(clientSet[i].getAssociatedAcctName().equals(username)){return true;}
+            if(clientSet[i].getAssociatedAcctName().equals(username)){
+                return true;
+            }
         }
         return false;
     }
@@ -258,10 +303,20 @@ public class ServerModel {
      * @return TRUE if credentials exist in ACCOUNTDB
      */
     private boolean validCredentials(String username, String password){
-        for(int i = 0; i < accounts.size(); i++){if(accounts.get(i).getUserProfile()[0].equals(username) && accounts.get(i).getUserProfile()[1].equals(password)){return true;}}
-        return false;}
+        for(int i = 0; i < accounts.size(); i++){
+            if(accounts.get(i).getUserProfile()[0].equals(username) && accounts.get(i).getUserProfile()[1].equals(password)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
     private boolean validCredentials(String username){
-        for(int i = 0; i < accounts.size(); i++){if(accounts.get(i).getUserProfile()[0].equals(username)){return true;}}
-        return false;}
-
+        for(int i = 0; i < accounts.size(); i++){
+            if(accounts.get(i).getUserProfile()[0].equals(username)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

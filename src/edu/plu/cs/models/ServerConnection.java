@@ -69,17 +69,27 @@ public class ServerConnection implements Runnable{
      * run()
      * Process requests for connection until THIS THREAD is ended (false): this.stop()
      */
-    public void run(){while(thread != null){
-        while(thread != null){try{
-            //server waits at ACCEPT until connection received;
-            //callback followed by addThread executes
-            this.addThread(server.accept());
-        }catch(IOException ioe){System.out.println(ioe);}}}}
+    public void run(){
+        while(thread != null){
+            while(thread != null){
+                try{
+                    //server waits at ACCEPT until connection received;
+                    //callback followed by addThread executes
+                    this.addThread(server.accept());
+                }catch(IOException ioe){
+                    System.out.println(ioe);}
+            }
+        }
+    }
+    
     /*
     getServerController()
     @return the Controller
     */
-    public ServerController getController(){return this.scntrl;}
+    public ServerController getController(){
+        return this.scntrl;
+    }
+    
     /**
      * addThread();
      * Creates new Thread using the received socket
@@ -88,24 +98,34 @@ public class ServerConnection implements Runnable{
         UserConnection ucon = new UserConnection(this, socket);
         scntrl.addConnection(ucon);
        // ServerThread tempST = new ServerThread(this, socket);
-        try{ucon.open(); ucon.start();}catch(IOException ioe){System.out.println("ServerConnection: addThread(), UserConnection Error: "+ ioe);}
-        //clientSet.add(tempST);
-        
-        
-        
+        try{
+            ucon.open(); 
+            ucon.start();
+        }catch(IOException ioe){
+            System.out.println("ServerConnection: addThread(), UserConnection Error: "+ ioe);
+        }
+        //clientSet.add(tempST);    
     }
+    
     /**
      * stop()
      * end THREAD
      * TODO: Clear all threads, or argument overload to end particular thread
      */
-    public void stop(){if(thread != null){thread.stop(); thread = null;}}
+    public void stop(){
+        if(thread != null){
+            thread.stop(); 
+            thread = null;
+        }
+    }
 
     /**
      * setController()
      * Links server to controller
      * @param cntrl - the controller to reference
      */
-    public void setController(ServerController cntrl){scntrl = cntrl;}
+    public void setController(ServerController cntrl){
+        scntrl = cntrl;
+    }
     
 }

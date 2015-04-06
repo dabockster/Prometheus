@@ -62,12 +62,56 @@ public class UserStatistic {
         }; 
         return tuple;}
     
-    public boolean setVictories(int vic){if(vic >=0){victories = vic; return true;} return false;}
-    public boolean setLosses(int loss){if(loss >=0){losses = loss; return true;} return false;}
-    public boolean setDraws(int draw){if(draw >=0){draws = draw; return true;} return false;}
-    public boolean setStreak(int streak){this.streak = streak; return true;}
-    public boolean setRating(int rating){if(rating >=0){this.rating = rating; return true;} return false;}
-    public boolean setTimePerMove(double time){if(time >=0){timePerMove = time; return true;} return false;}
-    public boolean setTotalTimePlayed(double time){if(time >=0){totalTimePlayed = time; return true;} return false;}
+    public boolean setVictories(int vic){
+        if(vic >=0){
+            victories = vic; 
+            return true;
+        } 
+        return false;
+    }
+    
+    public boolean setLosses(int loss){
+        if(loss >=0){
+            losses = loss; 
+            return true;
+        } 
+        return false;
+    }
+    
+    public boolean setDraws(int draw){
+        if(draw >=0){
+            draws = draw; 
+            return true;
+        } 
+        return false;
+    }
+    
+    public boolean setStreak(int streak){
+        this.streak = streak;
+        return true;
+    }
+    
+    public boolean setRating(int rating){
+        if(rating >=0){
+            this.rating = rating; 
+            return true;
+        } 
+        return false;
+    }
+    
+    public boolean setTimePerMove(double time){
+        if(time >=0){
+            timePerMove = time; 
+            return true;
+        } 
+        return false;
+    }
+    
+    public boolean setTotalTimePlayed(double time){
+        if(time >=0){
+            totalTimePlayed = time; 
+            return true;
+        } return false;
+    }
     //--------------------------------------------------------------------------
 }

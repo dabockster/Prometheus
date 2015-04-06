@@ -37,25 +37,44 @@ public class ClientConnectionController {
     private String ip;
     private int port;
     //constructor default
-    public ClientConnectionController(){ip = "localhost"; port = 8080; conAddr = new InetSocketAddress(ip, port); client = new Client(conAddr);};
+    public ClientConnectionController(){
+        ip = "localhost"; port = 8080;
+        conAddr = new InetSocketAddress(ip, port);
+        client = new Client(conAddr);
+    }
+    
     /*
     constructor
     @param String ip to connect to;
     @param int port of server;
     */
-    public ClientConnectionController(String ip, int port){this.ip = ip; this.port = port; conAddr = new InetSocketAddress(ip, port); client = new Client(conAddr);}
+    public ClientConnectionController(String ip, int port){
+        this.ip = ip;
+        this.port = port;
+        conAddr = new InetSocketAddress(ip, port);
+        client = new Client(conAddr);
+    }
+    
     /**
      * setClientController
      * @param clientCtrl 
      */
-    public void setClientController(ClientController clientCtrl){this.clientCtrl = clientCtrl;}
+    public void setClientController(ClientController clientCtrl){
+        this.clientCtrl = clientCtrl;
+    }
+    
     /**
      * conStatus
      * @return TRUE if connection is closed
      */
-    public boolean conStatus(){return client.conStatus();}
+    public boolean conStatus(){
+        return client.conStatus();
+    }
     
-    public void sendCmd(String cmd, String data){client.send(cmd +"<&>"+data);}
+    public void sendCmd(String cmd, String data){
+        client.send(cmd +"<&>"+data);
+    }
+    
     public void recvCmd(String msg) {
         String[] msgC = msg.split("<&>");
         switch(msgC[0]){

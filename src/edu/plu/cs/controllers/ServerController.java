@@ -39,8 +39,17 @@ public class ServerController {
     private ServerView view;
     private ServerConnection connection;
     private InetSocketAddress sock;
+    
     //ServerController Constructor
-    public ServerController(InetSocketAddress sock){model = new ServerModel(this); view = new ServerView(this); view.setVisible(true); this.sock = sock; connection = new ServerConnection(sock, this); model.updateViewAccounts();}
+    public ServerController(InetSocketAddress sock){
+        model = new ServerModel(this);
+        view = new ServerView(this);
+        view.setVisible(true);
+        this.sock = sock;
+        connection = new ServerConnection(sock, this);
+        model.updateViewAccounts();
+    }
+    
     /*
     addConnection
     */
@@ -56,10 +65,17 @@ public class ServerController {
         String[] msgC = msg.split("<&>");
         switch(msgC[0]){
             case "Login":
-                if(model.login(msgC[1], msgC[2], msgC[3])){this.sendCmd("Callback Login<&>true", msgC[3]);}else{this.sendCmd("Callback Login<&>false", msgC[3]);}
+                if(model.login(msgC[1], msgC[2], msgC[3])){
+                    this.sendCmd("Callback Login<&>true", msgC[3]);
+                }else{
+                    this.sendCmd("Callback Login<&>false", msgC[3]);
+                }
                 break;
             case "Register":
-                if(model.register(msgC[1], msgC[2], msgC[3])){this.sendCmd("Callback Register<&>true", msgC[4]);}else{this.sendCmd("Callback Register<&>false", msgC[4]);} //msgC[4] contains conID
+                if(model.register(msgC[1], msgC[2], msgC[3])){
+                    this.sendCmd("Callback Register<&>true", msgC[4]);
+                }else{this.sendCmd("Callback Register<&>false", msgC[4]);
+                } //msgC[4] contains conID
                 break;
         }
     }
@@ -67,8 +83,13 @@ public class ServerController {
     updateConnections
     TODO
     */
-    public void updateConnections(String cons){}
-    public void updateAccountView(String content){view.setAccountDisplay(content);}
+    public void updateConnections(String cons){
+    }
+    
+    public void updateAccountView(String content){
+        view.setAccountDisplay(content);
+    }
+    
     /*
     remove
     @param ID - the ID of the UserConnection to remove
@@ -76,6 +97,7 @@ public class ServerController {
     public void remove(int ID) {
         model.remove(ID);
     }
+    
     /*
     sendCmd
     */

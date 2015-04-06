@@ -90,7 +90,10 @@ public class ServerView extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
     */
-    public void setAccountDisplay(String content){accountDisplayArea.setText(content);}
+    public void setAccountDisplay(String content){
+        accountDisplayArea.setText(content);
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

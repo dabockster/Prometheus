@@ -31,7 +31,14 @@ public class UserConnection extends Thread{
      * @param _server - the received server, reference
      * @param _socket - the socket
      */
-    public UserConnection(ServerConnection server, Socket socket){this.server = server; this.socket = socket; ID = socket.getPort(); this.scntrl = server.getController(); scntrl.addConnection(this);}
+    public UserConnection(ServerConnection server, Socket socket){
+        this.server = server;
+        this.socket = socket;
+        ID = socket.getPort();
+        this.scntrl = server.getController();
+        scntrl.addConnection(this);
+    }
+    
     /**
      * run()
      * From Thread extension, executes THIS thread
@@ -73,12 +80,18 @@ public class UserConnection extends Thread{
      * setAssociatedAcctName
      * @param username 
      */
-    public void setAssociatedAcctName(String username){associatedAcctName = username;}
+    public void setAssociatedAcctName(String username){
+        associatedAcctName = username;
+    }
+    
     /**
      * getAssociatedAcctName
      * @param username 
      */
-    public String getAssociatedAcctName(){return associatedAcctName;}
+    public String getAssociatedAcctName(){
+        return associatedAcctName;
+    }
+    
     /**
      * sendMessage()
      * Writes to the socket for the client to read
@@ -86,24 +99,46 @@ public class UserConnection extends Thread{
      */
     public void sendMessage(String msg){
         //System.out.println("SThread, sendMessage is fucked." );
-        try{streamOut.writeUTF(msg); streamOut.flush();}catch(IOException ioe){System.out.println(ioe);}
+        try{
+            streamOut.writeUTF(msg);
+            streamOut.flush();
+        }catch(IOException ioe){
+            System.out.println(ioe);
+        }
     }
     /**
      * getID()
      * @return the integer port for the current socket
      */
-    public int getID(){return ID;}
+    public int getID(){
+        return ID;
+    }
+    
     /**
      * open()
      * Opens the socket
      */
-    public void open() throws IOException{streamIn = new DataInputStream(new BufferedInputStream(socket.getInputStream())); streamOut = new DataOutputStream(socket.getOutputStream());}
+    public void open() throws IOException{
+        streamIn = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+        streamOut = new DataOutputStream(socket.getOutputStream());
+    }
+    
     /**
      * close()
      * Closes the socket
      */
     public void close(){
-        try{if(socket!= null){socket.close();}if(streamIn != null){streamIn.close();}if(streamOut != null){streamOut.close();}}
-        catch(IOException ioe){System.out.println("UserConnection, close() error" +ioe);
-        }}
+        try{
+            if(socket!= null){
+                socket.close();
+            }if(streamIn != null){
+                streamIn.close();
+            }if(streamOut != null){
+                streamOut.close();
+            }
+        }
+        catch(IOException ioe){
+            System.out.println("UserConnection, close() error" +ioe);
+        }
+    }
 }

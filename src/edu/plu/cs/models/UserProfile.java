@@ -34,8 +34,15 @@ public class UserProfile {
     private String password;
     private String email;
     private UserStatistic statistic;
+    
     //constructor default
-    public UserProfile(){username = "undefined"; password = "undefined"; email = "undefined"; statistic = new UserStatistic(this);}
+    public UserProfile(){
+        username = "undefined";
+        password = "undefined";
+        email = "undefined";
+        statistic = new UserStatistic(this);
+    }
+    
     /*
     UserProfile(username, password, email)
     Constructor for Userprofile
@@ -44,9 +51,21 @@ public class UserProfile {
     @param email - String of the user's email
     TODO: ENCRYPTION
     */
-    public UserProfile(String username, String password, String email){this.username = username; this.password = password; this.email = email; statistic = new UserStatistic(this);}
+    public UserProfile(String username, String password, String email){
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        statistic = new UserStatistic(this);
+    }
+    
     //Implementation of constructor using String array {username, password, email}
-    public UserProfile(String[] tuple){this.username = tuple[0]; this.password = tuple[1]; this.email = tuple[2]; statistic = new UserStatistic(this);}
+    public UserProfile(String[] tuple){
+        this.username = tuple[0]; 
+        this.password = tuple[1]; 
+        this.email = tuple[2]; 
+        statistic = new UserStatistic(this);
+    }
+    
     /*
     UserProfile(username, password)
     Constructor for Userprofile
@@ -54,11 +73,19 @@ public class UserProfile {
     @param password - String of the password
     TODO: ENCRYPTION
     */
-    public UserProfile(String username, String password){this.username = username; this.password = password; this.email = "undefined"; statistic = new UserStatistic(this);}
+    public UserProfile(String username, String password){
+        this.username = username; 
+        this.password = password; 
+        this.email = "undefined"; 
+        statistic = new UserStatistic(this);
+    }
     /*
     getUserProfile()
     @return - a String array containing all the user information [username][password][email]
     */
-    public String[] getUserProfile(){String[] content = {username, password, email}; return content;}
+    public String[] getUserProfile(){
+        String[] content = {username, password, email}; 
+        return content;
+    }
    
 }
