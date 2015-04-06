@@ -74,7 +74,7 @@ public class Client implements Runnable{
     public void send(String msg){try {
         streamOut.writeUTF(msg);
         } catch (IOException ioe) {
-            System.out.println(ioe);
+            System.out.println("Client: Unable to Write >>CON-CLOSED<<");
             this.stop();
         }
 }
@@ -98,19 +98,21 @@ public class Client implements Runnable{
      * End Thread execution
      */
     public void stop(){
-        try{if(console != null){console.close();}if(streamOut != null){streamOut.close();}if(socket != null){socket.close();}if(thread != null){thread = null;}}catch(IOException ioe){System.out.println("Exception at Client.java stop(): "+ ioe); client.close(); client.stop();}
-        if(thread != null){thread.stop(); thread = null; System.out.println("Client.java thread set NULL");}
+        try{if(console != null){console.close();}if(streamOut != null){streamOut.close();}if(socket != null){socket.close();}if(thread != null){thread = null;}}catch(IOException ioe){System.out.println("Exception at Client.java stop(): "+ ioe);}
+        client.close();
+        cntrl.recvCmd("CONCLOSED");
+        if(thread != null){thread = null;}
     }
     /**
      * handle()
-     * Display input from socket
+     * Retrieve input from socket; forward msg to ClientConnectionController
      * @param msg - the message to display
      * TODO: Handle connection close request
      */
-    public void handle(String msg){System.out.println("CLIENT RECEIVED: "+ msg); 
+    public void handle(String msg){
         try{
         cntrl.recvCmd(msg);
-        } catch(NullPointerException n){System.out.println("null at Client, handle");}
+        } catch(NullPointerException n){System.out.println("Client.java: handle(null)>>CON-CLOSE<<"); this.stop();}
     }
     /**
      * setController()
