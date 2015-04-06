@@ -172,31 +172,26 @@ public class ServerModel {
                 if(clientSet[clientIndex].getID() == Integer.parseInt(conID)){}
                     clientSet[clientIndex].sendMessage(msg);
             }
-    }catch(NullPointerException n){System.out.println("Fucked at Handle.");}}
+    }catch(NullPointerException n){System.out.println("ServerModel: handle() >>NULLPOINT<<");}}
     /**
-     * remove()
+     * closeUserCon()
      * Remove connection from the connection set
      * @param ID - integer of the connection ID to remove
      */
-    public synchronized void remove(int ID){
+    public synchronized void closeUserCon(int ID){
         int i = findClient(ID);
-        System.out.println("iVal, Server.remove(): " + i);
         if(i >= 0){clientSet[i].close(); //clientSet[i].stop();
-            System.out.println("Remove(): clientSet[i]: closed.");
         }
         
        
         if(i >= 0){ //there exists
             if(i < clientCount -1){ // there exists contents at +1 of index
                 for(int k = i+1; k < clientCount; k++){clientSet[k-1] = clientSet[k];} //shift values
-                
             }
-            clientCount--;
-           
+            clientCount--;  
         }
         //update Server View
         this.updateViewAccounts();
-        
     }
     /**
      * updateViewConnections

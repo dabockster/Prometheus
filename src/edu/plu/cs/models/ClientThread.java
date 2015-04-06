@@ -39,17 +39,19 @@ public class ClientThread extends Thread{
      * close()
      * End inputStream
      */
-    public void close(){try{if(streamIn != null){streamIn.close();}}catch(IOException ioe){System.out.println(ioe);}}
+    public void close(){try{if(streamIn != null){streamIn.close();}}catch(IOException ioe){System.out.println(ioe);}contRun = false;}
     /**
      * run()
      * RUN instance invoked by Thread
      */
     public void run(){
         while(contRun){
-            try{System.out.println("clientThread AM RUNNING"); msgLen = bReader.read(charBuf); 
+            try{ msgLen = bReader.read(charBuf); 
                 if(msgLen > 0){msg = new String(charBuf, 0, msgLen); client.handle(msg);}
-                else{System.out.println("Connection failure"); contRun = false;}
-        }catch(IOException ioe){System.out.println("Smack a hoe" + ioe); contRun = false; client.stop();}}
+                else{System.out.println("Connection Failure"); contRun = false;}
+        }catch(IOException ioe){System.out.println("Connection Termination: " + ioe); contRun = false; }}
+        this.close();
+        client.stop();
     }
     //streamIn.readUTF()
 }

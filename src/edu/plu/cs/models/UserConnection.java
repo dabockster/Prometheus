@@ -24,7 +24,7 @@ public class UserConnection extends Thread{
     private DataInputStream streamIn = null;
     private DataOutputStream streamOut = null;
     private String associatedAcctName = "undef";
-    
+    private boolean boolThreadCont = true;
     /**
      * ServerThread constructor
      * Creates a Thread from the given server and socket
@@ -41,33 +41,17 @@ public class UserConnection extends Thread{
         String content = "";
         //listen for input
         //reads from socket - receives client input
-        boolean cont = true;
-        while(cont){
+        boolThreadCont = true;
+        while(boolThreadCont){
             //print input
             //TODO - send input to GUI
             try{
                 content = streamIn.readUTF();
-                
-                if(content.equals("!!!CONABORT!!!")){
-                    //--------------------------TERMINATING
-                    System.out.println("Removing Socket from Server: " + ID);
-                    scntrl.remove(ID);
-
-                    System.out.println(ID + " Removed!");
-                    this.close();
-                    System.out.println("ServerThread closed!");
-                    
-                    //--------------------------END TERMINATING
-                    cont = false;}
-                else{
-                scntrl.recvCmd(content + "<&>" + ID);} //TODO should call ServerController
+                scntrl.recvCmd(content + "<&>" + ID); //TODO should call ServerController
                 //System.out.println("FROM CLIENT: " + streamIn.readUTF()); //this code prints any data received to console
                 
             }catch(IOException ioe){System.out.println("Thread Exception Ocurred: " + ioe); }
         }//close while
-       
-       
-        
     }
     /**
      * setAssociatedAcctName
@@ -103,7 +87,7 @@ public class UserConnection extends Thread{
      * Closes the socket
      */
     public void close(){
-        try{if(socket!= null){socket.close();}if(streamIn != null){streamIn.close();}if(streamOut != null){streamOut.close();}}
+        try{if(socket!= null){socket.close();}if(streamIn != null){streamIn.close();}if(streamOut != null){streamOut.close();}boolThreadCont = false;}
         catch(IOException ioe){System.out.println("UserConnection, close() error" +ioe);
         }}
 }

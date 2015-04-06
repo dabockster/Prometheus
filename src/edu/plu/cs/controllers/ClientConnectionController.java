@@ -57,6 +57,7 @@ public class ClientConnectionController {
     
     public void sendCmd(String cmd, String data){client.send(cmd +"<&>"+data);}
     public void recvCmd(String msg) {
+        
         String[] msgC = msg.split("<&>");
         switch(msgC[0]){
             case "Callback Login":
@@ -65,6 +66,12 @@ public class ClientConnectionController {
                 break;
             case "Callback Register":
                 if(msgC[1].equals("true")){System.out.println("Successful Registration!");}else{System.out.println("Unsuccessful Registration.");}
+                break;
+            case "CONABORT": //Server has requested connection termination
+                client.stop();
+                break;
+            case "CONCLOSED":
+                System.out.println("Client connection to server was terminated.");
                 break;
         }
     }

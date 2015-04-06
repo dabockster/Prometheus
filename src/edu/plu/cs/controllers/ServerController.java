@@ -54,12 +54,17 @@ public class ServerController {
     public void recvCmd(String msg){
         System.out.println("srvCntrl msg: " + msg);
         String[] msgC = msg.split("<&>");
+        int conIDIndex = msgC.length -1;
         switch(msgC[0]){
             case "Login":
-                if(model.login(msgC[1], msgC[2], msgC[3])){this.sendCmd("Callback Login<&>true", msgC[3]);}else{this.sendCmd("Callback Login<&>false", msgC[3]);}
+                if(model.login(msgC[1], msgC[2], msgC[3])){this.sendCmd("Callback Login<&>true", msgC[3]);}else{this.sendCmd("Callback Login<&>false", msgC[conIDIndex]);}
                 break;
             case "Register":
-                if(model.register(msgC[1], msgC[2], msgC[3])){this.sendCmd("Callback Register<&>true", msgC[4]);}else{this.sendCmd("Callback Register<&>false", msgC[4]);} //msgC[4] contains conID
+                if(model.register(msgC[1], msgC[2], msgC[3])){this.sendCmd("Callback Register<&>true", msgC[4]);}else{this.sendCmd("Callback Register<&>false", msgC[conIDIndex]);} //msgC[4] contains conID
+                break;
+            case "CONABORT":
+                this.sendCmd("CONABORT", msgC[1]);
+                this.remove(Integer.parseInt(msgC[1]));
                 break;
         }
     }
@@ -74,7 +79,7 @@ public class ServerController {
     @param ID - the ID of the UserConnection to remove
     */
     public void remove(int ID) {
-        model.remove(ID);
+        model.closeUserCon(ID);
     }
     /*
     sendCmd
