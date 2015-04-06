@@ -122,6 +122,11 @@ public class MainMenuView extends javax.swing.JFrame {
         loginPanel.setOpaque(false);
 
         registerButton.setText("Register");
+        registerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerButtonActionPerformed(evt);
+            }
+        });
 
         loginButton.setText("Login");
         loginButton.addActionListener(new java.awt.event.ActionListener() {
@@ -188,7 +193,6 @@ public class MainMenuView extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        quitPanel.setLocation(new java.awt.Point(-32609, -32256));
         quitPanel.setOpaque(false);
 
         quitButton.setText("Quit Game");
@@ -285,6 +289,13 @@ public class MainMenuView extends javax.swing.JFrame {
         controller.openView("Lobby");
         controller.dispose();
     }//GEN-LAST:event_loginButtonActionPerformed
+//REGISTER BUTTON
+    private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+       //on Register
+       String username = usernameTF.getText();
+       String password = new String(passwordTF.getPassword());
+       controller.register(username, password);
+    }//GEN-LAST:event_registerButtonActionPerformed
 
     private void loginBlankError(){
         blank = new LoginBlankDialog(this);

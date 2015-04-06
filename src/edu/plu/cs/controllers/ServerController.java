@@ -40,7 +40,7 @@ public class ServerController {
     private ServerConnection connection;
     private InetSocketAddress sock;
     //ServerController Constructor
-    public ServerController(InetSocketAddress sock){model = new ServerModel(this); view = new ServerView(this); view.setVisible(true); this.sock = sock; connection = new ServerConnection(sock, this);}
+    public ServerController(InetSocketAddress sock){model = new ServerModel(this); view = new ServerView(this); view.setVisible(true); this.sock = sock; connection = new ServerConnection(sock, this); model.updateViewAccounts();}
     /*
     addConnection
     */
@@ -52,13 +52,14 @@ public class ServerController {
     process the command, and enacts the appropriate method
     */
     public void recvCmd(String msg){
+        System.out.println("srvCntrl msg: " + msg);
         String[] msgC = msg.split("<&>");
         switch(msgC[0]){
             case "Login":
                 if(model.login(msgC[1], msgC[2], msgC[3])){this.sendCmd("Callback Login<&>true", msgC[3]);}else{this.sendCmd("Callback Login<&>false", msgC[3]);}
                 break;
             case "Register":
-                if(model.register(msgC[1], msgC[2], msgC[3])){this.sendCmd("Callback Register<&>true", msgC[3]);}else{this.sendCmd("Callback Register<&>false", msgC[3]);}
+                if(model.register(msgC[1], msgC[2], msgC[3])){this.sendCmd("Callback Register<&>true", msgC[4]);}else{this.sendCmd("Callback Register<&>false", msgC[4]);} //msgC[4] contains conID
                 break;
         }
     }
@@ -67,6 +68,7 @@ public class ServerController {
     TODO
     */
     public void updateConnections(String cons){}
+    public void updateAccountView(String content){view.setAccountDisplay(content);}
     /*
     remove
     @param ID - the ID of the UserConnection to remove

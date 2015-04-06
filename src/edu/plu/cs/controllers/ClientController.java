@@ -61,7 +61,7 @@ public class ClientController {
      * @param credentials - the username<&>password
      */
     public void login(String credentials){clientConCntrl.sendCmd("Login", credentials);}
-    public void register(String username, String password, String email){if(email == null){email = "";} String credentials = username+"<&>"+password+"<&>"+email; clientConCntrl.sendCmd("Register", credentials);}
+    public void register(String username, String password, String email){String credentials = username+"<&>"+password+"<&>"+email; System.out.println("Register Credentials: "+ credentials);clientConCntrl.sendCmd("Register", credentials);}
     /**
      * Opens a view
      * @param view The view to be opened (eg "Offline" for the offline mode).

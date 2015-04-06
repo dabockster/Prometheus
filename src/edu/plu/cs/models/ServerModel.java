@@ -71,7 +71,7 @@ public class ServerModel {
     private String USERSTATDB; //TODO
     private String MATCHDB; //TODO
     //constructor
-    public ServerModel(ServerController controller){this.scntrl = controller; accounts = new ArrayList<UserProfile>();this.initializeDB();}
+    public ServerModel(ServerController controller){this.scntrl = controller; accounts = new ArrayList<UserProfile>();this.initializeDB(); }
     /*
     initializeDB()
     Initializes the dataStructures by reading the csv files
@@ -89,7 +89,9 @@ public class ServerModel {
                 System.out.println("entires: "+entries[0] +":"+ entries[1] +":" + entries[2]);
                 UserProfile profile = new UserProfile(entries);
                 accounts.add(profile);
+                
             }
+            
         } catch (FileNotFoundException ex) {
             System.out.println("File 404: " + ACCOUNTDB);
         } catch (IOException ex) {
@@ -193,17 +195,19 @@ public class ServerModel {
            
         }
         //update Server View
-        //this.updateViewConnections();
+        this.updateViewAccounts();
         
     }
     /**
      * updateViewConnections
      * Requests the controller to update the view to the current set of connections
      */
-    private void updateViewConnections(){String tempAggregate = "";
-        for(int p = 0; p < clientCount; p++){tempAggregate += clientSet[p].getID() + "\n";}
-        scntrl.updateConnections(tempAggregate);
-        System.out.println("Current Connections: " + tempAggregate );
+    public void updateViewAccounts(){String tempAggregate = "";
+        for(int p = 0; p < accounts.size(); p++){
+            String[] entries = accounts.get(p).getUserProfile();
+            tempAggregate +=  entries[0]+" " +entries[1] + " " +entries[2] + "\n";}
+        scntrl.updateAccountView(tempAggregate);
+        
     }
     
     /**
@@ -221,6 +225,7 @@ public class ServerModel {
      * @return FALSE for invalid credentials, or account is active
      */
     public boolean login(String username, String password, String conID){
+        
         if(!acctActive(username) && validCredentials(username, password)){
                 int clientIndex = findClient(Integer.parseInt(conID));;
                 clientSet[clientIndex].setAssociatedAcctName(username); 
@@ -234,7 +239,7 @@ public class ServerModel {
      * @param email
      * @return 
      */
-    public boolean register(String username, String password, String email){if(email.equals("") || email == null){email = "undefined";}if(!validCredentials(username)){String[] entries = {username, password, email}; UserProfile tempProfile = new UserProfile(entries); accounts.add(tempProfile); return true;} return false;}
+    public boolean register(String username, String password, String email){if(email.equals("") || email == null){email = "undefined";}if(!validCredentials(username)){String[] entries = {username, password, email}; UserProfile tempProfile = new UserProfile(entries); accounts.add(tempProfile); this.updateViewAccounts(); return true;} return false;}
     /**
      * 
      * @param username

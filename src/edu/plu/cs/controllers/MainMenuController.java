@@ -89,6 +89,16 @@ public class MainMenuController {
         //execute login -- DEPRECATED
         //login.execute();
     }
+    /**
+     * register()
+     * @param username
+     * @param password 
+     */
+    public void register(String username, String password){
+        //connect to the server
+        controller.connect();
+        
+        controller.register(username, password, "undefined");}
 
     public void setLoginStatus(boolean status) {
         controller.setLoginStatus(status);
