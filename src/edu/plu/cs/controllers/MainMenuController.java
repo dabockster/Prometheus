@@ -79,11 +79,15 @@ public class MainMenuController {
         controller.setUsername(username);
         controller.setPassword(password);
         
+        //connect to the server
+        controller.connect();
+        
         //Login object for ease and simplicity
         LoginController login = new LoginController(username, password, this);
         
-        //execute login
-        login.execute();
+        controller.login(login.getTransmission());
+        //execute login -- DEPRECATED
+        //login.execute();
     }
 
     public void setLoginStatus(boolean status) {

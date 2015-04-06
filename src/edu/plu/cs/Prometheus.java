@@ -24,6 +24,8 @@
 package edu.plu.cs;
 
 import edu.plu.cs.controllers.ClientController;
+import edu.plu.cs.controllers.ServerController;
+import java.net.InetSocketAddress;
 
 /**
  * Prometheus main class
@@ -35,8 +37,17 @@ public class Prometheus {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        //boolean variable determines if MAIN should initialize a server controller
+        boolean initServerController = true;
+        
+        
         // TODO code application logic here
         ClientController controller = new ClientController();
+        if(initServerController){
+            String ip = "localhost";
+            int port = 8080;
+            InetSocketAddress sock = new InetSocketAddress(ip, port);
+            ServerController srvCntrl = new ServerController(sock);}
     }
     
 }

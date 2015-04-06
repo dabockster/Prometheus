@@ -36,6 +36,7 @@ public class ClientController {
     private ClientModel model;
     private LobbyController lobby;
     private boolean loginStatus;
+    private ClientConnectionController clientConCntrl;
     
     /**
      * GameController constructor
@@ -45,7 +46,22 @@ public class ClientController {
         model = new ClientModel();
         loginStatus = false;
     }
-    
+    /**
+     * connect()
+     * connects to the gameServer
+     */
+    public boolean connect(){
+        clientConCntrl = new ClientConnectionController();
+        clientConCntrl.setClientController(this);
+        if(clientConCntrl.conStatus()){return false;}else{return true;}
+    }
+    /**
+     * login()
+     * Calls ClientConnectionController to transmit a login request
+     * @param credentials - the username<&>password
+     */
+    public void login(String credentials){clientConCntrl.sendCmd("Login", credentials);}
+    public void register(String username, String password, String email){if(email == null){email = "";} String credentials = username+"<&>"+password+"<&>"+email; clientConCntrl.sendCmd("Register", credentials);}
     /**
      * Opens a view
      * @param view The view to be opened (eg "Offline" for the offline mode).

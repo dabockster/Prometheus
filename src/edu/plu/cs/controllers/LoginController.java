@@ -55,7 +55,12 @@ public class LoginController {
         //set the transmit variable to what we've built
         toTransmit = sb.toString();
     }
-    
+    /**
+     * getTransmissions()
+     * @return the Login transmission 
+     */
+    public String getTransmission(){return toTransmit;}
+    //deprecate this function
     public void execute(){
         //HELP!!!
         
