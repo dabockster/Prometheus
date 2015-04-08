@@ -50,7 +50,7 @@ public class UserConnection extends Thread{
                 scntrl.recvCmd(content + "<&>" + ID); //TODO should call ServerController
                 //System.out.println("FROM CLIENT: " + streamIn.readUTF()); //this code prints any data received to console
                 
-            }catch(IOException ioe){System.out.println("Thread Exception Ocurred: " + ioe); }
+            }catch(IOException ioe){System.out.println("UserConnection.java: Socket closed! " + ioe); boolThreadCont = false; }
         }//close while
     }
     /**

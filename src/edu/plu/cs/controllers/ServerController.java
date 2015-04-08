@@ -79,7 +79,7 @@ public class ServerController {
     @param ID - the ID of the UserConnection to remove
     */
     public void remove(int ID) {
-        model.closeUserCon(ID);
+        model.remove(ID);
     }
     /*
     sendCmd

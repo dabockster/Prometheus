@@ -99,8 +99,8 @@ public class Client implements Runnable{
      */
     public void stop(){
         try{if(console != null){console.close();}if(streamOut != null){streamOut.close();}if(socket != null){socket.close();}if(thread != null){thread = null;}}catch(IOException ioe){System.out.println("Exception at Client.java stop(): "+ ioe);}
-        client.close();
-        cntrl.recvCmd("CONCLOSED");
+        //client.close();
+        //cntrl.recvCmd("CONCLOSED");
         if(thread != null){thread = null;}
     }
     /**
