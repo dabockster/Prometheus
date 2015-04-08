@@ -31,8 +31,8 @@ import edu.plu.cs.views.MainMenuView;
  */
 public class MainMenuController {
     
-    private MainMenuView view;
-    private ClientController controller;
+    private final MainMenuView view;
+    private final ClientController controller;
     
     
     /**
@@ -43,6 +43,7 @@ public class MainMenuController {
         view = new MainMenuView(this);
         view.setVisible(true);
         controller = ctrl;
+        controller.connect();
     }
     
     /**
@@ -67,40 +68,40 @@ public class MainMenuController {
     public void quitProgram(int exitStatus){
         controller.quitProgram(exitStatus);
     }
+
     
     /**
+     * LOGIN
      * Logs into the server
      * @param username the specified username
      * @param password the specified password
      */
     public void login(String username, String password){
-        
-        //Housekeeping - may delete later from ClientModel
-        controller.setUsername(username);
-        controller.setPassword(password);
-        
-        //connect to the server
-        controller.connect();
-        
-        //Login object for ease and simplicity
-        LoginController login = new LoginController(username, password, this);
-        
-        controller.login(login.getTransmission());
-        //execute login -- DEPRECATED
-        //login.execute();
+        controller.loginRequest(username, password);
     }
+
     /**
-     * register()
+     * REGISTER
      * @param username
      * @param password 
      */
     public void register(String username, String password){
-        //connect to the server
-        controller.connect();
-        
-        controller.register(username, password, "undefined");}
-
-    public void setLoginStatus(boolean status) {
-        controller.setLoginStatus(status);
+        controller.registerRequest(username, password);
     }
+    
+    /**
+     * VIEW - CLEAR TEXT FIELDS
+     */
+    public void clearFields(){
+        view.clearFields();
+    }
+
+    /**
+     * VIEW - FEEDBACK
+     * @param response 
+     */
+    public void sendServerFeedback(String response){
+        view.postServerFeedback(response);
+    }
+
 }

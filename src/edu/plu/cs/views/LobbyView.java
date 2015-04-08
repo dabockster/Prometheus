@@ -188,7 +188,6 @@ public class LobbyView extends javax.swing.JFrame {
     private void challengePlayer(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_challengePlayer
         String challengerName = ""+onlinePlayersList.getSelectedValue();
         sendChallenge(challengerName);
-
     }//GEN-LAST:event_challengePlayer
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -196,23 +195,22 @@ public class LobbyView extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void challengeButtonComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_challengeButtonComponentAdded
-        
+        GamePanel newGame = new GamePanel();
+        GameInterfacePanel.addTab("Tab 1", newGame);
     }//GEN-LAST:event_challengeButtonComponentAdded
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        GamePanel newGame = new GamePanel();
-        GameInterfacePanel.addTab("Tab 1", newGame);
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-        controller.openView("Main Menu");
-        controller.dispose();
+        controller.logout();
         System.gc();
     }//GEN-LAST:event_logoutButtonActionPerformed
     
     
     public void sendChallenge(String opponent){
-        boolean acceptedChallenge = controller.challengePlayer(opponent);
+
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

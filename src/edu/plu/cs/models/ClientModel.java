@@ -82,7 +82,7 @@ public class ClientModel {
     }
 
     /**
-     * Sets the current number of active fames
+     * Sets the current number of active games
      * @param gameNum the number of active games
      */
     public void setGameNum(int gameNum) {

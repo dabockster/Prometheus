@@ -53,12 +53,14 @@ public class MainMenuView extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        jLayeredPane1 = new javax.swing.JLayeredPane();
         objectsLayer = new javax.swing.JPanel();
         fieldsPanel = new javax.swing.JPanel();
         usernameLabel = new javax.swing.JLabel();
         usernameTF = new javax.swing.JTextField();
         passswordLabel = new javax.swing.JLabel();
         passwordTF = new javax.swing.JPasswordField();
+        serverResponseLabel = new javax.swing.JLabel();
         loginPanel = new javax.swing.JPanel();
         registerButton = new javax.swing.JButton();
         loginButton = new javax.swing.JButton();
@@ -68,6 +70,17 @@ public class MainMenuView extends javax.swing.JFrame {
         quitPanel = new javax.swing.JPanel();
         quitButton = new javax.swing.JButton();
         backgroundLayer = new javax.swing.JLabel();
+
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        jLayeredPane1Layout.setHorizontalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jLayeredPane1Layout.setVerticalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Prometheus & Bob");
@@ -92,6 +105,11 @@ public class MainMenuView extends javax.swing.JFrame {
 
         passwordTF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
+        serverResponseLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        serverResponseLabel.setForeground(new java.awt.Color(255, 255, 255));
+        serverResponseLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        serverResponseLabel.setText(" ");
+
         javax.swing.GroupLayout fieldsPanelLayout = new javax.swing.GroupLayout(fieldsPanel);
         fieldsPanel.setLayout(fieldsPanelLayout);
         fieldsPanelLayout.setHorizontalGroup(
@@ -104,6 +122,7 @@ public class MainMenuView extends javax.swing.JFrame {
                     .addComponent(usernameTF, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(passswordLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addComponent(serverResponseLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         fieldsPanelLayout.setVerticalGroup(
             fieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,6 +135,8 @@ public class MainMenuView extends javax.swing.JFrame {
                 .addComponent(passswordLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(passwordTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(serverResponseLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -224,7 +245,7 @@ public class MainMenuView extends javax.swing.JFrame {
         objectsLayerLayout.setHorizontalGroup(
             objectsLayerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, objectsLayerLayout.createSequentialGroup()
-                .addContainerGap(47, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(objectsLayerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(fieldsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(loginPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -237,13 +258,13 @@ public class MainMenuView extends javax.swing.JFrame {
             .addGroup(objectsLayerLayout.createSequentialGroup()
                 .addGap(171, 171, 171)
                 .addComponent(fieldsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
                 .addComponent(loginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58)
+                .addGap(18, 18, 18)
                 .addComponent(modesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(77, 77, 77)
+                .addGap(109, 109, 109)
                 .addComponent(quitPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -286,8 +307,6 @@ public class MainMenuView extends javax.swing.JFrame {
         }
         
         controller.login(username, password);
-        controller.openView("Lobby");
-        controller.dispose();
     }//GEN-LAST:event_loginButtonActionPerformed
 //REGISTER BUTTON
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
@@ -297,6 +316,10 @@ public class MainMenuView extends javax.swing.JFrame {
        controller.register(username, password);
     }//GEN-LAST:event_registerButtonActionPerformed
 
+    public void postServerFeedback(String response){
+        serverResponseLabel.setText(response);
+    }
+    
     private void loginBlankError(){
         blank = new LoginBlankDialog(this);
     }
@@ -305,6 +328,7 @@ public class MainMenuView extends javax.swing.JFrame {
     private javax.swing.JButton anonButotn;
     private javax.swing.JLabel backgroundLayer;
     private javax.swing.JPanel fieldsPanel;
+    private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JButton loginButton;
     private javax.swing.JPanel loginPanel;
     private javax.swing.JPanel modesPanel;
@@ -315,7 +339,16 @@ public class MainMenuView extends javax.swing.JFrame {
     private javax.swing.JButton quitButton;
     private javax.swing.JPanel quitPanel;
     private javax.swing.JButton registerButton;
+    private javax.swing.JLabel serverResponseLabel;
     private javax.swing.JLabel usernameLabel;
     private javax.swing.JTextField usernameTF;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * CLEAR TEXT FIELDS
+     */
+    public void clearFields() {
+        this.usernameTF.setText(null);
+        this.passwordTF.setText(null);
+    }
 }

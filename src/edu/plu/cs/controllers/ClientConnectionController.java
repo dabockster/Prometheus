@@ -23,7 +23,7 @@
  */
 package edu.plu.cs.controllers;
 
-import edu.plu.cs.models.Client;
+import edu.plu.cs.threads.ClientConnection;
 import java.net.InetSocketAddress;
 
 /**
@@ -31,67 +31,137 @@ import java.net.InetSocketAddress;
  * @author Vivo
  */
 public class ClientConnectionController {
-    private Client client;
-    private ClientController clientCtrl;
-    InetSocketAddress conAddr;
+    private final ClientController controller;
+
+    private ClientConnection connection;
+    private InetSocketAddress conAddr;
+    
     private String ip;
     private int port;
-    //constructor default
-    public ClientConnectionController(){
-        ip = "localhost"; port = 8080;
+    
+    /**
+     * CONSTRUCTOR - DEFAULT
+     * Creates a new ClientConnectionController
+     */
+    public ClientConnectionController(ClientController controller){
+        this.controller = controller;
+        ip = "localhost"; 
+        port = 8080;
         conAddr = new InetSocketAddress(ip, port);
-        client = new Client(conAddr);
     }
     
-    /*
-    constructor
-    @param String ip to connect to;
-    @param int port of server;
-    */
-    public ClientConnectionController(String ip, int port){
+    public void connect(){
+        connection = new ClientConnection(this, conAddr);
+        new Thread(connection).start();
+    }
+    
+    /**
+     * CONSTRUCTOR - MODIFIED
+     * @param ip to confirmConnection;
+     * @param port of server;
+     */
+    public ClientConnectionController(ClientController controller, String ip, int port){
+        this.controller = controller;
         this.ip = ip;
         this.port = port;
         conAddr = new InetSocketAddress(ip, port);
-        client = new Client(conAddr);
     }
     
     /**
-     * setClientController
-     * @param clientCtrl 
+     * TEARDOWN - CLIENTCONNECTION
      */
-    public void setClientController(ClientController clientCtrl){
-        this.clientCtrl = clientCtrl;
+    public void teardownConnection(){
+        //send disconnection command
+    }
+    
+
+    
+    /**
+     * NETWORK COMMUNICATIONS - SEND CMND
+     * @param cmndType
+     * @param cmnd 
+     */
+    public void sendCmnd(String cmndType, String cmnd){
+        System.out.println("Sent command " + cmndType);
+        connection.sendCmnd(cmndType+"<&>"+cmnd);
     }
     
     /**
-     * conStatus
-     * @return TRUE if connection is closed
-     */
-    public boolean conStatus(){
-        return client.conStatus();
-    }
-    
-    public void sendCmd(String cmd, String data){
-        client.send(cmd +"<&>"+data);
-    }
-    
-    public void recvCmd(String msg) {
-        
-        String[] msgC = msg.split("<&>");
-        switch(msgC[0]){
-            case "Callback Login":
-                System.out.println(msgC[0] +" : "+ msgC[1]);
-                if(msgC[1].equals("true")){clientCtrl.setLoginStatus(true);}else{clientCtrl.setLoginStatus(false);}
-                break;
-            case "Callback Register":
-                if(msgC[1].equals("true")){System.out.println("Successful Registration!");}else{System.out.println("Unsuccessful Registration.");}
-                break;
-            case "CONABORT": //Server has requested connection termination
-                client.stop();
-                break;
-            case "CONCLOSED":
-                System.out.println("Client connection to server was terminated.");
-                break;
+     * INTERPRET COMMUNICATIONS
+     * Receives a string, assesses the string's purpose, then executes an operation.
+     * This method takes an array of Strings and interprets the first index 
+     * to determine an operation. The method then passes the unused indexes
+     * of the string array to the method of the subsequent operation.
+     * @param cmndComp the string array to be interpreted 
+     */    
+    public void interpretCmnd(String[] cmndComp) {
+        if(cmndComp[0].equals("server")){ //this is added on the client side for all incoming transmission from the server
+            switch(cmndComp[1]){
+                case "connect":
+                    sendServerFeedback("You are connected to the server.");
+                    break;
+                case "loginResponse":
+                    this.loginResponse(cmndComp);
+                    break;
+                case "registerResponse":
+                    this.registrationResponse(cmndComp);
+                    break;
+            }
         }
     }
+    
+    /**
+     * EXECUTE RESPONSE - LOGIN 
+     */
+    private void loginResponse(String[] response){
+        if(response[2].equals("success")){
+            controller.loginResponse(true, null);
+        }else if(response[2].equals("failure")){
+            switch(response[3]){
+                case "nonexistent":
+                    controller.loginResponse(false, "Invalid username.");
+                    break;
+                case "alreadyOnline":
+                    controller.loginResponse(false, "The account you entered is already online.");
+                    break;
+                case "invalidPassword":
+                    controller.loginResponse(false, "Invalid password.");
+                    break;
+            }
+        }else{
+            controller.loginResponse(false, "Unknown login error.");
+        }
+    }
+    
+    /**
+     * EXECUTE RESPONSE - REGISTRATION 
+     */
+    private void registrationResponse(String[] response){
+        if(response[2].equals("success")){
+            controller.registerResponse(true, null);
+        }else if(response[2].equals("failure")){
+            switch(response[3]){
+                case "alreadyExists":
+                    controller.registerResponse(false, "That username already exists.");
+                    break;
+            }
+        }
+    }
+    
+    /**
+     * CHECKER
+     * Checks to see if this client is connected the server
+     * @return true if a connection has been established with the server
+     */
+    public boolean isConnectedToServer(){
+        return connection.connected;
+    }
+    
+    /**
+     * SERVER FEEDBACK
+     */
+    public void sendServerFeedback(String response){
+        controller.sendServerFeedback(response);
+    }    
+
 }
