@@ -129,7 +129,7 @@ public class LobbyView extends javax.swing.JFrame {
         optionInterfacePanelLayout.setHorizontalGroup(
             optionInterfacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, optionInterfacePanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(10, Short.MAX_VALUE)
                 .addGroup(optionInterfacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -187,7 +187,7 @@ public class LobbyView extends javax.swing.JFrame {
 
     private void challengePlayer(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_challengePlayer
         String challengerName = ""+onlinePlayersList.getSelectedValue();
-        sendChallenge(challengerName);
+        controller.challengePlayer(challengerName);
     }//GEN-LAST:event_challengePlayer
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -207,11 +207,6 @@ public class LobbyView extends javax.swing.JFrame {
         controller.logout();
         System.gc();
     }//GEN-LAST:event_logoutButtonActionPerformed
-    
-    
-    public void sendChallenge(String opponent){
-
-    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane GameInterfacePanel;
