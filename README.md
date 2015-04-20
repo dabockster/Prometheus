@@ -9,6 +9,8 @@ For more information on Gomoku:
 
 [http://en.wikipedia.org/wiki/Gomoku](http://en.wikipedia.org/wiki/Gomoku)
 
+NOTE: This program requires a minimum of Java 8 installed.
+
 ---
 
 ### Setup
