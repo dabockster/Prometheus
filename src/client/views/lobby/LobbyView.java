@@ -90,7 +90,7 @@ public class LobbyView extends javax.swing.JFrame {
         });
         challengeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                challengePlayer(evt);
+                challengeButtonActionListener(evt);
             }
         });
 
@@ -187,10 +187,11 @@ public class LobbyView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void challengePlayer(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_challengePlayer
+    private void challengeButtonActionListener(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_challengeButtonActionListener
         String challengerName = ""+onlinePlayersList.getSelectedValue();
         //do something with the challengerName
-    }//GEN-LAST:event_challengePlayer
+        controller.challenge(challengerName);
+    }//GEN-LAST:event_challengeButtonActionListener
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:

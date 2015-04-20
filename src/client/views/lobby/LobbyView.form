@@ -154,7 +154,7 @@
           </AccessibilityProperties>
           <Events>
             <EventHandler event="componentAdded" listener="java.awt.event.ContainerListener" parameters="java.awt.event.ContainerEvent" handler="challengeButtonComponentAdded"/>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="challengePlayer"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="challengeButtonActionListener"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton2">

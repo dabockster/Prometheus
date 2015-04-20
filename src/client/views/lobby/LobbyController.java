@@ -24,7 +24,9 @@ public class LobbyController {
     }
     
     //----- send data -----
-    
+    public void challenge(String opName){
+        controller.challengeRequest(opName);
+    }
 
     //update View
     public void updateOnlinePlayers(String[] onlinePlayers){
