@@ -135,27 +135,27 @@ public class UserConnection implements Runnable{
      * This method takes an array of Strings and interprets the first index 
      * to determine an operation. The method then passes the unused indexes
      * of the string array to the method of the subsequent operation.
-     * @param cmndComp the string array to be interpreted 
+     * @param request the string array to be interpreted 
      */
-    public synchronized void interpretRequest(String[] cmndComp){
-        switch(cmndComp[0]){
+    public synchronized void interpretRequest(String[] request){
+        switch(request[0]){
             case "connect" :
                 this.connectRequest();
                 break;
             case "error" :
-                this.errorResponse(cmndComp[1]);
+                this.errorResponse(request[1]);
                 break;
             case "login" :
-                this.loginRequest(cmndComp);
+                this.loginRequest(request);
                 break;
             case "logout" :
                 this.logoutRequest();
                 break;
             case "msg" :
-                msgResponse(cmndComp[1]);
+                msgRequest(request[1]);
                 break;
             case "register" :
-                registerRequest(cmndComp);
+                registerRequest(request);
                 break;
             case "update" :
                 System.out.println("UserConnection.update");
@@ -186,10 +186,10 @@ public class UserConnection implements Runnable{
     /**
      * REQUEST
      * Commences login procedure for this UserConnection
-     * @param cmndComp the login information used for authentication
+     * @param request the login information used for authentication
      */
-    private synchronized void loginRequest(String cmndComp[]){
-        controller.login(this, cmndComp); //create login
+    private synchronized void loginRequest(String request[]){
+        controller.login(this, request); //create login
         
     }
         
@@ -208,19 +208,19 @@ public class UserConnection implements Runnable{
      * RESPONSE
      * Receives a message from ClientConnection and
      * relays it to userConnectionFeedback.
-     * @param msg the message to be relayed
+     * @param response the message to be relayed
      */
-    private synchronized void msgResponse(String msg){
-        this.sendClientFeedback(msg);
+    private synchronized void msgRequest(String response){
+        this.sendClientFeedback(response);
     }
     
     /**
      * REQUEST
      * Commences procedure to register a new account.
-     * @param cmndComp
+     * @param request
      */
-    private synchronized void registerRequest(String[] cmndComp){
-        controller.register(this, cmndComp);
+    private synchronized void registerRequest(String[] request){
+        controller.register(this, request);
     }
     
     /**
