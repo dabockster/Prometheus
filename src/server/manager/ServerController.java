@@ -303,4 +303,8 @@ public class ServerController {
         view.clientFeedback(feedback);
     }    
     
+    public void relayChallengeResponse(){
+        
+    }
+    
 }

@@ -200,4 +200,20 @@ public class ClientController {
         mainMenu.sendServerFeedback(feedback);
     }
     
+    /**
+     * called from dialogue box button
+     * sends to ClientConnectionController
+     * @param opName
+     * @param accept 
+     */
+    public void challengeResponse(String opName,boolean accept){
+        if(accept){
+            cController.interpretResponse("challengeResponse<&>"+opName+"<&>true");
+        }
+    }
+    
+    public void launchGame(){
+        
+    }
+    
 }

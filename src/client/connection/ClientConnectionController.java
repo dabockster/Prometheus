@@ -184,6 +184,12 @@ public class ClientConnectionController {
      */
     public void sendServerFeedback(String response){
         controller.sendServerFeedback(response);
-    }    
+    }
+    
+    public void interpretResponse(String response){
+        
+    }
+    
+    
 
 }

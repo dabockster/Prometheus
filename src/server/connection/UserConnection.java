@@ -240,6 +240,10 @@ public class UserConnection implements Runnable{
         controller.sendClientFeedback(username+": "+ feedback);
     }
     
+    public void relayChallengeResponse(){
+        
+    }
+    
     /**
      * GETTER - USERNAME
      */
