@@ -67,7 +67,7 @@ public class MainMenuView extends javax.swing.JFrame {
         registerButton = new javax.swing.JButton();
         loginButton = new javax.swing.JButton();
         modesPanel = new javax.swing.JPanel();
-        anonButotn = new javax.swing.JButton();
+        anonButton = new javax.swing.JButton();
         offlineButton = new javax.swing.JButton();
         quitPanel = new javax.swing.JPanel();
         quitButton = new javax.swing.JButton();
@@ -183,11 +183,11 @@ public class MainMenuView extends javax.swing.JFrame {
 
         modesPanel.setOpaque(false);
 
-        anonButotn.setText("Anonymous");
-        anonButotn.setToolTipText("");
-        anonButotn.addActionListener(new java.awt.event.ActionListener() {
+        anonButton.setText("Anonymous");
+        anonButton.setToolTipText("");
+        anonButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                anonButotnActionPerformed(evt);
+                anonButtonActionPerformed(evt);
             }
         });
 
@@ -205,7 +205,7 @@ public class MainMenuView extends javax.swing.JFrame {
             .addGroup(modesPanelLayout.createSequentialGroup()
                 .addGap(94, 94, 94)
                 .addGroup(modesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(anonButotn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(anonButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(offlineButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(93, Short.MAX_VALUE))
         );
@@ -213,7 +213,7 @@ public class MainMenuView extends javax.swing.JFrame {
             modesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(modesPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(anonButotn)
+                .addComponent(anonButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(offlineButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -287,7 +287,6 @@ public class MainMenuView extends javax.swing.JFrame {
 
         setServerMenu.setText("Set Server");
         setServerMenu.setToolTipText("");
-        setServerMenu.setActionCommand("Set Server");
 
         serverIPandPortPrompt.setText("Enter Server Address");
         serverIPandPortPrompt.setToolTipText("");
@@ -305,10 +304,11 @@ public class MainMenuView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void anonButotnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anonButotnActionPerformed
-        controller.openView("Lobby");
-        controller.dispose();
-    }//GEN-LAST:event_anonButotnActionPerformed
+    private void anonButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anonButtonActionPerformed
+        String username = "anonymous";
+        
+        controller.login(username, "anon");
+    }//GEN-LAST:event_anonButtonActionPerformed
 
     private void offlineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_offlineButtonActionPerformed
         controller.openView("Offline");
@@ -351,7 +351,7 @@ public class MainMenuView extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton anonButotn;
+    private javax.swing.JButton anonButton;
     private javax.swing.JLabel backgroundLayer;
     private javax.swing.JPanel fieldsPanel;
     private javax.swing.JLayeredPane jLayeredPane1;

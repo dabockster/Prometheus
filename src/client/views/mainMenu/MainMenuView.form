@@ -23,7 +23,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Set Server"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
-            <Property name="actionCommand" type="java.lang.String" value="Set Server"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="serverIPandPortPrompt">
@@ -254,7 +253,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="anonButotn" max="32767" attributes="0"/>
+                          <Component id="anonButton" max="32767" attributes="0"/>
                           <Component id="offlineButton" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="93" max="32767" attributes="0"/>
@@ -265,7 +264,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="anonButotn" min="-2" max="-2" attributes="0"/>
+                      <Component id="anonButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="offlineButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
@@ -274,13 +273,13 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="anonButotn">
+            <Component class="javax.swing.JButton" name="anonButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Anonymous"/>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="anonButotnActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="anonButtonActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="offlineButton">
