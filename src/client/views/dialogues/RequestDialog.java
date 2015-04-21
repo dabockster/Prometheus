@@ -77,7 +77,7 @@ public class RequestDialog extends javax.swing.JDialog {
 
         opponentLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         opponentLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        opponentLabel.setText("PLAYER");
+        opponentLabel.setText("SAMPLE TEXT");
 
         javax.swing.GroupLayout messagePanelLayout = new javax.swing.GroupLayout(messagePanel);
         messagePanel.setLayout(messagePanelLayout);
