@@ -7,6 +7,7 @@
 package client.views.lobby;
 
 import client.manager.ClientController;
+import client.views.dialogues.RequestDialog;
 
 /**
  *
@@ -15,6 +16,7 @@ import client.manager.ClientController;
 public class LobbyController {
     
     private LobbyView view;
+    private RequestDialog challenger;
     private ClientController controller;
     
     public LobbyController(ClientController ctrl){
@@ -27,7 +29,19 @@ public class LobbyController {
     public void challenge(String opName){
         controller.challengeRequest(opName);
     }
-
+    
+    public void incomingChallenge(String opName){
+        challenger = new RequestDialog(view, this, opName);
+    }
+    
+    public void acceptChallenge(){
+        controller.acceptChallenge();
+    }
+    
+    public void rejectChallenge(){
+        controller.rejectChallenge();
+    }
+    
     //update View
     public void updateOnlinePlayers(String[] onlinePlayers){
         view.updatePlayers(onlinePlayers);

@@ -81,7 +81,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="messagePanel" max="32767" attributes="0"/>
-                          <Component id="jPanel1" max="32767" attributes="0"/>
+                          <Component id="buttonPanel" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -93,7 +93,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="messagePanel" min="-2" pref="105" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="32767" attributes="0"/>
-                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                      <Component id="buttonPanel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -109,7 +109,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="challengeMessageLabel" pref="332" max="32767" attributes="0"/>
-                              <Component id="playerLabel" alignment="0" max="32767" attributes="0"/>
+                              <Component id="opponentLabel" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -121,7 +121,7 @@
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="challengeMessageLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="playerLabel" min="-2" pref="41" max="-2" attributes="0"/>
+                          <Component id="opponentLabel" min="-2" pref="41" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -137,7 +137,7 @@
                     <Property name="text" type="java.lang.String" value="You have been challenged by"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="playerLabel">
+                <Component class="javax.swing.JLabel" name="opponentLabel">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="36" style="0"/>
@@ -148,7 +148,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel1">
+            <Container class="javax.swing.JPanel" name="buttonPanel">
 
               <Layout>
                 <DimensionLayout dim="0">
@@ -186,6 +186,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="DECLINE"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="declineButtonActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

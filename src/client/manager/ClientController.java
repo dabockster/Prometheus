@@ -64,6 +64,18 @@ public class ClientController {
         cController.connect(ip,port);
     }
     
+    public void acceptChallenge(){
+        
+    }
+    
+    public void rejectChallenge(){
+        
+    }
+    
+    public void challengeRequest(String opName){
+        
+    }
+    
     /**
      * LOGIN REQUEST
      * Uses username and password provided to loginRequest
