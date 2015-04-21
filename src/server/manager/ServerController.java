@@ -224,6 +224,11 @@ public class ServerController {
     public void login(UserConnection ucon, String[] cmnd){
         sendClientFeedback("Login attempt made...");
         String username = cmnd[1];
+        if(username.equals("anonymous")){    //For anonymous gameplay
+            ucon.setUsername(model.getAnonName());
+            updateAll();
+            return;   
+        }
         String password = cmnd[2];
         UserProfile profile;
         if( !model.usernameExists(username) ){ 
@@ -285,7 +290,6 @@ public class ServerController {
             view.addRegisteredProfile(newProfile.getUsername());
         }
     }
-   
             
     /** VIEW - FEEDBACK
      * Relays a message to the view to be displayed

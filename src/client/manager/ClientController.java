@@ -23,11 +23,12 @@
  */
 package client.manager;
 
-import client.views.offline.OfflineController;
 import client.connection.ClientConnectionController;
 import client.views.lobby.LobbyController;
 import client.views.mainMenu.MainMenuController;
+import client.views.offline.OfflineController;
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * ClientController class

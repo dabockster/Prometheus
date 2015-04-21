@@ -35,6 +35,7 @@ public class ServerModel {
     private final ServerController controller;        
     private final ArrayList<UserProfile> accounts;
     private final ArrayList<UserConnection> online;
+    private int numberOfAnon = 0;
     
 
     /**
@@ -73,6 +74,17 @@ public class ServerModel {
      */ 
     public UserConnection getUserConnection(int i){
         return online.get(i);   
+    }
+    
+    /**
+     * USERCONNECTION - GET ANON NAME
+     * Appends the current number of anonymous players to the end of "anonymous"
+     * so there are no duplicate usernames.
+     * @return the anonymous name
+     */
+    public String getAnonName(){
+        numberOfAnon++;
+        return "Anonymous"+numberOfAnon;
     }
     
     /**

@@ -73,6 +73,15 @@ public class UserConnection implements Runnable{
     }
     
     /**
+     * SETTER
+     * Sets this username to the string name
+     * @param name the name to be set to the username
+     */
+    public void setUsername(String name){
+        this.username = name;
+    }
+    
+    /**
      * TEARDOWN
      * Closes the socket
      */
