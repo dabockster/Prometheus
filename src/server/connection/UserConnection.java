@@ -108,7 +108,7 @@ public class UserConnection implements Runnable{
                 String cmnd = streamIn.readUTF();
                 String cmndComp[] = cmnd.split("<&>");
                 sendClientFeedback("command received "+cmndComp[0]);
-                this.interpretCmnd(cmndComp);
+                this.interpretRequest(cmndComp);
             }catch(IOException ioe){
                 connected = false;
             }
@@ -120,7 +120,7 @@ public class UserConnection implements Runnable{
      * Writes command to socket for client to read
      * @param cmnd the command to be sent
      */
-    public void sendCmnd(String cmnd){
+    public void sendResponse(String cmnd){
         try {
             streamOut.writeUTF(cmnd);
             streamOut.flush();
@@ -137,67 +137,67 @@ public class UserConnection implements Runnable{
      * of the string array to the method of the subsequent operation.
      * @param cmndComp the string array to be interpreted 
      */
-    public synchronized void interpretCmnd(String[] cmndComp){
+    public synchronized void interpretRequest(String[] cmndComp){
         switch(cmndComp[0]){
             case "connect" :
-                this.connectCmnd();
+                this.connectRequest();
                 break;
             case "error" :
-                this.errorCmnd(cmndComp[1]);
+                this.errorResponse(cmndComp[1]);
                 break;
             case "login" :
-                this.loginCmnd(cmndComp);
+                this.loginRequest(cmndComp);
                 break;
             case "logout" :
-                this.logoutCmnd();
+                this.logoutRequest();
                 break;
             case "msg" :
-                msgCmnd(cmndComp[1]);
+                msgResponse(cmndComp[1]);
                 break;
             case "register" :
-                registerCmnd(cmndComp);
+                registerRequest(cmndComp);
                 break;
             case "update" :
                 System.out.println("UserConnection.update");
-                updateCmnd();
+                updateResponse();
                 break;
             }
     }
     
     /**
-     * EXECUTE COMMAND
+     * REQUEST
      * Provides a server response to indicate successful connection
      */
-    private synchronized void connectCmnd(){
+    private synchronized void connectRequest(){
         sendClientFeedback("Sending connect response.");
         String response = "connect<&>success";
-        this.sendCmnd(response);
+        this.sendResponse(response);
     }
     
     /**
-     * EXECUTE COMMAND
+     * RESPONSE
      * Relays a message to userConnectionFeedback signaling an error.
      * @param errorMsg the error message to be relayed
      */
-    private synchronized void errorCmnd(String errorMsg){
+    private synchronized void errorResponse(String errorMsg){
         this.sendClientFeedback(errorMsg);
     }    
         
     /**
-     * EXECUTE COMMAND
+     * REQUEST
      * Commences login procedure for this UserConnection
      * @param cmndComp the login information used for authentication
      */
-    private synchronized void loginCmnd(String cmndComp[]){
+    private synchronized void loginRequest(String cmndComp[]){
         controller.login(this, cmndComp); //create login
         
     }
         
     /**
-     * EXECUTE COMMAND
+     * REQUEST
      * Commences logout procedure for this UserConnection
      */
-    private synchronized void logoutCmnd(){
+    private synchronized void logoutRequest(){
         this.sendClientFeedback("has logged off.");
         profile.logout();
         controller.logout(this); //create logout
@@ -205,34 +205,34 @@ public class UserConnection implements Runnable{
     }
     
     /**
-     * EXECUTE COMMAND
+     * RESPONSE
      * Receives a message from ClientConnection and
      * relays it to userConnectionFeedback.
      * @param msg the message to be relayed
      */
-    private synchronized void msgCmnd(String msg){
+    private synchronized void msgResponse(String msg){
         this.sendClientFeedback(msg);
     }
     
     /**
-     * EXECUTE COMMAND
+     * REQUEST
      * Commences procedure to register a new account.
      * @param cmndComp
      */
-    private synchronized void registerCmnd(String[] cmndComp){
+    private synchronized void registerRequest(String[] cmndComp){
         controller.register(this, cmndComp);
     }
     
     /**
-     * EXECUTE COMMAND
+     * RESPONSE
      * @param cmndComp 
      */
-    private synchronized void updateCmnd(){
+    private synchronized void updateResponse(){
         controller.updateAll();
     }
     
     /**
-     * RELAY MESSAGE
+     * RESPONSE
      * Sends a message to server controller to relay to view.
      * @param feedback 
      */

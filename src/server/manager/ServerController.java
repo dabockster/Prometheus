@@ -211,7 +211,7 @@ public class ServerController {
      * @param ucon 
      */
     public void update(UserConnection ucon, String cmnd){
-        ucon.sendCmnd(cmnd);
+        ucon.sendResponse(cmnd);
     }
     
     /**
@@ -227,22 +227,22 @@ public class ServerController {
         String password = cmnd[2];
         UserProfile profile;
         if( !model.usernameExists(username) ){ 
-            ucon.sendCmnd("loginResponse<&>failure<&>nonexistent");
+            ucon.sendResponse("loginResponse<&>failure<&>nonexistent");
             sendClientFeedback("Failed login.");
         }else{
             profile = model.getUserProfile(username);
             if( profile.isOnline() ){
-                ucon.sendCmnd("loginResponse<&>failure<&>alreadyOnline");
+                ucon.sendResponse("loginResponse<&>failure<&>alreadyOnline");
                 sendClientFeedback("Tried to login but is already online.");  
             }else if(profile.hasPassword(password)){
                 profile.logon();
                 ucon.setUserProfile(profile);
-                ucon.sendCmnd("loginResponse<&>success");
+                ucon.sendResponse("loginResponse<&>success");
                 sendClientFeedback("I made it!");
                 this.updateViewConnections();
                 System.out.println("LOGIN");
             }else{
-                ucon.sendCmnd("loginResponse<&>failure<&>invalidPassword");
+                ucon.sendResponse("loginResponse<&>failure<&>invalidPassword");
                 sendClientFeedback("Tried to login with the incorrect password.");
             }
             updateAll();
@@ -276,11 +276,11 @@ public class ServerController {
         UserProfile newProfile; 
         if( model.usernameExists(username) ){ 
             sendClientFeedback("...failed to register a UserProfile.");
-            ucon.sendCmnd("registerResponse<&>failure<&>alreadyExists");
+            ucon.sendResponse("registerResponse<&>failure<&>alreadyExists");
         }else{
             sendClientFeedback("...registration complete.");            
             newProfile = new UserProfile(username, password);
-            ucon.sendCmnd("registerResponse<&>success");
+            ucon.sendResponse("registerResponse<&>success");
             model.addProfile(newProfile);
             view.addRegisteredProfile(newProfile.getUsername());
         }
