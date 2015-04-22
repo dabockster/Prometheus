@@ -141,7 +141,7 @@ public class ServerController {
         if(fileName == null)
             fileName = "/resources/accounts.txt/";
         try{
-            File file = new File(getClass().getResource(fileName).toURI());
+            File file = new File(fileName);
             try (PrintWriter out = new PrintWriter(file)) {
                 while( model.numberOfProfiles()>0 ){
                     System.out.println(model.registeredUserCount());
@@ -154,9 +154,7 @@ public class ServerController {
         catch(IOException ex){
             System.out.println("Could not write to file." + ex);
             sendServerFeedback("Failed to write UserProfiles to file "+fileName+".");
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
     }   
     
     

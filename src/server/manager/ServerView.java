@@ -138,11 +138,6 @@ public class ServerView extends javax.swing.JFrame {
 
         portTF.setText("8080");
         portTF.setToolTipText("");
-        portTF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                portTFActionPerformed(evt);
-            }
-        });
 
         jButton1.setText("Setup Server");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -322,14 +317,18 @@ public class ServerView extends javax.swing.JFrame {
         portTF.setEditable(false);
     }//GEN-LAST:event_buildServerButton
 
+    /**
+     * Creates a new Client view from which one can log on to the server
+     * @param evt 
+     */
     private void newClientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newClientButtonActionPerformed
         ClientController newControl = new ClientController();
     }//GEN-LAST:event_newClientButtonActionPerformed
 
-    private void portTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_portTFActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_portTFActionPerformed
-
+    /**
+     * Terminates the server
+     * @param evt 
+     */
     private void shutDownButtonbuildServerButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shutDownButtonbuildServerButton
         if(!controller.serverRunning()){
             serverFeedback("Server was not running.");
