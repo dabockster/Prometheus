@@ -56,7 +56,6 @@ public class ClientConnection implements Runnable{
             streamIn = new DataInputStream(socket.getInputStream());
             streamOut = new DataOutputStream(socket.getOutputStream());
             connected = true;
-            System.out.println("Connection Opened");
         } catch (IOException ioe){
             System.out.println("Error building ClientConnection "+ ioe);
         }       
@@ -68,7 +67,6 @@ public class ClientConnection implements Runnable{
         streamOut.close();
         socket.close();
         connected = false;
-        System.out.println("Connection Closed");
         } catch (IOException ex){
             System.out.println("error "+ex);
         }

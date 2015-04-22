@@ -61,14 +61,14 @@ public class ServerConnection implements Runnable{
      */
     private void openServerConnection(){
         if(this.socket != null){
-            sendServerFeedback("Server socket must be closed before openning a new server socket.");
+            sendServerFeedback("Failed to Open - Socket Already In Use");
             return;
         }
         try{
             this.socket = new ServerSocket(this.port);
-            sendServerFeedback("Server is up!");
+            sendServerFeedback("Socket Open");
         } catch (IOException e) {
-            this.sendServerFeedback("Failed to open port "+port+".");
+            this.sendServerFeedback("Faiiled to Open - Port "+port+" Unaccessisble");
         } 
     }
     
@@ -81,7 +81,7 @@ public class ServerConnection implements Runnable{
         try{
             this.socket.close();
         } catch ( IOException e ) {
-            this.sendServerFeedback("Server failed to terminate.");
+            this.sendServerFeedback("Failed to Close");
             throw new RuntimeException("Error closing server.", e);
         }
     }
@@ -100,10 +100,10 @@ public class ServerConnection implements Runnable{
             Socket client = null;
                 try{
                     client = this.socket.accept();
-                    this.sendServerFeedback("Accepted a new client!");
+                    this.sendServerFeedback("Accepted New Client");
                 } catch (IOException e){
                     if(isStopped()){
-                        this.sendServerFeedback("The server has been stopped.");
+                        this.sendServerFeedback("Stopped");
                         return;
                     }
                     throw new RuntimeException("Error accepting ClientConnection.",e);
@@ -128,6 +128,6 @@ public class ServerConnection implements Runnable{
      * @param feedback 
      */
     public void sendServerFeedback(String feedback){
-        controller.sendServerFeedback(feedback);
+        controller.sendServerFeedback("ServerConnection: " + feedback);
     }    
 }

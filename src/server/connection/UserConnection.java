@@ -56,9 +56,9 @@ public class UserConnection implements Runnable{
         try{
             streamIn = new DataInputStream(socket.getInputStream());
             streamOut = new DataOutputStream(socket.getOutputStream());
-            this.sendClientFeedback("Unidentified user has connected.");
+            this.sendClientFeedback("Successfully Opened Connection");
         }catch(IOException ex){
-            this.sendClientFeedback("Failed to retreive socket InputStream and OutputStream.");
+            this.sendClientFeedback("Failed to Open Connection");
             connected = false;
         }
     }
@@ -118,7 +118,7 @@ public class UserConnection implements Runnable{
             try{
                 String cmnd = streamIn.readUTF();
                 String cmndComp[] = cmnd.split("<&>");
-                sendClientFeedback("command received "+cmndComp[0]);
+                sendClientFeedback("Made Request : "+cmndComp[0]);
                 this.interpretRequest(cmndComp);
             }catch(IOException ioe){
                 connected = false;
@@ -163,7 +163,6 @@ public class UserConnection implements Runnable{
                 registerRequest(request);
                 break;
             case "update" :
-                System.out.println("UserConnection.update");
                 updateRequest();
                 break;
             default :

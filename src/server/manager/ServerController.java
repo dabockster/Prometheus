@@ -221,7 +221,6 @@ public class ServerController {
      * @param cmnd the strings used for login
      */
     public void login(UserConnection ucon, String[] cmnd){
-        sendClientFeedback("Login attempt made...");
         String username = cmnd[1];
         String password = cmnd[2];
         UserProfile profile;
@@ -234,26 +233,28 @@ public class ServerController {
             ucon.setAnon(true);
             ucon.loggedOn = true;
             ucon.sendResponse("loginResponse<&>success");
+            sendClientFeedback(ucon.getUsername()+": Anonymous Login Succssful");
             this.updateViewConnections();
             updateAll();
         }else if( !model.usernameExists(username) ){  //username does not exist
             ucon.sendResponse("loginResponse<&>failure<&>nonexistent");
-            sendClientFeedback("Entered invalid username.");
+            sendClientFeedback(ucon.getUsername()+": Login Failed - Invalid Username");
         }else{  
             profile = model.getUserProfile(username);
             if( profile.isOnline() ){   //is already online
                 ucon.sendResponse("loginResponse<&>failure<&>alreadyOnline");
-                sendClientFeedback("Is already online.");
+                sendClientFeedback(ucon.getUsername()+": Login Failed - Profile Already Logged In");
             }else if(profile.hasPassword(password)){ //succesfful login
                 profile.logon();
                 ucon.setUserProfile(profile);
                 ucon.loggedOn = true;
                 ucon.sendResponse("loginResponse<&>success");
+                sendClientFeedback(ucon.getUsername()+": Login Succssful");
                 this.updateViewConnections();
                 updateAll();
             }else{ //incorrect password
                 ucon.sendResponse("loginResponse<&>failure<&>invalidPassword");
-                sendClientFeedback("Entered incorrect password.");
+                sendClientFeedback(ucon.getUsername()+": Login Failed - Invalid Password");
             }
         }
     }
@@ -286,10 +287,10 @@ public class ServerController {
         String password = cmnd[2];
         UserProfile newProfile; 
         if( model.usernameExists(username) ){ 
-            sendClientFeedback("Failed to register "+ username+".");
+                sendClientFeedback(ucon.getUsername()+": Registration Failed - Username Taken");
             ucon.sendResponse("registerResponse<&>failure<&>alreadyExists");
         }else{
-            sendClientFeedback("Successfully registered "+ username+".");            
+                sendClientFeedback(ucon.getUsername()+": Registration Successful");
             newProfile = new UserProfile(username, password);
             model.addProfile(newProfile);
             view.addRegisteredProfile(newProfile.getUsername());
