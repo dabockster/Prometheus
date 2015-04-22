@@ -17,12 +17,13 @@ import javax.swing.ListModel;
  */
 public class LobbyView extends javax.swing.JFrame {
     
-    private LobbyController controller;
+    private final LobbyController controller;
     String[] onlinePlayers;
     
 
     /**
      * Creates new form GameLobby
+     * @param ctrl
      */
     public LobbyView(LobbyController ctrl) {
         controller = ctrl;
@@ -33,8 +34,6 @@ public class LobbyView extends javax.swing.JFrame {
     //continually updates which players are online
     public void updatePlayers(String[] players){
         DefaultListModel listModel = new DefaultListModel();
-        
-        onlinePlayersList.setModel(listModel);
         for(int i=0; i<players.length; i++){
             listModel.addElement(players[i]);
         }

@@ -143,11 +143,12 @@ public class ClientController {
     
     /**
      * UPDATE RESPONSE
+     * This method receives all online players from server and adds them to 
+     * the OnlinePlayers in the model. It then updates the lobby view.
      * @param update
      */
     public void updateResponse(String[] update){
-        System.out.println("ClientUpdated");
-        String[] players = Arrays.copyOfRange(update, 1, update.length);
+       String[] players = Arrays.copyOfRange(update, 1, update.length);
         System.out.println(players[0].toString());
         
         model.updateOnlinePlayers(players);

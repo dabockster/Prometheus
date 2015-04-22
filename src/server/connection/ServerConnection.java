@@ -61,12 +61,12 @@ public class ServerConnection implements Runnable{
      */
     private void openServerConnection(){
         if(this.socket != null){
-            sendServerFeedback("Server connection socket must be closed before openning a new server socket.");
+            sendServerFeedback("Server socket must be closed before openning a new server socket.");
             return;
         }
         try{
             this.socket = new ServerSocket(this.port);
-            this.sendServerFeedback("ServerConnection is open and ready for business on port "+port+"!");
+            sendServerFeedback("Server is up!");
         } catch (IOException e) {
             this.sendServerFeedback("Failed to open port "+port+".");
         } 
@@ -92,7 +92,6 @@ public class ServerConnection implements Runnable{
      */
     @Override
     public void run() {
-        this.sendServerFeedback("Running ServerConnection - listening for incoming ClientConnections...");
         synchronized(this){
             this.acceptingNewClients = Thread.currentThread();
         }
@@ -101,10 +100,10 @@ public class ServerConnection implements Runnable{
             Socket client = null;
                 try{
                     client = this.socket.accept();
-                    this.sendServerFeedback("Accepted a new ClientConnection!");
+                    this.sendServerFeedback("Accepted a new client!");
                 } catch (IOException e){
                     if(isStopped()){
-                        this.sendServerFeedback("ServerConnection isStopped.");
+                        this.sendServerFeedback("The server has been stopped.");
                         return;
                     }
                     throw new RuntimeException("Error accepting ClientConnection.",e);

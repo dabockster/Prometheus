@@ -35,7 +35,7 @@ public class ServerView extends javax.swing.JFrame {
      * @param feedback the message to be relayed
      */
     public void serverFeedback(String feedback){
-        serverFeebackTA.append(feedback + "\n");
+        serverFeebackTA.append(feedback + "\n\n");
     }
     
     /**
@@ -309,7 +309,11 @@ public class ServerView extends javax.swing.JFrame {
     }//GEN-LAST:event_addressTFActionPerformed
 
     private void buildServerButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buildServerButton
-        if(portTF.getText() == "") {
+        if(controller.serverRunning()){
+            serverFeedback("Server is already running.");
+            return;           
+        }
+        if(portTF.getText().isEmpty()) {
             serverFeedback("Please enter a port number.");            
             return;
         }
@@ -327,6 +331,10 @@ public class ServerView extends javax.swing.JFrame {
     }//GEN-LAST:event_portTFActionPerformed
 
     private void shutDownButtonbuildServerButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shutDownButtonbuildServerButton
+        if(!controller.serverRunning()){
+            serverFeedback("Server was not running.");
+            return;           
+        }
         portTF.setText(null);
         portTF.setEditable(true);
         controller.teardownModel(null);

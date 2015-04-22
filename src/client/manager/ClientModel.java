@@ -23,7 +23,7 @@
  */
 package client.manager;
 
-import server.storage.UserProfile;
+import server.manager.UserProfile;
 import java.util.ArrayList;
 
 /**
@@ -49,7 +49,6 @@ public class ClientModel {
     public void updateOnlinePlayers(String[] profiles){
         onlinePlayers.clear();
         System.out.println("ClientModel.updateOnlinePlayers()");
-        System.out.println(profiles[0].toString());
         for(int i=0; i<profiles.length; i++){
             this.addPlayer(profiles[i]);
             System.out.println(profiles[i].toString());

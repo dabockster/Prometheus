@@ -23,7 +23,6 @@
  */
 package server.manager;
 
-import server.storage.ServerModel;
 import server.connection.UserConnection;
 import server.connection.ServerConnection;
 import java.io.BufferedReader;
@@ -37,7 +36,6 @@ import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import server.storage.UserProfile;
 
 /**
  *
@@ -51,6 +49,8 @@ public class ServerController {
     private InetAddress address;
     private File database;
     
+    private boolean serverUp = false;
+    
     /**
      * CONSTRUCTOR
      * Obtains IP address of the current machine and creates a ServerView.
@@ -62,13 +62,19 @@ public class ServerController {
         try{
             address = InetAddress.getLocalHost();
             view.setIP(address.getHostAddress());
-            view.serverFeedback("Server has been created on this machine.");
         }catch (UnknownHostException ex){
             view.serverFeedback("Failed to identify this machine's IP address.");
         }
         view.setVisible(true);
     }
-
+    
+    /**
+     * GETTER
+     * Returns the current state of the server
+     */
+    public boolean serverRunning(){
+        return serverUp;
+    }
     
     /**
      * SERVERCONNECTION - SETUP
@@ -76,10 +82,10 @@ public class ServerController {
      * @param port the port to be used by the server
      */
     public void setupConnection(int port){
-        sendServerFeedback("Setup ServerConnection.");
         connection = new ServerConnection(this,port);
         new Thread(connection).start();
         setupModel(null);
+        serverUp = true;
     }
     
     /**
@@ -91,6 +97,7 @@ public class ServerController {
             this.sendServerFeedback("How does one stop that which never began?");
         }else            
             connection.stop();
+        serverUp = false;
     }
     
     /**
@@ -112,7 +119,6 @@ public class ServerController {
                 UserProfile profile = new UserProfile(profileString);
                 model.addProfile(profile);
             }
-            sendServerFeedback("Successfully retreived profiles.");
             bufferedReader.close();
         } catch (FileNotFoundException ex) {
             sendServerFeedback("Error: Cannot find file " + fileName + " not found.");
@@ -128,7 +134,7 @@ public class ServerController {
      * MODEL - TEARDOWN
      * Writes all string representations of registered userProfiles
      * to the designated File with name fileName. If no fileName is specified
-     * write to "ACCOUNT.csv"
+     * write to "accounts.txt"
      * @param fileName the File to be written
      */
     public void teardownModel(String fileName){
@@ -170,15 +176,15 @@ public class ServerController {
      * Broadcasts a server update to all clients connected
      */
     public void updateAll(){
-        String cmnd= "updateResponse";
+        String response= "updateResponse";
         for(int j = 0; j<model.numberOfConnections(); j++){
             UserConnection thisCon = model.getUserConnection(j);
-            cmnd = cmnd + "<&>" + model.getUserConnection(j).toString();                
+            response = response + "<&>" + model.getUserConnection(j).toString();                
         }
         for(int i=0; i<model.numberOfConnections(); i++){
             UserConnection ucon = model.getUserConnection(i);
-            System.out.println("USER CONNECTIONS :  " + ucon.getUsername() + "    CMND : "+cmnd);
-            update(ucon, cmnd);
+            System.out.println("USER CONNECTIONS :  " + ucon.getUsername() + "    CMND : "+response);
+            update(ucon, response);
         }
     }
     
@@ -224,31 +230,35 @@ public class ServerController {
     public void login(UserConnection ucon, String[] cmnd){
         sendClientFeedback("Login attempt made...");
         String username = cmnd[1];
-        if(username.equals("anonymous")){    //For anonymous gameplay
-            ucon.setUsername(model.getAnonName());
-            updateAll();
-            return;   
-        }
         String password = cmnd[2];
         UserProfile profile;
-        if( !model.usernameExists(username) ){ 
+        if(username.equals("anonymous")){    //For anonymous gameplay
+            ucon.setUsername(model.getAnonName());
+            profile = new UserProfile(username, password);
+            model.addProfile(profile);
+            view.addRegisteredProfile(profile.getUsername());
+            profile.logon();
+            ucon.setUserProfile(profile);
+            ucon.setAnon(true);
+            ucon.sendResponse("loginResponse<&>success");
+            this.updateViewConnections();
+            
+        }else if( !model.usernameExists(username) ){  //username does not exist
             ucon.sendResponse("loginResponse<&>failure<&>nonexistent");
-            sendClientFeedback("Failed login.");
-        }else{
+            sendClientFeedback("Entered invalid username.");
+        }else{  
             profile = model.getUserProfile(username);
-            if( profile.isOnline() ){
+            if( profile.isOnline() ){   //is already online
                 ucon.sendResponse("loginResponse<&>failure<&>alreadyOnline");
-                sendClientFeedback("Tried to login but is already online.");  
-            }else if(profile.hasPassword(password)){
+                sendClientFeedback("Is already online.");
+            }else if(profile.hasPassword(password)){ //succesfful login
                 profile.logon();
                 ucon.setUserProfile(profile);
                 ucon.sendResponse("loginResponse<&>success");
-                sendClientFeedback("I made it!");
                 this.updateViewConnections();
-                System.out.println("LOGIN");
-            }else{
+            }else{ //incorrect password
                 ucon.sendResponse("loginResponse<&>failure<&>invalidPassword");
-                sendClientFeedback("Tried to login with the incorrect password.");
+                sendClientFeedback("Entered incorrect password.");
             }
             updateAll();
         }
@@ -260,7 +270,8 @@ public class ServerController {
      * Safely terminates a user's connection with the server
      * @param ucon
      */
-    public void logout(UserConnection ucon){
+    public void logout(UserConnection ucon, boolean isAnon){
+        
         model.removeUserConnection(ucon);
         this.updateAll();
         this.updateViewProfiles();
@@ -275,19 +286,18 @@ public class ServerController {
      * @param cmnd
      */
     public void register(UserConnection ucon, String[] cmnd){
-        sendClientFeedback("Attempting to register a new UserProfile...");
         String username = cmnd[1];
         String password = cmnd[2];
         UserProfile newProfile; 
         if( model.usernameExists(username) ){ 
-            sendClientFeedback("...failed to register a UserProfile.");
+            sendClientFeedback("Failed to register "+ username+".");
             ucon.sendResponse("registerResponse<&>failure<&>alreadyExists");
         }else{
-            sendClientFeedback("...registration complete.");            
+            sendClientFeedback("Successfully registered "+ username+".");            
             newProfile = new UserProfile(username, password);
-            ucon.sendResponse("registerResponse<&>success");
             model.addProfile(newProfile);
             view.addRegisteredProfile(newProfile.getUsername());
+            ucon.sendResponse("registerResponse<&>success");
         }
     }
             

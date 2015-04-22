@@ -162,12 +162,11 @@ public class ClientConnectionController {
     
     /**
      * EXECUTE RESPONSE - ONLINE PLAYERS
-     * @param cmndComp 
+     * @param request 
      */
-    private void updateResponse(String[] cmndComp){
+    private void updateResponse(String[] request){
         System.out.println("Method CCC.updateResponse()");        
-        System.out.println("\n\n\n"+cmndComp[0]+"   "+ cmndComp[1]+"   ");
-        controller.updateResponse(cmndComp);
+        controller.updateResponse(request);
     }
     
     /**

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package server.storage;
+package server.manager;
 import server.connection.UserConnection;
 import server.manager.ServerController;
 import java.util.ArrayList;

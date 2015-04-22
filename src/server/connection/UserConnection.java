@@ -14,7 +14,7 @@ TODO: send inputStream of Thread to GUI
 import java.net.*;
 import java.io.*;
 import server.manager.ServerController;
-import server.storage.UserProfile;
+import server.manager.UserProfile;
 
 
 public class UserConnection implements Runnable{
@@ -29,7 +29,8 @@ public class UserConnection implements Runnable{
     public boolean connected = true;
     
     private UserProfile profile;
-    private String username = "Anonymous";
+    private String username = "Unidentified";
+    private boolean playingAnon; //true if User is playing as anonymous
     
     
     
@@ -82,6 +83,15 @@ public class UserConnection implements Runnable{
     }
     
     /**
+     * SETTER
+     * Sets playingAnon to the status boolean.
+     * @param status is the new value for playingAnon
+     */
+    public void setAnon(boolean status){
+        this.playingAnon = status;
+    }
+    
+    /**
      * TEARDOWN
      * Closes the socket
      */
@@ -102,7 +112,7 @@ public class UserConnection implements Runnable{
     }    
     
     /**
-     * NETWORK COMMUNICATIONS
+     * RUN
      * Listens for incoming client commands then 
      * forwards it to the interpretations method.
      */
@@ -207,7 +217,7 @@ public class UserConnection implements Runnable{
      * Commences logout procedure for this UserConnection
      */
     private synchronized void logoutRequest(){
-        this.sendClientFeedback("has logged off.");
+        this.sendClientFeedback("Logged off.");
         profile.logout();
         controller.logout(this); //create logout
         this.close();
@@ -264,7 +274,6 @@ public class UserConnection implements Runnable{
      * Getter - profile.toString()
      */
     public String toString(){
-        
         return profile.toString();
     }
 }

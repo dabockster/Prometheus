@@ -15,9 +15,9 @@ import client.views.dialogues.RequestDialog;
  */
 public class LobbyController {
     
-    private LobbyView view;
+    private final LobbyView view;
     private RequestDialog challenger;
-    private ClientController controller;
+    private final ClientController controller;
     
     public LobbyController(ClientController ctrl){
         view = new LobbyView(this);
