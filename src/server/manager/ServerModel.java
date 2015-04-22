@@ -23,9 +23,7 @@
  */
 package server.manager;
 import server.connection.UserConnection;
-import server.manager.ServerController;
 import java.util.ArrayList;
-import server.manager.ServerController;
 
 /**
  * STORES ALL SERVER DATA
@@ -145,6 +143,20 @@ public class ServerModel {
      */
     public UserProfile getUserProfile(int i){
         return accounts.get(i);
+    }
+    
+    /**
+     * USERPROFILE - REMOVE ANON
+     * Removes an anonymous profile from the list of registered profiles.
+     * 
+     * @param username 
+     */
+    public void removeAnon(String username){
+        for(int i = 0; i < accounts.size(); i++){
+                if(accounts.get(i).isNamed(username)){
+                    accounts.remove(i);  
+                }
+            }
     }
     
     /**

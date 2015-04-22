@@ -75,15 +75,6 @@ public class UserConnection implements Runnable{
     
     /**
      * SETTER
-     * Sets this username to the string name
-     * @param name the name to be set to the username
-     */
-    public void setUsername(String name){
-        this.username = name;
-    }
-    
-    /**
-     * SETTER
      * Sets playingAnon to the status boolean.
      * @param status is the new value for playingAnon
      */
@@ -161,17 +152,11 @@ public class UserConnection implements Runnable{
             case "connect" :
                 this.connectRequest();
                 break;
-            case "error" :
-                this.errorResponse(request[1]);
-                break;
             case "login" :
                 this.loginRequest(request);
                 break;
             case "logout" :
                 this.logoutRequest();
-                break;
-            case "msg" :
-                msgRequest(request[1]);
                 break;
             case "register" :
                 registerRequest(request);
@@ -180,11 +165,14 @@ public class UserConnection implements Runnable{
                 System.out.println("UserConnection.update");
                 updateResponse();
                 break;
+            default :
+                sendClientFeedback("Unrecognized request "+request[0]);
+                break;
             }
     }
     
     /**
-     * REQUEST
+     * REQUEST - CONNECT
      * Provides a server response to indicate successful connection
      */
     private synchronized void connectRequest(){
@@ -192,62 +180,51 @@ public class UserConnection implements Runnable{
         String response = "connect<&>success";
         this.sendResponse(response);
     }
-    
+            
     /**
-     * RESPONSE
-     * Relays a message to userConnectionFeedback signaling an error.
-     * @param errorMsg the error message to be relayed
-     */
-    private synchronized void errorResponse(String errorMsg){
-        this.sendClientFeedback(errorMsg);
-    }    
-        
-    /**
-     * REQUEST
+     * REQUEST - LOGIN
      * Commences login procedure for this UserConnection
      * @param request the login information used for authentication
      */
     private synchronized void loginRequest(String request[]){
         controller.login(this, request); //create login
-        
     }
         
     /**
-     * REQUEST
+     * REQUEST - LOGOUT
      * Commences logout procedure for this UserConnection
      */
     private synchronized void logoutRequest(){
         this.sendClientFeedback("Logged off.");
         profile.logout();
-        controller.logout(this); //create logout
+        controller.logout(this, playingAnon); //create logout
         this.close();
     }
     
     /**
-     * RESPONSE
-     * Receives a message from ClientConnection and
-     * relays it to userConnectionFeedback.
-     * @param response the message to be relayed
-     */
-    private synchronized void msgRequest(String response){
-        this.sendClientFeedback(response);
-    }
-    
-    /**
-     * REQUEST
+     * REQUEST - REGISTER
      * Commences procedure to register a new account.
      * @param request
      */
     private synchronized void registerRequest(String[] request){
         controller.register(this, request);
-    }
+    }      
     
     /**
-     * RESPONSE
-     * @param cmndComp 
+     * RESPONSE - UPDATE
+     * Updates all UserConnections connected to the server
      */
     private synchronized void updateResponse(){
         controller.updateAll();
+    }
+    
+    /**
+     * RESPONSE - SERVER DOWN
+     * Sends a message saying that the server is down and terminates 
+     * this UserConnection
+     */
+    private void serverDownResponse(){
+        //STUBIT
     }
     
     /**
@@ -269,7 +246,6 @@ public class UserConnection implements Runnable{
     public String getUsername(){
         return this.username;
     }
-    
     /**
      * Getter - profile.toString()
      */

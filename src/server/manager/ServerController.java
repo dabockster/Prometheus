@@ -178,7 +178,7 @@ public class ServerController {
     public void updateAll(){
         String response= "updateResponse";
         for(int j = 0; j<model.numberOfConnections(); j++){
-            UserConnection thisCon = model.getUserConnection(j);
+            UserConnection ucon = model.getUserConnection(j);
             response = response + "<&>" + model.getUserConnection(j).toString();                
         }
         for(int i=0; i<model.numberOfConnections(); i++){
@@ -233,8 +233,7 @@ public class ServerController {
         String password = cmnd[2];
         UserProfile profile;
         if(username.equals("anonymous")){    //For anonymous gameplay
-            ucon.setUsername(model.getAnonName());
-            profile = new UserProfile(username, password);
+            profile = new UserProfile(model.getAnonName(), password);
             model.addProfile(profile);
             view.addRegisteredProfile(profile.getUsername());
             profile.logon();
@@ -242,7 +241,7 @@ public class ServerController {
             ucon.setAnon(true);
             ucon.sendResponse("loginResponse<&>success");
             this.updateViewConnections();
-            
+            updateAll();
         }else if( !model.usernameExists(username) ){  //username does not exist
             ucon.sendResponse("loginResponse<&>failure<&>nonexistent");
             sendClientFeedback("Entered invalid username.");
@@ -271,7 +270,9 @@ public class ServerController {
      * @param ucon
      */
     public void logout(UserConnection ucon, boolean isAnon){
-        
+        if(isAnon){
+            model.removeAnon(ucon.getUsername());
+        }
         model.removeUserConnection(ucon);
         this.updateAll();
         this.updateViewProfiles();
