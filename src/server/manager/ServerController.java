@@ -170,12 +170,14 @@ public class ServerController {
         String response= "updateResponse";
         for(int j = 0; j<model.numberOfConnections(); j++){
             UserConnection ucon = model.getUserConnection(j);
-            response = response + "<&>" + model.getUserConnection(j).toString();                
+            if(ucon.loggedOn)
+                response = response + "<&>" + model.getUserConnection(j).toString();                
         }
         for(int i=0; i<model.numberOfConnections(); i++){
             UserConnection ucon = model.getUserConnection(i);
             System.out.println("USER CONNECTIONS :  " + ucon.getUsername() + "    CMND : "+response);
-            update(ucon, response);
+            if(ucon.loggedOn)
+                update(ucon, response);
         }
     }
     
@@ -230,6 +232,7 @@ public class ServerController {
             profile.logon();
             ucon.setUserProfile(profile);
             ucon.setAnon(true);
+            ucon.loggedOn = true;
             ucon.sendResponse("loginResponse<&>success");
             this.updateViewConnections();
             updateAll();
@@ -244,6 +247,7 @@ public class ServerController {
             }else if(profile.hasPassword(password)){ //succesfful login
                 profile.logon();
                 ucon.setUserProfile(profile);
+                ucon.loggedOn = true;
                 ucon.sendResponse("loginResponse<&>success");
                 this.updateViewConnections();
                 updateAll();

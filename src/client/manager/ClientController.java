@@ -39,20 +39,18 @@ public class ClientController {
     private OfflineController offline;
     private ClientModel model;
     private LobbyController lobby;
-    private boolean connectedToServer;
+    private boolean connectedToServer = false;
     private ClientConnectionController cController;
     
     /**
      * GameController constructor
      */
     public ClientController(){
+        cController = new ClientConnectionController(this);
         mainMenu = new MainMenuController(this);
         model = new ClientModel();
-        connectedToServer = false;
-        cController = new ClientConnectionController(this);
-        connectionRequest();
+        cController.serverRequest("connect"); //sends a connect request to server
     }
-   
     
     public void acceptChallenge(){
         
@@ -67,29 +65,33 @@ public class ClientController {
     }
 
     /**
-     * CONNECT REQUEST
+     * NEW CONNECTION TO SERVER
      * Connects to a specified IP address and port
      * @param ip
      * @param port 
      */
-    public void connectRequest(String ip, int port){
+    public void newConnection(String ip, int port){
         if(cController != null)
             cController.close();
-        cController.connect(ip,port);
+        cController = new ClientConnectionController(this,ip,port);
+        connectRequest();
     }  
-    
+
     /**
      * CONNECT REQUEST
+     * Sends a request to server to ensure a connection
+     * has been established
      */
-    public void connectionRequest(){
+    public void connectRequest(){
         cController.serverRequest("connect");
     }
+    
     
     /**
      * CONNECT RESPONSE
      * Displays a message from the server
      */
-    public void connectionRequest(boolean connected){
+    public void connectResponse(boolean connected){
         if(connected){
             connectedToServer = true;
             sendServerFeedback("Connected to Server");
@@ -97,7 +99,6 @@ public class ClientController {
             connectedToServer = false;
             sendServerFeedback("NOT Connected to Server");
         }   
-            
     }
     
     
@@ -131,10 +132,7 @@ public class ClientController {
      */
     public void logoutRequest(){
         cController.serverRequest("logout");
-        cController.close();
         lobby.dispose();
-        mainMenu.dispose();
-        System.gc();
         refreshClient();
     }
     
@@ -228,12 +226,12 @@ public class ClientController {
     /**
      * Wipes this ClientController and creates a new clientController
      */
-    public void refreshClient(){
-        mainMenu = new MainMenuController(this);
+    public void refreshClient(){      
+        cController = new ClientConnectionController(this);
         model = new ClientModel();
         connectedToServer = false;
-        cController.close();
-        cController = new ClientConnectionController(this);
+        mainMenu = new MainMenuController(this);
+        cController.serverRequest("connect");
     }
 
 

@@ -48,25 +48,7 @@ public class ClientConnectionController {
         ip = "localhost"; 
         port = 8080;
         conAddr = new InetSocketAddress(ip, port);
-        connect();
-    }
-    
-    private void connect(){
-        connection = new ClientConnection(this, conAddr);
-        new Thread(connection).start();
-    }
-    
-    public void connect(String iP, int portNum){
-        conAddr = new InetSocketAddress(iP,portNum);
-        connection = new ClientConnection(this, conAddr);
-        new Thread(connection).start();
-    }
-    
-    /**
-     * Terminates ClientConnection
-     */
-    public void close(){
-        connection.close();
+        ClientConnectionController.this.newConnection();
     }
     
     /**
@@ -79,7 +61,27 @@ public class ClientConnectionController {
         this.ip = ip;
         this.port = port;
         conAddr = new InetSocketAddress(ip, port);
+        ClientConnectionController.this.newConnection();
     }
+    
+    private void newConnection(){
+        connection = new ClientConnection(this, conAddr);
+        new Thread(connection).start();
+    }
+    
+    public void newConnection(String iP, int portNum){
+        conAddr = new InetSocketAddress(iP,portNum);
+        connection = new ClientConnection(this, conAddr);
+        new Thread(connection).start();
+    }
+    
+    /**
+     * Terminates ClientConnection
+     */
+    public void close(){
+        connection.close();
+    }
+
     
     /**
      * NETWORK COMMUNICATIONS - SEND CMND
@@ -87,7 +89,7 @@ public class ClientConnectionController {
      * @param cmnd 
      */
     public void serverRequest(String request){
-        System.out.println("Sent request " + request);
+        System.out.println("Sent Request: " + request);
         connection.serverRequest(request);
     }
     
@@ -121,9 +123,10 @@ public class ClientConnectionController {
      */
     private void connectionResponse(String response){
         if(response.equals("true"))
-            controller.connectionRequest(true);
-        else
-            controller.connectionRequest(false);
+            controller.connectResponse(true);
+        else{
+            controller.connectResponse(false);
+        }
     }
     
     /**
@@ -148,6 +151,7 @@ public class ClientConnectionController {
             controller.loginResponse(false, "Unknown login error.");
         }
     }
+    
     
     /**
      * REGISTER RESPONSE

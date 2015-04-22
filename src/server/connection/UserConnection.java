@@ -31,6 +31,7 @@ public class UserConnection implements Runnable{
     private UserProfile profile;
     private String username = "Unidentified";
     private boolean playingAnon; //true if User is playing as anonymous
+    public boolean loggedOn = false;
     
     
     
@@ -196,8 +197,8 @@ public class UserConnection implements Runnable{
         this.sendClientFeedback("Logged off.");
         profile.logout();
         controller.logout(this, playingAnon);
-        this.username = null;
-        profile = null;
+        this.sendResponse("disconnect");
+        loggedOn = false;
     }
     
     /**

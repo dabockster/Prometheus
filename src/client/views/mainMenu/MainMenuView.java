@@ -23,7 +23,6 @@
  */
 package client.views.mainMenu;
 
-import client.views.mainMenu.MainMenuController;
 import client.views.dialogues.LoginBlankDialog;
 import client.views.dialogues.ServerPromptDialog;
 

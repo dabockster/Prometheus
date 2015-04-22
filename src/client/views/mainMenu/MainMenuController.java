@@ -42,18 +42,18 @@ public class MainMenuController {
      */
     public MainMenuController(ClientController ctrl){
         view = new MainMenuView(this);
-        view.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);      //CHANGE TO EXIT_ON_CLOSE when running Client and Server on dif machines
+        view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);      //CHANGE TO EXIT_ON_CLOSE when running Client and Server on dif machines
         view.setVisible(true);
         controller = ctrl;
     }
     
-   
-    public void connect(){
-        controller.connectRequest();
-    }
-    
+    /**
+     * Attempts to connect to a specific ip
+     * @param ip
+     * @param port 
+     */
     public void connect(String ip, int port){
-        controller.connectRequest(ip, port);
+        controller.newConnection(ip, port);
     }
     
     /**

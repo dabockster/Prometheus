@@ -56,7 +56,7 @@ public class ClientConnection implements Runnable{
             streamIn = new DataInputStream(socket.getInputStream());
             streamOut = new DataOutputStream(socket.getOutputStream());
             connected = true;
-            System.out.println("Connection medium created.");
+            System.out.println("Connection Opened");
         } catch (IOException ioe){
             System.out.println("Error building ClientConnection "+ ioe);
         }       
@@ -68,6 +68,7 @@ public class ClientConnection implements Runnable{
         streamOut.close();
         socket.close();
         connected = false;
+        System.out.println("Connection Closed");
         } catch (IOException ex){
             System.out.println("error "+ex);
         }
@@ -86,13 +87,16 @@ public class ClientConnection implements Runnable{
         open();
         while(connected){
             try{
-                System.out.println("Client is listening...");
                 String cmnd = streamIn.readUTF();
-                String cmndComp[] = cmnd.split("<&>");
-                System.out.println("RECEIVED COMMAND "+cmndComp[0]);
-                controller.interpretResponse(cmndComp);
+                String response[] = cmnd.split("<&>");
+                System.out.println("Received Response: "+response[0]);
+                if(response[0].equals("disconnect")){
+                        connected = false;
+                        this.close();
+                }
+                controller.interpretResponse(response);
             }catch(IOException ioe){
-                System.out.println("Failed to receive command from server.");
+                System.out.println("Failed to receive response." + ioe);
                 connected = false; 
             }
         } 
@@ -111,7 +115,8 @@ public class ClientConnection implements Runnable{
             connected = true;
         } catch (IOException ioe) {
             System.out.println(ioe);
-            controller.sendServerFeedback("Failed to send command.");
+            String[] error = {"connect","false"};
+            controller.interpretResponse(error);
         }
     }
     
