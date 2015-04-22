@@ -110,8 +110,8 @@ public class MainMenuController {
      * VIEW - FEEDBACK
      * @param response 
      */
-    public void sendServerFeedback(String response){
-        view.postServerFeedback(response);
+    public void sendFeedback(String response){
+        view.postFeedback(response);
     }
 
 }

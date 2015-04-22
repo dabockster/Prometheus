@@ -237,7 +237,7 @@ public class ClientController {
 
     
     public void sendServerFeedback(String feedback){
-        mainMenu.sendServerFeedback(feedback);
+        mainMenu.sendFeedback(feedback);
     }
     
     /**

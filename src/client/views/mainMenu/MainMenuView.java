@@ -337,7 +337,7 @@ public class MainMenuView extends javax.swing.JFrame {
         String password = new String(passwordTF.getPassword());
         
         if (username.isEmpty() | password.isEmpty()){
-            loginBlankError();
+            postFeedback("Please enter both a username and password");
             return;
         }
         controller.login(username, password);
@@ -347,6 +347,10 @@ public class MainMenuView extends javax.swing.JFrame {
        //on Register
        String username = usernameTF.getText();
        String password = new String(passwordTF.getPassword());
+       if (username.isEmpty() | password.isEmpty()){
+            postFeedback("Please enter both a username and password");
+            return;
+        }
        controller.register(username, password);
     }//GEN-LAST:event_registerButtonActionPerformed
 
@@ -354,7 +358,7 @@ public class MainMenuView extends javax.swing.JFrame {
            ServerPromptDialog serverPrompt = new ServerPromptDialog(this, this.controller);
     }//GEN-LAST:event_serverIPandPortPromptActionPerformed
 
-    public void postServerFeedback(String response){
+    public void postFeedback(String response){
         serverResponseLabel.setText(response);
     }
    
