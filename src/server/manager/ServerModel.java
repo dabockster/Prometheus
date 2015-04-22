@@ -99,6 +99,7 @@ public class ServerModel {
      * adds newProfile to the ArrayList of allRegisteredPlayers
      */
     public void addProfile(UserProfile profile){
+            sendServerFeedback("Added a UserProfile");
             accounts.add(profile);
     }
     
@@ -109,7 +110,7 @@ public class ServerModel {
      */
     public String pullProfileString(){
         if( accounts.isEmpty() ){
-            sendServerFeedback("There are no more profiles in the model.");
+            sendServerFeedback("Model Is Empty");
             return null;
         }else{
             return accounts.remove(0).toString();
@@ -130,7 +131,7 @@ public class ServerModel {
                 }
             }
         } catch( NullPointerException ex){
-            sendClientFeedback("User "+username+" does not exist.");
+            sendServerFeedback("Failed to Find UserProfile - "+username+" does not exist");
         }
         return null;
     }
@@ -212,15 +213,6 @@ public class ServerModel {
      * @param feedback 
      */
     public void sendServerFeedback(String feedback){
-        controller.sendServerFeedback(feedback);
-    }
-    
-    /**
-     * VIEW - FEEDBACK
-     * Sends a message to the controller to relay to the view.
-     * @param feedback 
-     */    
-    public void sendClientFeedback(String feedback){
-        controller.sendClientFeedback(feedback);
-    }    
+        controller.sendServerFeedback("ServerModel: "+ feedback);
+    }  
 }

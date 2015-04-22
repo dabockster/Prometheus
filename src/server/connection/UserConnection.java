@@ -193,7 +193,7 @@ public class UserConnection implements Runnable{
      * Commences logout procedure for this UserConnection
      */
     private synchronized void logoutRequest(){
-        this.sendClientFeedback("Logged off.");
+        this.sendClientFeedback("Logoff Successful");
         profile.logout();
         controller.logout(this, playingAnon);
         this.sendResponse("disconnect");
