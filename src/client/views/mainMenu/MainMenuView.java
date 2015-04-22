@@ -43,6 +43,7 @@ public class MainMenuView extends javax.swing.JFrame {
     public MainMenuView(MainMenuController ctrl) {
         controller = ctrl;
         initComponents();
+        
     }
 
     /**
@@ -304,17 +305,30 @@ public class MainMenuView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * BUTTON - PLAY ANONYMOUSLY
+     * @param evt 
+     */
     private void anonButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anonButtonActionPerformed
         String username = "anonymous";
-        
         controller.login(username, "anon");
     }//GEN-LAST:event_anonButtonActionPerformed
 
+    
+    /**
+     * BUTTON - PLAY OFFLINE
+     * @param evt 
+     */
     private void offlineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_offlineButtonActionPerformed
         controller.openView("Offline");
         controller.dispose();
     }//GEN-LAST:event_offlineButtonActionPerformed
 
+    
+    /**
+     * BUTTON - QUIT
+     * @param evt 
+     */
     private void quitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitButtonActionPerformed
         controller.quitProgram(0);
     }//GEN-LAST:event_quitButtonActionPerformed
@@ -327,10 +341,9 @@ public class MainMenuView extends javax.swing.JFrame {
             loginBlankError();
             return;
         }
-        
         controller.login(username, password);
     }//GEN-LAST:event_loginButtonActionPerformed
-//REGISTER BUTTON
+    //REGISTER BUTTON
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
        //on Register
        String username = usernameTF.getText();

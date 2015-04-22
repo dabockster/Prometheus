@@ -51,8 +51,9 @@ public class LobbyController {
         controller.openView(view);
     }
     
-    public void logout(){
+    public int logout(){
         controller.logoutRequest();
+        return 0;
     }
     
     public void dispose(){

@@ -1,7 +1,9 @@
+package server.manager;
+
 /*
  * The MIT License
  *
- * Copyright 2015 Timothy Ernst.
+ * Copyright 2015 dabockster.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,19 +23,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package client.startup;
 
-import client.manager.ClientController;
+
 import server.manager.ServerController;
 
 /**
- *
- * @author Timothy Ernst
+ * ServerStartup main class
+ * @author dabockster
  */
-public class ClientStartup {
+public class ServerStartup {
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ClientController client = new ClientController();
-    }}
+        ServerController server = new ServerController();
+    }
+    
+}

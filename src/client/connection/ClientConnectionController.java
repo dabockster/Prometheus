@@ -62,6 +62,9 @@ public class ClientConnectionController {
         new Thread(connection).start();
     }
     
+    /**
+     * Terminates ClientConnection
+     */
     public void close(){
         connection.close();
     }

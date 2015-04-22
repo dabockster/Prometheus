@@ -28,7 +28,6 @@ import client.views.lobby.LobbyController;
 import client.views.mainMenu.MainMenuController;
 import client.views.offline.OfflineController;
 import java.util.Arrays;
-import java.util.Random;
 
 /**
  * ClientController class
@@ -38,9 +37,9 @@ public class ClientController {
     
     private MainMenuController mainMenu;
     private OfflineController offline;
-    private final ClientModel model;
+    private ClientModel model;
     private LobbyController lobby;
-    private final boolean isOnline;
+    private boolean isOnline;
     private ClientConnectionController cController;
     
     /**
@@ -52,18 +51,7 @@ public class ClientController {
         isOnline = false;
         cController = new ClientConnectionController(this);
     }
-    
-    public void connect(){
-        if(cController != null)
-            cController.close();
-        cController.connect(); 
-    }
-    
-    public void connect(String ip, int port){
-        if(cController != null)
-            cController.close();
-        cController.connect(ip,port);
-    }
+   
     
     public void acceptChallenge(){
         
@@ -77,6 +65,38 @@ public class ClientController {
         
     }
     
+      
+    /**
+     * CONNECT REQUEST
+     * Connects to default IP and port
+     */
+    public void connectRequest(){
+        if(cController != null)
+            cController.close();
+        cController.connect(); 
+    }
+    
+    /**
+     * CONNECT REQUEST
+     * Connects to a specified IP address and port
+     * @param ip
+     * @param port 
+     */
+    public void connectRequest(String ip, int port){
+        if(cController != null)
+            cController.close();
+        cController.connect(ip,port);
+    }  
+    
+    /**
+     * CONNECT RESPONSE
+     * Displays a message from the server
+     */
+    public void connectResponse(String serverResponse){
+        sendServerFeedback(serverResponse);
+    }
+    
+    
     /**
      * LOGIN REQUEST
      * Uses username and password provided to loginRequest
@@ -89,12 +109,14 @@ public class ClientController {
     
     /**
      * LOGIN RESPONSE
+     * Relays whether this client has successfully logged onto the server
+     * @param success the state of the login request
+     * @param error any error that has occurred
      */
     public void loginResponse(boolean success, String error){
         if(success){
-            mainMenu.openView("Lobby");
-            mainMenu.dispose();
-            
+           openView("Lobby");
+            mainMenu.dispose();            
         }else{
             sendServerFeedback(error);
         }        
@@ -106,8 +128,9 @@ public class ClientController {
     public void logoutRequest(){
         cController.serverRequest("logout");
         lobby.dispose();
-        mainMenu = new MainMenuController(this);
+        refreshClient();
     }
+    
     
     /**
      * REGISTER REQUEST
@@ -195,6 +218,17 @@ public class ClientController {
     public void quitProgram(int exitStatus){
         System.exit(exitStatus);
     }
+    
+    
+    /**
+     * Wipes this ClientController and creates a new clientController
+     */
+    public void refreshClient(){
+        mainMenu = new MainMenuController(this);
+        model = new ClientModel();
+        isOnline = false;
+        cController = new ClientConnectionController(this);
+    }
 
 
     
@@ -213,9 +247,5 @@ public class ClientController {
             cController.interpretResponse("challengeResponse<&>"+opName+"<&>true");
         }
     }
-    
-    public void launchGame(){
-        
-    }
-    
+
 }

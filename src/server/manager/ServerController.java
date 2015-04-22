@@ -246,11 +246,11 @@ public class ServerController {
                 ucon.setUserProfile(profile);
                 ucon.sendResponse("loginResponse<&>success");
                 this.updateViewConnections();
+                updateAll();
             }else{ //incorrect password
                 ucon.sendResponse("loginResponse<&>failure<&>invalidPassword");
                 sendClientFeedback("Entered incorrect password.");
             }
-            updateAll();
         }
     }
     
@@ -264,6 +264,7 @@ public class ServerController {
         if(isAnon){
             model.removeAnon(ucon.getUsername());
         }
+        model.removeUserConnection(ucon);
         this.updateAll();
         this.updateViewProfiles();
         this.updateViewConnections();

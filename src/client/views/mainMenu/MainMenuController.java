@@ -24,6 +24,7 @@
 package client.views.mainMenu;
 
 import client.manager.ClientController;
+import javax.swing.JFrame;
 
 /**
  * MainMenuController class
@@ -41,17 +42,18 @@ public class MainMenuController {
      */
     public MainMenuController(ClientController ctrl){
         view = new MainMenuView(this);
+        view.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);      //CHANGE TO EXIT_ON_CLOSE when running Client and Server on dif machines
         view.setVisible(true);
         controller = ctrl;
     }
     
    
     public void connect(){
-        controller.connect();
+        controller.connectRequest();
     }
     
     public void connect(String ip, int port){
-        controller.connect(ip, port);
+        controller.connectRequest(ip, port);
     }
     
     /**
