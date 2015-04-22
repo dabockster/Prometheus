@@ -39,7 +39,7 @@ public class ClientController {
     private OfflineController offline;
     private ClientModel model;
     private LobbyController lobby;
-    private boolean isOnline;
+    private boolean connectedToServer;
     private ClientConnectionController cController;
     
     /**
@@ -48,8 +48,9 @@ public class ClientController {
     public ClientController(){
         mainMenu = new MainMenuController(this);
         model = new ClientModel();
-        isOnline = false;
+        connectedToServer = false;
         cController = new ClientConnectionController(this);
+        connectionRequest();
     }
    
     
@@ -64,18 +65,7 @@ public class ClientController {
     public void challengeRequest(String opName){
         
     }
-    
-      
-    /**
-     * CONNECT REQUEST
-     * Connects to default IP and port
-     */
-    public void connectRequest(){
-        if(cController != null)
-            cController.close();
-        cController.connect(); 
-    }
-    
+
     /**
      * CONNECT REQUEST
      * Connects to a specified IP address and port
@@ -89,11 +79,25 @@ public class ClientController {
     }  
     
     /**
+     * CONNECT REQUEST
+     */
+    public void connectionRequest(){
+        cController.serverRequest("connect");
+    }
+    
+    /**
      * CONNECT RESPONSE
      * Displays a message from the server
      */
-    public void connectResponse(String serverResponse){
-        sendServerFeedback(serverResponse);
+    public void connectionRequest(boolean connected){
+        if(connected){
+            connectedToServer = true;
+            sendServerFeedback("Connected to Server");
+        }else{
+            connectedToServer = false;
+            sendServerFeedback("NOT Connected to Server");
+        }   
+            
     }
     
     
@@ -127,7 +131,10 @@ public class ClientController {
      */
     public void logoutRequest(){
         cController.serverRequest("logout");
+        cController.close();
         lobby.dispose();
+        mainMenu.dispose();
+        System.gc();
         refreshClient();
     }
     
@@ -171,9 +178,7 @@ public class ClientController {
      * @param update
      */
     public void updateResponse(String[] update){
-       String[] players = Arrays.copyOfRange(update, 1, update.length);
-        System.out.println(players[0].toString());
-        
+       String[] players = Arrays.copyOfRange(update, 1, update.length);        
         model.updateOnlinePlayers(players);
         lobby.updateOnlinePlayers(model.getPlayerNames());
     }
@@ -226,7 +231,8 @@ public class ClientController {
     public void refreshClient(){
         mainMenu = new MainMenuController(this);
         model = new ClientModel();
-        isOnline = false;
+        connectedToServer = false;
+        cController.close();
         cController = new ClientConnectionController(this);
     }
 

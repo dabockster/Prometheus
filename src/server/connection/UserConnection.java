@@ -163,7 +163,7 @@ public class UserConnection implements Runnable{
                 break;
             case "update" :
                 System.out.println("UserConnection.update");
-                updateResponse();
+                updateRequest();
                 break;
             default :
                 sendClientFeedback("Unrecognized request "+request[0]);
@@ -176,9 +176,7 @@ public class UserConnection implements Runnable{
      * Provides a server response to indicate successful connection
      */
     private synchronized void connectRequest(){
-        sendClientFeedback("Sending connect response.");
-        String response = "connect<&>success";
-        this.sendResponse(response);
+        connectResponse(true);
     }
             
     /**
@@ -212,20 +210,23 @@ public class UserConnection implements Runnable{
     }      
     
     /**
-     * RESPONSE - UPDATE
+     * REQUEST - UPDATE
      * Updates all UserConnections connected to the server
      */
-    private synchronized void updateResponse(){
+    private synchronized void updateRequest(){
         controller.updateAll();
     }
     
     /**
-     * RESPONSE - SERVER DOWN
-     * Sends a message saying that the server is down and terminates 
-     * this UserConnection
+     * RESPONSE - CONNECT
+     * Sends a connection status update to the client.
      */
-    private void serverDownResponse(){
-        //STUBIT
+    public void connectResponse(boolean connected){
+        String response = "connect<&>";
+        if(connected){
+            this.sendResponse(response + "true");
+        }else
+            this.sendResponse(response+"false");
     }
     
     /**

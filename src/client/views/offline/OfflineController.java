@@ -63,6 +63,11 @@ public class OfflineController {
         controller.openView(view);
     }
     
+    public void toLogin(){
+        view.dispose();
+        controller.refreshClient();        
+    }
+    
     /**
      * Opens the Surrender Dialog
      */

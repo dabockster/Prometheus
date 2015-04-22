@@ -51,7 +51,7 @@ public class ClientConnectionController {
         connect();
     }
     
-    public synchronized void connect(){
+    private void connect(){
         connection = new ClientConnection(this, conAddr);
         new Thread(connection).start();
     }
@@ -82,15 +82,6 @@ public class ClientConnectionController {
     }
     
     /**
-     * TEARDOWN - CLIENTCONNECTION
-     */
-    public void teardownConnection(){
-        //send disconnection command
-    }
-    
-
-    
-    /**
      * NETWORK COMMUNICATIONS - SEND CMND
      * @param request
      * @param cmnd 
@@ -111,7 +102,7 @@ public class ClientConnectionController {
     public void interpretResponse(String[] response) {
         switch(response[0]){
             case "connect":
-                sendServerFeedback("You are connected to the server.");
+                this.connectionResponse(response[1]);
                 break;
             case "loginResponse":
                 this.loginResponse(response);
@@ -126,7 +117,17 @@ public class ClientConnectionController {
     }
     
     /**
-     * EXECUTE RESPONSE - LOGIN 
+     * CONNECT RESPONSE
+     */
+    private void connectionResponse(String response){
+        if(response.equals("true"))
+            controller.connectionRequest(true);
+        else
+            controller.connectionRequest(false);
+    }
+    
+    /**
+     * LOGIN RESPONSE
      */
     private void loginResponse(String[] response){
         if(response[1].equals("success")){
@@ -149,7 +150,7 @@ public class ClientConnectionController {
     }
     
     /**
-     * EXECUTE RESPONSE - REGISTRATION 
+     * REGISTER RESPONSE
      */
     private void registrationResponse(String[] response){
         if(response[1].equals("success")){

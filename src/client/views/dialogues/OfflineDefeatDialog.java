@@ -186,7 +186,7 @@ public class OfflineDefeatDialog extends javax.swing.JFrame {
     }//GEN-LAST:event_playButtonActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        controller.openView("Main Menu");
+        controller.toLogin();
         this.dispose();
         System.gc();
     }//GEN-LAST:event_loginButtonActionPerformed
