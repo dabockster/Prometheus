@@ -23,8 +23,6 @@
  */
 package server.manager;
 
-import server.connection.UserConnection;
-import server.connection.ServerConnection;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,10 +30,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetAddress;
-import java.net.URISyntaxException;
 import java.net.UnknownHostException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import server.connection.ServerConnection;
+import server.connection.UserConnection;
 
 /**
  *
@@ -106,12 +103,11 @@ public class ServerController {
      * @param fileName the name of the file containing the data
      */
     private void setupModel(String fileName){
-        if(fileName == null)
-            fileName = "/resources/accounts.txt";
         try {
-            File file = new File(getClass().getResource(fileName).toURI());
-            FileReader fileReader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            File file = new File("accounts.txt");
+                    if(!file.exists())
+                        file.createNewFile();
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
             String profileString;
             while((profileString = bufferedReader.readLine()) != null){
                 if(profileString == null)
@@ -121,11 +117,9 @@ public class ServerController {
             }
             bufferedReader.close();
         } catch (FileNotFoundException ex) {
-            sendServerFeedback("Error: Cannot find file " + fileName + " not found.");
+            sendServerFeedback("Error: Cannot find file.");
         } catch (IOException ex) {
-            sendServerFeedback("Error: Cannot read file "+fileName+".");
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, ex);
+            sendServerFeedback("Error: Cannot read file.");
         }
         updateViewProfiles();
     }
@@ -137,11 +131,9 @@ public class ServerController {
      * write to "accounts.txt"
      * @param fileName the File to be written
      */
-    public void teardownModel(String fileName){
-        if(fileName == null)
-            fileName = "/resources/accounts.txt/";
+    public void teardownModel(){
         try{
-            File file = new File(fileName);
+            File file = new File("accounts.txt");
             try (PrintWriter out = new PrintWriter(file)) {
                 while( model.numberOfProfiles()>0 ){
                     System.out.println(model.registeredUserCount());
@@ -149,12 +141,13 @@ public class ServerController {
                     sendServerFeedback(nextProfile);
                     out.println(nextProfile);
                 }
+                out.close();
             }
         }
         catch(IOException ex){
             System.out.println("Could not write to file." + ex);
-            sendServerFeedback("Failed to write UserProfiles to file "+fileName+".");
-        } 
+            sendServerFeedback("Failed to write UserProfiles to file.");
+        }
     }   
     
     
@@ -271,7 +264,6 @@ public class ServerController {
         if(isAnon){
             model.removeAnon(ucon.getUsername());
         }
-        model.removeUserConnection(ucon);
         this.updateAll();
         this.updateViewProfiles();
         this.updateViewConnections();

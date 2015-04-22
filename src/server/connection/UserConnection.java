@@ -198,7 +198,8 @@ public class UserConnection implements Runnable{
         this.sendClientFeedback("Logged off.");
         profile.logout();
         controller.logout(this, playingAnon); //create logout
-        this.close();
+        this.username = null;
+        profile = null;
     }
     
     /**

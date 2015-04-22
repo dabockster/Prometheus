@@ -336,7 +336,7 @@ public class ServerView extends javax.swing.JFrame {
         }
         portTF.setText(null);
         portTF.setEditable(true);
-        controller.teardownModel(null);
+        controller.teardownModel();
         clearRegisteredProfiles();
         controller.teardownConnection();
     }//GEN-LAST:event_shutDownButtonbuildServerButton
