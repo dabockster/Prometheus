@@ -240,7 +240,8 @@ public class UserConnection implements Runnable{
     
     public void relayChallengeResponse(String[] details,boolean accept){
         if(accept){
-            sendResponse("accept<&>"+details);
+            String ipPort=details[0]+"<&>"+details[1];
+            sendResponse("accept<&>"+ipPort);
         }
         else{
             sendResponse("reject");

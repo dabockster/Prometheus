@@ -121,6 +121,13 @@ public class ClientConnectionController {
             case "accept":
                 interpretDetails(Arrays.copyOfRange(response, 1, response.length));
                 connection.connectToPlayer(opIp, opPort);
+                break;
+            case "reject":
+                //here should be a message displayed for the rejection
+                //discussion earlier was about evolving away from dialogue boxes
+                //this will be empty until the issue is resolved and a decision made
+                //upon which time I will finish the implementation
+                break;
                 
         }
     }
