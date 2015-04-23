@@ -118,4 +118,9 @@ public class ClientConnection implements Runnable{
         }
     }
     
+    
+    public void connectToPlayer(String ip,int port){
+        
+    }
+    
 } // enclosing CLASS

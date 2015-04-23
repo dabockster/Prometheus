@@ -314,8 +314,16 @@ public class ServerController {
         view.clientFeedback(feedback);
     }    
     
-    public void relayChallengeResponse(){
-        
+    /**
+     * relays response to UserConnection of the challenger
+     * sends details if accept, no details if reject
+     * @param challengerName
+     * @param details
+     * @param accept 
+     */
+    public void relayChallengeResponse(String challengerName,String[] details,boolean accept){
+        UserConnection uCon=model.getUserConnection(challengerName);
+        uCon.relayChallengeResponse(details,accept);
     }
     
 }

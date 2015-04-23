@@ -248,7 +248,7 @@ public class ClientController {
      */
     public void challengeResponse(String opName,boolean accept){
         if(accept){
-            cController.interpretResponse("challengeResponse<&>"+opName+"<&>true");
+            //cController.interpretResponse("challengeResponse<&>"+opName+"<&>true");
         }
     }
 

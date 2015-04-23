@@ -25,6 +25,7 @@ package client.connection;
 
 import client.manager.ClientController;
 import java.net.InetSocketAddress;
+import java.util.Arrays;
 
 /**
  *
@@ -38,6 +39,8 @@ public class ClientConnectionController {
     
     private String ip;
     private int port;
+    private String opIp;
+    private int opPort;
     
     /**
      * CONSTRUCTOR - DEFAULT
@@ -115,6 +118,10 @@ public class ClientConnectionController {
             case "updateResponse":
                 this.updateResponse(response);
                 break;
+            case "accept":
+                interpretDetails(Arrays.copyOfRange(response, 1, response.length));
+                connection.connectToPlayer(opIp, opPort);
+                
         }
     }
     
@@ -193,8 +200,9 @@ public class ClientConnectionController {
         controller.sendServerFeedback(response);
     }
     
-    public void interpretResponse(String response){
-        
+    public void interpretDetails(String[] ipPort){
+        opIp=ipPort[0];
+        opPort=Integer.parseInt(ipPort[1]);
     }
     
     

@@ -238,8 +238,13 @@ public class UserConnection implements Runnable{
         controller.sendClientFeedback(username+": "+ feedback);
     }
     
-    public void relayChallengeResponse(){
-        
+    public void relayChallengeResponse(String[] details,boolean accept){
+        if(accept){
+            sendResponse("accept<&>"+details);
+        }
+        else{
+            sendResponse("reject");
+        }
     }
     
     /**

@@ -74,6 +74,16 @@ public class ServerModel {
         return online.get(i);   
     }
     
+    public UserConnection getUserConnection(String challengerName){
+        UserConnection ucon=null;
+        for(UserConnection i:online){
+            if(i.getUsername().equals(challengerName)){
+                ucon=i;
+            }
+        }
+        return ucon;
+    }
+    
     /**
      * USERCONNECTION - GET ANON NAME
      * Appends the current number of anonymous players to the end of "anonymous"
