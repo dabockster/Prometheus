@@ -193,7 +193,7 @@ public class ServerController {
             UserConnection ucon = model.getUserConnection(i);
             System.out.println("USER CONNECTIONS :  " + ucon.getUsername() + "    CMND : "+response);
             if(ucon.loggedOn)
-                update(ucon, response);
+                updateConnection(ucon, response);
         }
     }
     
@@ -221,12 +221,42 @@ public class ServerController {
     }
     
     /**
-     * UPDATE
+     * UPDATE USERCONNECTION
      * Sends a list of all online users in String representation.
      * @param ucon 
      */
-    public void update(UserConnection ucon, String cmnd){
+    public void updateConnection(UserConnection ucon, String cmnd){
         ucon.sendResponse(cmnd);
+    }
+    
+    /**
+     * RELAY CHALLENGE REQUEST
+     * Forwards a challenge request from one UserConnection to another.
+     * @param challengerUName the username of the challenger
+     * @param request information containin
+     */
+    public void relayChallengeRequest(String challengerUsername, String opponentUsername){
+        UserConnection ucon = model.getUserConnection(opponentUsername);
+        ucon.relayChallengeRequest(challengerUsername);
+    }
+    
+    /**
+     * RELAY CHALLENGE RESPONSE
+     * Forwards a challenge response from one UserConnection to another.
+     * @param acceptedChallenge
+     * @param challengerUsername
+     * @param ip
+     * @param port
+     */
+    public void relayChallengeResponse(boolean acceptedChallenge, String challengerUsername, String ip, int port){
+        UserConnection ucon = model.getUserConnection(challengerUsername);
+        String response = challengerUsername;
+        if(!acceptedChallenge){
+            ucon.relayChallengeResponse(acceptedChallenge,response);
+        }else{
+            response = response +"<&>"+ip+"<&>"+port;
+            ucon.relayChallengeResponse(acceptedChallenge,response);
+        }
     }
     
     /**
@@ -312,19 +342,6 @@ public class ServerController {
             view.addRegisteredProfile(newProfile.getUsername());
             ucon.sendResponse("registerResponse<&>success");
         }
-    }
-    
-    /**
-     * RELAY CHALLENGE RESPONSE
-     * relays response to UserConnection of the challenger
-     * sends details if accept, no details if reject
-     * @param challengerName
-     * @param details
-     * @param accept 
-     */
-    public void relayChallengeResponse(String challengerName,String[] details,boolean accept){
-        UserConnection uCon=model.getUserConnection(challengerName);
-        uCon.relayChallengeResponse(details,accept);
     }
     
 }

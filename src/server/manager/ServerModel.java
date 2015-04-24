@@ -74,10 +74,15 @@ public class ServerModel {
         return online.get(i);   
     }
     
-    public UserConnection getUserConnection(String challengerName){
+    /**
+     * Gets the desired UserConnection with the specified username
+     * @param username
+     * @return 
+     */
+    public UserConnection getUserConnection(String username){
         UserConnection ucon=null;
         for(UserConnection i:online){
-            if(i.getUsername().equals(challengerName)){
+            if(i.getUsername().equals(username)){
                 ucon=i;
             }
         }

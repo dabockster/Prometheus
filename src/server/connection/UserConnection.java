@@ -150,6 +150,12 @@ public class UserConnection implements Runnable{
      */
     public synchronized void interpretRequest(String[] request){
         switch(request[0]){
+            case "challengeResponse":
+                this.challengeResponse(request);
+                break;
+            case "challengeRequest" :
+                this.challengeRequest(request);
+                break;
             case "connect" :
                 this.connectRequest();
                 break;
@@ -178,7 +184,61 @@ public class UserConnection implements Runnable{
     private synchronized void connectRequest(){
         connectResponse(true);
     }
-            
+    
+    /**
+     * REQUEST - CHALLENGE
+     * Forwards a challenge from this userConnection to another.
+     * @param request username of the player to be challenged
+     */
+    private synchronized void challengeRequest(String request[]){
+        String opponentUsername = request[1];
+        controller.relayChallengeRequest(this.username, opponentUsername);
+        sendClientFeedback("is Challenging "+ opponentUsername);
+    }
+    
+    /**
+     * RESPONSE - RELAY CHALLENGE
+     * Receives  challenge from the server to send a challenge message to 
+     * this UserConnection.
+     * @param challengeUsername the username of the challenger
+     */
+    public void relayChallengeRequest(String challengeUsername){
+        sendResponse("incomingChallenge<&>"+challengeUsername);
+        sendClientFeedback("received challenge from "+challengeUsername);
+    }
+    
+    /**
+     * REQUEST - CHALLENGE RESPONSE
+     * Receives challenge response from a ClientConnection and forwards it
+     * to the server.
+     * @param request challengerUsername, a response to challenge, and ip/port for Client Connection
+     */
+    private synchronized void challengeResponse(String request[]){
+        String challengerUsername = request[1];
+        if(request[2].equals("reject")){
+            controller.relayChallengeResponse(false, challengerUsername,null,0);
+            sendClientFeedback("challenge denied from "+challengerUsername);
+        }else{
+            controller.relayChallengeResponse(true, challengerUsername, request[3], Integer.parseInt(request[4]));
+            sendClientFeedback("challenge accepted from "+challengerUsername);
+
+        }
+    }
+    
+    /**
+     * RESPONSE - RELAY CHALLENGE RESPONSE
+     * Receives a challenge response from the server on behalf of another client.
+     * @param details if they accepted this will contain the address to connect
+     * @param accept true if they accepted challenge
+     */
+    public void relayChallengeResponse(boolean accepted, String response){
+        if(accepted){
+            sendResponse("challengeAccepted<&>"+response);
+        }else{
+            sendResponse("challengeRejected<&>"+response);
+        }
+    }
+    
     /**
      * REQUEST - LOGIN
      * Commences login procedure for this UserConnection
@@ -239,15 +299,6 @@ public class UserConnection implements Runnable{
         controller.sendClientFeedback(username+": "+ feedback);
     }
     
-    public void relayChallengeResponse(String[] details,boolean accept){
-        if(accept){
-            String ipPort=details[0]+"<&>"+details[1];
-            sendResponse("accept<&>"+ipPort);
-        }
-        else{
-            sendResponse("reject");
-        }
-    }
     
     /**
      * GETTER - USERNAME
