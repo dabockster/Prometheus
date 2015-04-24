@@ -172,9 +172,13 @@ public class LobbyView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * CHALLENGE
+     * Sends a challenge from this client to the client with the selected username
+     * @param evt 
+     */
     private void challengeButtonActionListener(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_challengeButtonActionListener
         String challengerName = ""+onlinePlayersList.getSelectedValue();
-        //do something with the challengerName
         controller.challenge(challengerName);
     }//GEN-LAST:event_challengeButtonActionListener
 

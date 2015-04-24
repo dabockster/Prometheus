@@ -52,18 +52,23 @@ public class ClientController {
         cController.serverRequest("connect"); //sends a connect request to server
     }
     
-    public void acceptChallenge(){
-        
-    }
-    
-    public void rejectChallenge(){
-        
-    }
-    
     public void challengeRequest(String opName){
+        cController.serverRequest("challengeRequest<&>"+opName);
+    }
+    
+    public void challengeResponse(String[] response){
+        //This will contain the username of the person who responsed
+        //their response (accept / reject)
+        //if accept, it will contain ip and port
+    }
+    
+    public void incomingChallenge(String challengerName){
+        lobby.incomingChallenge(challengerName);
+    }
+    
+    public void respondToChallenge(boolean accept){
         
     }
-
     /**
      * NEW CONNECTION TO SERVER
      * Connects to a specified IP address and port

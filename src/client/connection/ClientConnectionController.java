@@ -106,8 +106,14 @@ public class ClientConnectionController {
      */    
     public void interpretResponse(String[] response) {
         switch(response[0]){
+            case "challengeResponse":
+                controller.challengeResponse(response);
+                break;
             case "connect":
                 this.connectionResponse(response[1]);
+                break;
+            case "incomingChallenge":
+                controller.incomingChallenge(response[1]);
                 break;
             case "loginResponse":
                 this.loginResponse(response);
@@ -117,16 +123,6 @@ public class ClientConnectionController {
                 break;
             case "updateResponse":
                 this.updateResponse(response);
-                break;
-            case "accept":
-                interpretDetails(Arrays.copyOfRange(response, 1, response.length));
-                connection.connectToPlayer(opIp, opPort);
-                break;
-            case "reject":
-                //here should be a message displayed for the rejection
-                //discussion earlier was about evolving away from dialogue boxes
-                //this will be empty until the issue is resolved and a decision made
-                //upon which time I will finish the implementation
                 break;
                 
         }

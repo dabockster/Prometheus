@@ -38,11 +38,11 @@ public class LobbyController {
     }
     
     public void acceptChallenge(){
-        controller.acceptChallenge();
+        controller.respondToChallenge(true);
     }
     
     public void rejectChallenge(){
-        controller.rejectChallenge();
+        controller.respondToChallenge(false);
     }
     
     //update View
