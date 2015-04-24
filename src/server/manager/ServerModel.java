@@ -107,9 +107,10 @@ public class ServerModel {
      * USERPROFILE - ADD
      * addProfile(UserProfile newProfile) : void
      * adds newProfile to the ArrayList of allRegisteredPlayers
+     * @param profile
      */
     public void addProfile(UserProfile profile){
-            sendServerFeedback("Added a UserProfile");
+            sendServerFeedback("Created UserProfile '"+profile.getUsername()+"'");
             accounts.add(profile);
     }
     
@@ -141,7 +142,7 @@ public class ServerModel {
                 }
             }
         } catch( NullPointerException ex){
-            sendServerFeedback("Failed to Find UserProfile - "+username+" does not exist");
+            sendServerFeedback("Failed to Find UserProfile - '"+username+"' does not exist");
         }
         return null;
     }
@@ -165,6 +166,7 @@ public class ServerModel {
     public void removeAnon(String username){
         for(int i = 0; i < accounts.size(); i++){
                 if(accounts.get(i).isNamed(username)){
+                    sendServerFeedback("Deleted UserProfile '" + username+"'");
                     accounts.remove(i);  
                 }
             }
@@ -223,6 +225,6 @@ public class ServerModel {
      * @param feedback 
      */
     public void sendServerFeedback(String feedback){
-        controller.sendServerFeedback("ServerModel: "+ feedback);
+        controller.sendServerFeedback("Model: "+ feedback);
     }  
 }

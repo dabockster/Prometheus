@@ -128,6 +128,6 @@ public class ServerConnection implements Runnable{
      * @param feedback 
      */
     public void sendServerFeedback(String feedback){
-        controller.sendServerFeedback("ServerConnection: " + feedback);
+        controller.sendServerFeedback("Connection: " + feedback);
     }    
 }
