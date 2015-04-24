@@ -35,7 +35,7 @@ public class ClientModel {
     
     private ClientController controller;
     private ArrayList<UserProfile> onlinePlayers;
-    private ArrayList<GameController> currentGames = new ArrayList<>();
+    private ArrayList<GameController> currentGames;
 
     
     /**
@@ -44,6 +44,7 @@ public class ClientModel {
     public ClientModel(ClientController controller){
         this.controller = controller;
         onlinePlayers = new ArrayList<UserProfile>();
+        currentGames = new ArrayList<>();
     }
     
     /**
@@ -82,5 +83,33 @@ public class ClientModel {
         }
         return playerNames;
     }
+    
+    /**
+     * Adds a GameController to the list of CurrentGames
+     * @param newGame the GameController to be added
+     */
+    public void addGame(GameController newGame){
+        currentGames.add(newGame);
+    }
+    
+    /**
+     * Removes a GameController from the list of CurrentGames
+     * @param oldGame 
+     */
+    public void removeGame(GameController oldGame){
+        currentGames.remove(oldGame);
+        //ensure game results are sent to server,
+        //somehow account for crashes
+    }
+    
+    /**
+     * Returns the number of current games
+     * @return the number of games
+     */
+    public int numberOfGames(){
+        return currentGames.size();
+    }
+    
+    
     
 }

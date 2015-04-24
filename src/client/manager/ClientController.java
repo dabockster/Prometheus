@@ -56,28 +56,15 @@ public class ClientController {
         model = new ClientModel(this);
         cController.serverRequest("connect"); //sends a connect request to server
     }
-    
+  
     /**
-     * UPDATE REQUEST
-     * Sends a request to the server to receive a list of all online UserProfiles
+     * Displays a message on the view
+     * @param feedback 
      */
-    public void updateRequest(){
-        cController.serverRequest("update");
+    public void displayLoginMessage(String feedback){
+        mainMenu.sendFeedback(feedback);
     }
-    
-    /**
-     * UPDATE RESPONSE
-     * This method receives all online players from server and adds them to 
-     * the OnlinePlayers in the model. It then updates the lobby view.
-     * @param update
-     */
-    public void updateResponse(String[] update){
-       String[] players = Arrays.copyOfRange(update, 1, update.length);        
-        model.updateOnlinePlayers(players);
-        lobby.updateOnlinePlayers(model.getPlayerNames());
-    }
-
-    
+     
     /**
      * Exits the entire program
      * @param exitStatus the status of the exit (0 for clean exit, 1 for errors, etc)
@@ -85,7 +72,6 @@ public class ClientController {
     public void quitProgram(int exitStatus){
         System.exit(exitStatus);
     }
-    
     
     /**
      * Wipes this ClientController and creates a new clientController
@@ -97,7 +83,6 @@ public class ClientController {
         mainMenu = new MainMenuController(this);
         cController.serverRequest("connect");
     }
-
 
     /**
      * NEW CONNECTION TO SERVER
@@ -141,6 +126,26 @@ public class ClientController {
             displayLoginMessage("NOT Connected to Server");
         }   
     }    
+    
+    /**
+     * UPDATE REQUEST
+     * Sends a request to the server to receive a list of all online UserProfiles
+     */
+    public void updateRequest(){
+        cController.serverRequest("update");
+    }
+    
+    /**
+     * UPDATE RESPONSE
+     * This method receives all online players from server and adds them to 
+     * the OnlinePlayers in the model. It then updates the lobby view.
+     * @param update
+     */
+    public void updateResponse(String[] update){
+       String[] players = Arrays.copyOfRange(update, 1, update.length);        
+        model.updateOnlinePlayers(players);
+        lobby.updateOnlinePlayers(model.getPlayerNames());
+    }
     
     /**
      * LOGIN REQUEST
@@ -203,16 +208,9 @@ public class ClientController {
             displayLoginMessage(error);
         }
     }
-    
-    /**
-     * Displays a message on the view
-     * @param feedback 
-     */
-    public void displayLoginMessage(String feedback){
-        mainMenu.sendFeedback(feedback);
-    }
         
     /**
+     * SEND CHALLENGE
      * Sends a challenge from this ClientConnection to opName
      * @param opName 
      */
@@ -221,6 +219,7 @@ public class ClientController {
     }
     
     /**
+     * RECEIVE CHALLENGE
      * Receives challenge from challengerName 
      * @param challengerName 
      */
@@ -229,13 +228,16 @@ public class ClientController {
     } 
     
     /**
-     * Sends this ClientConnection's response to the challenger
+     * SEND RESPONSE TO CHALLENGE
+     *      if accept :
+     * Hosts a new Game and sends a response to challenger with IP and port
+     *      else :
+     * Sends a response to challenger saying reject
      * @param accept 
      */
     public void respondToChallenge(boolean accept){
         if(accept){
             //host the a new game
-            //create a ServerSocket
             //send response to challenge with ip and port
             //wait for client to connect
         }else{
@@ -244,7 +246,9 @@ public class ClientController {
     }
     
     /**
-     * Receives response to the challenge that this ClientConnection sent
+     * RECEIVE RESPONSE TO CHALLENGE
+     * Receives the username and response (true/false) of the person who responded
+     * if accept it will call connectToHost
      * @param response 
      */
     public void challengeResponse(String[] response){
@@ -253,6 +257,31 @@ public class ClientController {
         //if accept:
             //response[3] ip 
             //response[4] port
+    }
+    
+    /**
+     * HOST A PEER2PEER GAME
+     * Creates a GameController
+     * Adds GameController to list of currentGames in ClientModel
+     * Create a GameView
+     * Create a PeerToPeerConnection
+     * Open ServerSocket and wait for client to connect
+     * 
+     */
+    private void hostGame(){
+      
+    }
+    
+    /**
+     * CONNECT TO A PEER2PEER GAME
+     * Creates a GameController
+     * Adds GamesController to list of currentGames in ClientModel
+     * Creates a GameView
+     * Create a PeerToPeerConnection
+     * Connect to host
+     */
+    private void connectToHost(){
+
     }
 
 }
