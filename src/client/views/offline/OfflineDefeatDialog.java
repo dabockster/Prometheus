@@ -21,21 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package client.views.dialogues;
+package client.views.offline;
+
+import client.views.offline.OfflineController;
 
 /**
  *
  * @author dabockster
  */
-public class LoginBlankDialog extends javax.swing.JDialog {
+public class OfflineDefeatDialog extends javax.swing.JFrame {
+    
+    private OfflineController controller;
 
     /**
-     * Creates new form LoginBlankDialog
+     * Creates new form OfflineDefeatDialog
      */
-    public LoginBlankDialog(java.awt.Frame parent) {
-        super(parent);
+    public OfflineDefeatDialog(OfflineController ctrl) {
+        controller = ctrl;
+        this.setVisible(true);
         initComponents();
-        setVisible(true);
     }
 
     /**
@@ -46,57 +50,64 @@ public class LoginBlankDialog extends javax.swing.JDialog {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         backgroundPanel = new javax.swing.JPanel();
-        borderPanel = new javax.swing.JPanel();
+        layoutPanel = new javax.swing.JPanel();
         messagePanel = new javax.swing.JPanel();
-        errorLabel = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         buttonPanel = new javax.swing.JPanel();
-        okButton = new javax.swing.JButton();
+        playButton = new javax.swing.JButton();
+        loginButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Login Error");
-        setAlwaysOnTop(true);
-        setBackground(new java.awt.Color(0, 0, 0));
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Defeat");
         setResizable(false);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         backgroundPanel.setBackground(new java.awt.Color(0, 0, 0));
-        backgroundPanel.setMinimumSize(new java.awt.Dimension(300, 150));
+        backgroundPanel.setPreferredSize(new java.awt.Dimension(300, 150));
 
-        borderPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0)));
-        borderPanel.setOpaque(false);
+        layoutPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(55, 255, 0)));
+        layoutPanel.setOpaque(false);
 
         messagePanel.setOpaque(false);
 
-        errorLabel.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
-        errorLabel.setForeground(new java.awt.Color(0, 255, 51));
-        errorLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        errorLabel.setText("Login field(s) cannot be left blank.");
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(55, 255, 0));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Defeat");
 
         javax.swing.GroupLayout messagePanelLayout = new javax.swing.GroupLayout(messagePanel);
         messagePanel.setLayout(messagePanelLayout);
         messagePanelLayout.setHorizontalGroup(
             messagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, messagePanelLayout.createSequentialGroup()
+            .addGroup(messagePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(errorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         messagePanelLayout.setVerticalGroup(
             messagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(messagePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(errorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         buttonPanel.setOpaque(false);
 
-        okButton.setText("OK");
-        okButton.addActionListener(new java.awt.event.ActionListener() {
+        playButton.setText("Play Again");
+        playButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                okButtonActionPerformed(evt);
+                playButtonActionPerformed(evt);
+            }
+        });
+
+        loginButton.setText("Back to Login");
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButtonActionPerformed(evt);
             }
         });
 
@@ -105,37 +116,41 @@ public class LoginBlankDialog extends javax.swing.JDialog {
         buttonPanelLayout.setHorizontalGroup(
             buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buttonPanelLayout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addComponent(okButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(playButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addComponent(loginButton)
+                .addContainerGap())
         );
         buttonPanelLayout.setVerticalGroup(
             buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(buttonPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(okButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonPanelLayout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(playButton)
+                    .addComponent(loginButton))
+                .addContainerGap())
         );
 
-        javax.swing.GroupLayout borderPanelLayout = new javax.swing.GroupLayout(borderPanel);
-        borderPanel.setLayout(borderPanelLayout);
-        borderPanelLayout.setHorizontalGroup(
-            borderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(borderPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout layoutPanelLayout = new javax.swing.GroupLayout(layoutPanel);
+        layoutPanel.setLayout(layoutPanelLayout);
+        layoutPanelLayout.setHorizontalGroup(
+            layoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layoutPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(borderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(messagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(buttonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        borderPanelLayout.setVerticalGroup(
-            borderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(borderPanelLayout.createSequentialGroup()
+        layoutPanelLayout.setVerticalGroup(
+            layoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layoutPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(messagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
@@ -144,32 +159,45 @@ public class LoginBlankDialog extends javax.swing.JDialog {
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(borderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(layoutPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         backgroundPanelLayout.setVerticalGroup(
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(borderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(layoutPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        getContentPane().add(backgroundPanel, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        getContentPane().add(backgroundPanel, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+    private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
+        controller.openView();
         this.dispose();
-    }//GEN-LAST:event_okButtonActionPerformed
+        System.gc();
+    }//GEN-LAST:event_playButtonActionPerformed
+
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+        controller.toLogin();
+        this.dispose();
+        System.gc();
+    }//GEN-LAST:event_loginButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundPanel;
-    private javax.swing.JPanel borderPanel;
     private javax.swing.JPanel buttonPanel;
-    private javax.swing.JLabel errorLabel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel layoutPanel;
+    private javax.swing.JButton loginButton;
     private javax.swing.JPanel messagePanel;
-    private javax.swing.JButton okButton;
+    private javax.swing.JButton playButton;
     // End of variables declaration//GEN-END:variables
 }

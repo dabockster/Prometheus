@@ -25,7 +25,10 @@ public class LobbyController {
         controller = ctrl;
     }
     
-    //----- send data -----
+    /**
+     * Sends a challenge to the server to the specified opponent.
+     * @param opName 
+     */
     public void challenge(String opName){
         controller.challengeRequest(opName);
     }
@@ -45,10 +48,6 @@ public class LobbyController {
     //update View
     public void updateOnlinePlayers(String[] onlinePlayers){
         view.updatePlayers(onlinePlayers);
-    }
-    
-    public void openView(String view){
-        controller.openView(view);
     }
     
     public int logout(){

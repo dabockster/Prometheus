@@ -24,6 +24,7 @@ import java.io.*;
 public class ClientConnection implements Runnable{
     private final ClientConnectionController controller;
     private final InetSocketAddress serverAddr;
+    
     private DataOutputStream streamOut;
     private DataInputStream streamIn;
     

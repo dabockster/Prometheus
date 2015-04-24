@@ -183,7 +183,7 @@ public class SurrenderDialog extends javax.swing.JDialog {
 
     private void yesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yesButtonActionPerformed
         controller.defeat();
-        controller.dispose();
+        controller.disposeView();
         this.dispose();
     }//GEN-LAST:event_yesButtonActionPerformed
 

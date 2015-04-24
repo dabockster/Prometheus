@@ -75,7 +75,14 @@ public class ClientController {
             cController.close();
         cController = new ClientConnectionController(this,ip,port);
         connectRequest();
-    }  
+    }
+    
+    /**
+     * Creates an offline game 
+     */
+    public void offlineGame(){
+        offline = new OfflineController(this);
+    }
 
     /**
      * CONNECT REQUEST
@@ -84,8 +91,7 @@ public class ClientController {
      */
     public void connectRequest(){
         cController.serverRequest("connect");
-    }
-    
+    }    
     
     /**
      * CONNECT RESPONSE
@@ -99,8 +105,7 @@ public class ClientController {
             connectedToServer = false;
             sendServerFeedback("NOT Connected to Server");
         }   
-    }
-    
+    }    
     
     /**
      * LOGIN REQUEST
@@ -120,7 +125,7 @@ public class ClientController {
      */
     public void loginResponse(boolean success, String error){
         if(success){
-           openView("Lobby");
+            lobby = new LobbyController(this);
             mainMenu.dispose();            
         }else{
             sendServerFeedback(error);
@@ -180,25 +185,7 @@ public class ClientController {
         model.updateOnlinePlayers(players);
         lobby.updateOnlinePlayers(model.getPlayerNames());
     }
-    
-    /**
-     * Opens a view
-     * @param view The view to be opened (eg "Offline" for the offline mode).
-     */
-    public void openView(String view){
-        switch(view){
-            case "Main Menu":
-                mainMenu = new MainMenuController(this);
-                break;
-            case "Offline":
-                offline = new OfflineController(this);
-                break;
-            case "Lobby":
-                lobby = new LobbyController(this);
-                break;
-        }
-    }
-    
+
     /**
      * Closes a view
      * @param view The view to be closed (eg "Offline" for the offline mode).
@@ -209,7 +196,7 @@ public class ClientController {
                 mainMenu.dispose();
                 break;
             case "Offline":
-                offline.dispose();
+                offline.disposeView();
                 break;
         }
     }

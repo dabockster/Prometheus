@@ -64,14 +64,7 @@ public class MainMenuController {
     }
     
     /**
-     * Opens a new view outside of the current view
-     * @param view The view to be opened (eg "Offline" for the offline mode).
-     */
-    public void openView(String view){
-        controller.openView(view);
-    }
-    
-    /**
+     * QUIT 
      * Exits the entire program
      * @param exitStatus the status of the exit (0 for clean exit, 1 for errors, etc)
      */
@@ -97,6 +90,15 @@ public class MainMenuController {
      */
     public void register(String username, String password){
         controller.registerRequest(username, password);
+    }
+    
+    /**
+     * OFFLINE
+     * Creates an offline game
+     */
+    public void offline(){
+        controller.offlineGame();
+        view.dispose();
     }
     
     /**

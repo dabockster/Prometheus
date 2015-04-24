@@ -24,7 +24,6 @@
 package client.views.offline;
 
 import client.manager.ClientController;
-import client.views.dialogues.OfflineDefeatDialog;
 import client.views.dialogues.SurrenderDialog;
 
 /**
@@ -49,22 +48,25 @@ public class OfflineController {
     }
     
     /**
+     * Opens the view
+     */
+    public void openView(){
+        view = new OfflineView(this);
+        view.setVisible(true);
+    }
+    
+    /**
      * Closes the view
      */
-    public void dispose(){
+    public void disposeView(){
         view.dispose();
     }
     
     /**
-     * Opens a new view outside of the current view
-     * @param view The view to be opened (eg "Offline" for the offline mode).
+     * Closes the view and returns to the MainMenu view
      */
-    public void openView(String view){
-        controller.openView(view);
-    }
-    
     public void toLogin(){
-        view.dispose();
+        disposeView();
         controller.refreshClient();        
     }
     
@@ -75,6 +77,9 @@ public class OfflineController {
         surrender = new SurrenderDialog(this);
     }
     
+    /**
+     * Opens the defeat Dialog
+     */
     public void defeat(){
         defeat = new OfflineDefeatDialog(this);
     }

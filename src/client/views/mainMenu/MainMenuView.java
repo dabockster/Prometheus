@@ -23,9 +23,6 @@
  */
 package client.views.mainMenu;
 
-import client.views.dialogues.LoginBlankDialog;
-import client.views.dialogues.ServerPromptDialog;
-
 /**
  * MainMenuView class
  * @author dabockster
@@ -33,7 +30,6 @@ import client.views.dialogues.ServerPromptDialog;
 public class MainMenuView extends javax.swing.JFrame {
 
     private MainMenuController controller;
-    private LoginBlankDialog blank;
     
     /**
      * Creates new form MainMenuView
@@ -319,8 +315,7 @@ public class MainMenuView extends javax.swing.JFrame {
      * @param evt 
      */
     private void offlineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_offlineButtonActionPerformed
-        controller.openView("Offline");
-        controller.dispose();
+        controller.offline();
     }//GEN-LAST:event_offlineButtonActionPerformed
 
     
@@ -342,9 +337,12 @@ public class MainMenuView extends javax.swing.JFrame {
         }
         controller.login(username, password);
     }//GEN-LAST:event_loginButtonActionPerformed
-    //REGISTER BUTTON
+
+    /**
+     * REGISTER BUTTON
+     * @param evt 
+     */
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-       //on Register
        String username = usernameTF.getText();
        String password = new String(passwordTF.getPassword());
        if (username.isEmpty() | password.isEmpty()){
@@ -354,16 +352,16 @@ public class MainMenuView extends javax.swing.JFrame {
        controller.register(username, password);
     }//GEN-LAST:event_registerButtonActionPerformed
 
+    /**
+     * Creates a dialogue box where the user can enter a desired server IP and port
+     * @param evt the user selects "Enter Server address"
+     */
     private void serverIPandPortPromptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serverIPandPortPromptActionPerformed
-           ServerPromptDialog serverPrompt = new ServerPromptDialog(this, this.controller);
+           ServerPromptDialog serverPrompt = new ServerPromptDialog(this, controller);
     }//GEN-LAST:event_serverIPandPortPromptActionPerformed
 
     public void postFeedback(String response){
         serverResponseLabel.setText(response);
-    }
-   
-    private void loginBlankError(){
-        blank = new LoginBlankDialog(this);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

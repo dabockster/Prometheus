@@ -28,7 +28,10 @@ public class LobbyView extends javax.swing.JFrame {
         initComponents();
     }
 
-    //continually updates which players are online
+    /**
+     * Updates the list of online players within the view
+     * @param players 
+     */
     public void updatePlayers(String[] players){
         DefaultListModel listModel = new DefaultListModel();
         for(int i=0; i<players.length; i++){

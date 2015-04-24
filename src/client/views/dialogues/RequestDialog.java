@@ -35,6 +35,7 @@ public class RequestDialog extends javax.swing.JDialog {
     private LobbyController controller;
     
     /**
+     * CONSTRUCTOR
      * Creates new form RequestDialog
      */
     public RequestDialog(java.awt.Frame parent, LobbyController controller, String opName) {
