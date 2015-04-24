@@ -65,6 +65,22 @@ public class ServerController {
         view.setVisible(true);
     }
     
+        /** VIEW - FEEDBACK
+     * Relays a message to the view to be displayed
+     * @param feedback the message to be relayed
+     */
+    public void sendServerFeedback(String feedback){
+        view.serverFeedback(feedback);
+    }
+    
+    /** VIEW - FEEDBACK
+     * Relays a message to the view to be displayed
+     * @param feedback the message to be relayed
+     */
+    public void sendClientFeedback(String feedback){
+        view.clientFeedback(feedback);
+    }    
+    
     /**
      * GETTER
      * Returns the current state of the server
@@ -214,15 +230,15 @@ public class ServerController {
     }
     
     /**
-     * EXECUTE COMMAND - LOGIN
+     * LOGIN REQUEST
      * Authenticates username and password and assigns
      * the connection's UserProfile to the corresponding UserProfile.
      * @param ucon
-     * @param cmnd the strings used for login
+     * @param request the strings used for login
      */
-    public void login(UserConnection ucon, String[] cmnd){
-        String username = cmnd[1];
-        String password = cmnd[2];
+    public void login(UserConnection ucon, String[] request){
+        String username = request[1];
+        String password = request[2];
         UserProfile profile;
         if(username.equals("anonymous")){    //For anonymous gameplay
             profile = new UserProfile(model.getAnonName(), password);
@@ -261,7 +277,7 @@ public class ServerController {
     
 
     /**
-     * EXECUTE COMMAND - LOGOUT
+     * LOGOUT REQUEST
      * Safely terminates a user's connection with the server
      * @param ucon
      */
@@ -276,7 +292,7 @@ public class ServerController {
     }
     
     /**
-     * EXECUTE COMMAND - REGISTER
+     * REGISTER REQUEST
      * Registers a new UserProfile with the specified username,
      * password, and email.
      * @param ucon the UserConnection that is registering the new UserProfile
@@ -297,24 +313,9 @@ public class ServerController {
             ucon.sendResponse("registerResponse<&>success");
         }
     }
-            
-    /** VIEW - FEEDBACK
-     * Relays a message to the view to be displayed
-     * @param feedback the message to be relayed
-     */
-    public void sendServerFeedback(String feedback){
-        view.serverFeedback(feedback);
-    }
-    
-    /** VIEW - FEEDBACK
-     * Relays a message to the view to be displayed
-     * @param feedback the message to be relayed
-     */
-    public void sendClientFeedback(String feedback){
-        view.clientFeedback(feedback);
-    }    
     
     /**
+     * RELAY CHALLENGE RESPONSE
      * relays response to UserConnection of the challenger
      * sends details if accept, no details if reject
      * @param challengerName

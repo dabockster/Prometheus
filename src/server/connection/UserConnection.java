@@ -39,7 +39,7 @@ public class UserConnection implements Runnable{
      * CONSTRUCTOR
      * Creates a Thread from the given server and socket
      * @param controller this UserConnection's controller
-     * @param socket the socket
+     * @param clientSocket the client socket
      */
     public UserConnection(ServerController controller, Socket clientSocket){
         this.controller = controller;
@@ -67,7 +67,7 @@ public class UserConnection implements Runnable{
      * SETUP 
      * Sets a UserProfile to this UserConnection ands changes 
      * the UserProfile state to online.
-     * @param UserProfile this client's UserProfile
+     * @param profile this client's UserProfile
      */
     public void setUserProfile(UserProfile profile){
         this.profile = profile;
@@ -220,6 +220,7 @@ public class UserConnection implements Runnable{
     /**
      * RESPONSE - CONNECT
      * Sends a connection status update to the client.
+     * @param connected true if this is connected to client
      */
     public void connectResponse(boolean connected){
         String response = "connect<&>";
@@ -250,13 +251,16 @@ public class UserConnection implements Runnable{
     
     /**
      * GETTER - USERNAME
+     * @return this UserConnection's username
      */
     public String getUsername(){
         return this.username;
     }
     /**
      * Getter - profile.toString()
+     * @return a string representation of this UserConnection's profile
      */
+    @Override
     public String toString(){
         return profile.toString();
     }

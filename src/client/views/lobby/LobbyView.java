@@ -1,9 +1,6 @@
 package client.views.lobby;
 
-import client.views.lobby.LobbyController;
-import client.views.dialogues.GamePanel;
 import javax.swing.DefaultListModel;
-import javax.swing.ListModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -71,10 +68,11 @@ public class LobbyView extends javax.swing.JFrame {
         GameInterfacePanel.setName(""); // NOI18N
 
         titleLabel.setFont(new java.awt.Font("Magneto", 0, 36)); // NOI18N
-        titleLabel.setForeground(new java.awt.Color(91, 162, 129));
+        titleLabel.setForeground(new java.awt.Color(70, 170, 235));
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleLabel.setText("P r o j e c t  P r o m e t h e u s  L o b b y");
+        titleLabel.setText("Prometheus Game Lobby");
         titleLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        titleLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         optionInterfacePanel.setMaximumSize(new java.awt.Dimension(200, 600));
         optionInterfacePanel.setMinimumSize(new java.awt.Dimension(200, 600));
@@ -82,11 +80,6 @@ public class LobbyView extends javax.swing.JFrame {
 
         challengeButton.setText("Challenge");
         challengeButton.setPreferredSize(new java.awt.Dimension(79, 177));
-        challengeButton.addContainerListener(new java.awt.event.ContainerAdapter() {
-            public void componentAdded(java.awt.event.ContainerEvent evt) {
-                challengeButtonComponentAdded(evt);
-            }
-        });
         challengeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 challengeButtonActionListener(evt);
@@ -94,11 +87,6 @@ public class LobbyView extends javax.swing.JFrame {
         });
 
         jButton2.setText("Check Stats");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         logoutButton.setText("Logout");
         logoutButton.addActionListener(new java.awt.event.ActionListener() {
@@ -108,11 +96,6 @@ public class LobbyView extends javax.swing.JFrame {
         });
 
         jButton4.setText("Leaderboard");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
 
         onlinePlayersList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = onlinePlayers;
@@ -191,19 +174,6 @@ public class LobbyView extends javax.swing.JFrame {
         //do something with the challengerName
         controller.challenge(challengerName);
     }//GEN-LAST:event_challengeButtonActionListener
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void challengeButtonComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_challengeButtonComponentAdded
-        GamePanel newGame = new GamePanel();
-        GameInterfacePanel.addTab("Tab 1", newGame);
-    }//GEN-LAST:event_challengeButtonComponentAdded
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        
-    }//GEN-LAST:event_jButton4ActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         controller.logout();

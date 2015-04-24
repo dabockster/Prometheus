@@ -48,19 +48,12 @@ public class ServerView extends javax.swing.JFrame {
     }
     
     /**
-     * UPDATE
+     * UPDATE REGISTERED PROFILES
      * Relays a message from server by appending registeredAccountsTA
      * @param username the message to be relayed
      */
     public void addRegisteredProfile(String username){
         registeredAccountsTA.append(username + "\n");
-    }
-    
-    /**
-     * CLEAR ONLINE PROFILES
-     */
-    public void clearOnlineProfiles(){
-        onlineAccountsTA.setText("");
     }
     
     /**
@@ -70,12 +63,19 @@ public class ServerView extends javax.swing.JFrame {
         registeredAccountsTA.setText("");
     }
     /**
-     * UPDATE
+     * UPDATE ONLINE USERS
      * Relays a message from server by appending onlineAccountsTA
      * @param username the message to be relayed
      */
     public void addOnlineProfile(String username){
         onlineAccountsTA.append(username + "\n");
+    }
+    
+    /**
+     * CLEAR ONLINE USERS
+     */
+    public void clearOnlineProfiles(){
+        onlineAccountsTA.setText("");
     }
 
     /**
@@ -130,11 +130,6 @@ public class ServerView extends javax.swing.JFrame {
         portLabel.setText("Port Number:");
 
         addressTF.setEditable(false);
-        addressTF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addressTFActionPerformed(evt);
-            }
-        });
 
         portTF.setText("8080");
         portTF.setToolTipText("");
@@ -298,10 +293,6 @@ public class ServerView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void addressTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressTFActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addressTFActionPerformed
 
     private void buildServerButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buildServerButton
         if(controller.serverRunning()){

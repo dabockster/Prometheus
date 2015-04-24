@@ -25,7 +25,6 @@ package server.manager;
  */
 
 
-import server.manager.ServerController;
 
 /**
  * ServerStartup main class
