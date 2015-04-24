@@ -284,7 +284,7 @@ public class ClientController {
      * Connect to host
      */
     private void connectToHost(String ip, int port){
-
+        
     }
 
 }

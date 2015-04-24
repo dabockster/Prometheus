@@ -25,7 +25,6 @@ package client.connection;
 
 import client.manager.ClientController;
 import java.net.InetSocketAddress;
-import java.util.Arrays;
 
 /**
  *
