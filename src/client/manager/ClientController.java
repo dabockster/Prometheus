@@ -27,6 +27,8 @@ import client.connection.ClientConnectionController;
 import client.views.lobby.LobbyController;
 import client.views.mainMenu.MainMenuController;
 import client.views.offline.OfflineController;
+import gameplay.GameController;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -42,58 +44,60 @@ public class ClientController {
     private boolean connectedToServer = false;
     private ClientConnectionController cController;
     
+    
+    
+    
     /**
      * ClientController constructor
      */
     public ClientController(){
         cController = new ClientConnectionController(this);
         mainMenu = new MainMenuController(this);
-        model = new ClientModel();
+        model = new ClientModel(this);
         cController.serverRequest("connect"); //sends a connect request to server
     }
     
     /**
-     * Sends a challenge from this ClientConnection to opName
-     * @param opName 
+     * UPDATE REQUEST
+     * Sends a request to the server to receive a list of all online UserProfiles
      */
-    public void challengeRequest(String opName){
-        cController.serverRequest("challengeRequest<&>"+opName);
+    public void updateRequest(){
+        cController.serverRequest("update");
     }
     
     /**
-     * Receives challenge from challengerName 
-     * @param challengerName 
+     * UPDATE RESPONSE
+     * This method receives all online players from server and adds them to 
+     * the OnlinePlayers in the model. It then updates the lobby view.
+     * @param update
      */
-    public void incomingChallenge(String challengerName){
-        lobby.incomingChallenge(challengerName);
-    } 
+    public void updateResponse(String[] update){
+       String[] players = Arrays.copyOfRange(update, 1, update.length);        
+        model.updateOnlinePlayers(players);
+        lobby.updateOnlinePlayers(model.getPlayerNames());
+    }
+
     
     /**
-     * Sends this ClientConnection's response to the challenger
-     * @param accept 
+     * Exits the entire program
+     * @param exitStatus the status of the exit (0 for clean exit, 1 for errors, etc)
      */
-    public void respondToChallenge(boolean accept){
-        if(accept){
-            //host the a new game 
-            //create a ServerSocket
-            //send response to challenge with ip and port
-            //wait for client to connect.
-        }else{
-            //sends a reject response
-        }
+    public void quitProgram(int exitStatus){
+        System.exit(exitStatus);
     }
     
+    
     /**
-     * Receives response to the challenge that this ClientConnection sent
-     * @param response 
+     * Wipes this ClientController and creates a new clientController
      */
-    public void challengeResponse(String[] response){
-        //response[1] the username of the person who responsed
-        //response[2] their response (accept / reject)
-        //if accept:
-            //response[3] ip 
-            //response[4] port
+    public void refreshClient(){      
+        cController = new ClientConnectionController(this);
+        model = new ClientModel(this);
+        connectedToServer = false;
+        mainMenu = new MainMenuController(this);
+        cController.serverRequest("connect");
     }
+
 
     /**
      * NEW CONNECTION TO SERVER
@@ -131,10 +135,10 @@ public class ClientController {
     public void connectResponse(boolean connected){
         if(connected){
             connectedToServer = true;
-            sendServerFeedback("Connected to Server");
+            displayLoginMessage("Connected to Server");
         }else{
             connectedToServer = false;
-            sendServerFeedback("NOT Connected to Server");
+            displayLoginMessage("NOT Connected to Server");
         }   
     }    
     
@@ -159,19 +163,20 @@ public class ClientController {
             lobby = new LobbyController(this);
             mainMenu.dispose();            
         }else{
-            sendServerFeedback(error);
+            displayLoginMessage(error);
         }        
     }
     
     /**
      * LOGOUT REQUEST
+     * Sends a logout request from this to the server.
+     * Disposes the game lobby, closes ClientConnection, and opens the MainMenuView
      */
     public void logoutRequest(){
         cController.serverRequest("logout");
         lobby.dispose();
         refreshClient();
     }
-    
     
     /**
      * REGISTER REQUEST
@@ -186,88 +191,68 @@ public class ClientController {
     
     /**
      * REGISTER RESPONSE
-     * @param success
-     * @param error 
+     * Receives a response to a register request
+     * @param success true if successfully registered
+     * @param error an error to display to the client
      */
     public void registerResponse(boolean success, String error){
         if(success){
             mainMenu.clearFields();
-            sendServerFeedback("Profile Created. Please Login.");
+            displayLoginMessage("Profile Created. Please Login.");
         }else{
-            sendServerFeedback(error);
+            displayLoginMessage(error);
         }
     }
     
     /**
-     * UPDATE REQUEST
+     * Displays a message on the view
+     * @param feedback 
      */
-    public void updateRequest(){
-        cController.serverRequest("update");
-    }
-    
-    /**
-     * UPDATE RESPONSE
-     * This method receives all online players from server and adds them to 
-     * the OnlinePlayers in the model. It then updates the lobby view.
-     * @param update
-     */
-    public void updateResponse(String[] update){
-       String[] players = Arrays.copyOfRange(update, 1, update.length);        
-        model.updateOnlinePlayers(players);
-        lobby.updateOnlinePlayers(model.getPlayerNames());
-    }
-
-    /**
-     * Closes a view
-     * @param view The view to be closed (eg "Offline" for the offline mode).
-     */
-    public void closeView(String view){
-        switch(view){
-            case "Main Menu":
-                mainMenu.dispose();
-                break;
-            case "Offline":
-                offline.disposeView();
-                break;
-        }
-    }
-    
-    /**
-     * Exits the entire program
-     * @param exitStatus the status of the exit (0 for clean exit, 1 for errors, etc)
-     */
-    public void quitProgram(int exitStatus){
-        System.exit(exitStatus);
-    }
-    
-    
-    /**
-     * Wipes this ClientController and creates a new clientController
-     */
-    public void refreshClient(){      
-        cController = new ClientConnectionController(this);
-        model = new ClientModel();
-        connectedToServer = false;
-        mainMenu = new MainMenuController(this);
-        cController.serverRequest("connect");
-    }
-
-
-    
-    public void sendServerFeedback(String feedback){
+    public void displayLoginMessage(String feedback){
         mainMenu.sendFeedback(feedback);
     }
+        
+    /**
+     * Sends a challenge from this ClientConnection to opName
+     * @param opName 
+     */
+    public void challengeRequest(String opName){
+        cController.serverRequest("challengeRequest<&>"+opName);
+    }
     
     /**
-     * called from dialogue box button
-     * sends to ClientConnectionController
-     * @param opName
+     * Receives challenge from challengerName 
+     * @param challengerName 
+     */
+    public void incomingChallenge(String challengerName){
+        lobby.incomingChallenge(challengerName);
+    } 
+    
+    /**
+     * Sends this ClientConnection's response to the challenger
      * @param accept 
      */
-    public void challengeResponse(String opName,boolean accept){
+    public void respondToChallenge(boolean accept){
         if(accept){
-            //cController.interpretResponse("challengeResponse<&>"+opName+"<&>true");
+            //host the a new game
+            //create a ServerSocket
+            //send response to challenge with ip and port
+            //wait for client to connect
+        }else{
+            //sends a reject response
         }
+    }
+    
+    /**
+     * Receives response to the challenge that this ClientConnection sent
+     * @param response 
+     */
+    public void challengeResponse(String[] response){
+        //response[1] the username of the person who responsed
+        //response[2] their response (accept / reject)
+        //if accept:
+            //response[3] ip 
+            //response[4] port
     }
 
 }

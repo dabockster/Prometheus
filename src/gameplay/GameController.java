@@ -30,11 +30,11 @@ import client.manager.ClientController;
  * 
  * @author PLUCSCE
  */
-public class MatchController {
+public class GameController {
     
     //data fields
     ClientController controller;
-    MatchView view;
+    GameView view;
     PeerToPeerConnection connection;
     
     /**
@@ -43,7 +43,7 @@ public class MatchController {
      * PeerToPeerConnection where it will accept the connecting client.
      * @param controller the client controller to which this will communicate
      */
-    public MatchController(ClientController controller){
+    public GameController(ClientController controller){
         this.controller = controller;
         //creates view
         //creates PeerToPeerConnection to host
@@ -57,7 +57,7 @@ public class MatchController {
      * @param ip the IP address of the host
      * @param port the port number of the host
      */
-    public MatchController(ClientController controller, String ip, int port){
+    public GameController(ClientController controller, String ip, int port){
         this.controller = controller;
         //creates view
         //creates PeerToPeerConnection to connect

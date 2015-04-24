@@ -23,6 +23,7 @@
  */
 package client.manager;
 
+import gameplay.GameController;
 import server.manager.UserProfile;
 import java.util.ArrayList;
 
@@ -32,13 +33,16 @@ import java.util.ArrayList;
  */
 public class ClientModel {
     
+    private ClientController controller;
     private ArrayList<UserProfile> onlinePlayers;
-    
+    private ArrayList<GameController> currentGames = new ArrayList<>();
+
     
     /**
      * GameModel constructor
      */
-    public ClientModel(){
+    public ClientModel(ClientController controller){
+        this.controller = controller;
         onlinePlayers = new ArrayList<UserProfile>();
     }
     
@@ -64,6 +68,10 @@ public class ClientModel {
          onlinePlayers.add(new UserProfile(profileString));
      }
     
+    /**
+     * Returns an array of Strings of all online players
+     * @return 
+     */
     public String[] getPlayerNames(){
         if(onlinePlayers == null)
             return null;
@@ -72,7 +80,6 @@ public class ClientModel {
         for(int i=0; i<playerNames.length; i++){
            playerNames[i] = onlinePlayers.get(i).getUsername();
         }
-        
         return playerNames;
     }
     

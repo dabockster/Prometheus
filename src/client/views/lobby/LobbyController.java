@@ -18,6 +18,7 @@ public class LobbyController {
     private RequestDialog challenger;
     private final ClientController controller;
     
+    
     public LobbyController(ClientController ctrl){
         view = new LobbyView(this);
         view.setVisible(true);
@@ -32,15 +33,25 @@ public class LobbyController {
         controller.challengeRequest(opName);
     }
     
-    public void incomingChallenge(String opName){
-        System.out.println("Challenger: "+ opName);
-        challenger = new RequestDialog(view, this, opName);
+    /**
+     * Receives challenge from challengerName and displays a RequestDialogue 
+     * @param challengerName 
+     */
+    public void incomingChallenge(String challengerName){
+        System.out.println("Challenger: "+ challengerName);
+        challenger = new RequestDialog(view, this, challengerName);
     }
     
+    /**
+     * Sends an accept Challenge response to the challenger
+     */
     public void acceptChallenge(){
         controller.respondToChallenge(true);
     }
     
+    /**
+     * Sends a reject Challenge response to the challenger
+     */
     public void rejectChallenge(){
         controller.respondToChallenge(false);
     }
@@ -50,11 +61,18 @@ public class LobbyController {
         view.updatePlayers(onlinePlayers);
     }
     
+    /**
+     * Logs the user out
+     * @return 
+     */
     public int logout(){
         controller.logoutRequest();
         return 0;
     }
     
+    /**
+     * Dispose the view
+     */
     public void dispose(){
         view.dispose();
     }

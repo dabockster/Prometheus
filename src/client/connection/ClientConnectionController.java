@@ -200,7 +200,7 @@ public class ClientConnectionController {
      * SERVER FEEDBACK
      */
     public void sendServerFeedback(String response){
-        controller.sendServerFeedback(response);
+        controller.displayLoginMessage(response);
     }
     
     public void interpretDetails(String[] ipPort){

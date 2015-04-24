@@ -28,12 +28,12 @@ package gameplay;
  *
  * @author PLUCSCE
  */
-public class MatchView extends javax.swing.JPanel {
+public class GameView extends javax.swing.JPanel {
 
     /**
      * Creates new form GameView
      */
-    public MatchView() {
+    public GameView() {
         initComponents();
     }
 
