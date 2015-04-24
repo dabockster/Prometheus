@@ -53,7 +53,7 @@ public class ClientController {
     }
     
     /**
-     * Sends Challenge from this ClientConnection
+     * Sends a challenge from this ClientConnection to opName
      * @param opName 
      */
     public void challengeRequest(String opName){
@@ -61,30 +61,40 @@ public class ClientController {
     }
     
     /**
-     * Receives response to the challenge that this ClientConnection sent
-     * @param response 
-     */
-    public void challengeResponse(String[] response){
-        //This will contain the username of the person who responsed
-        //their response (accept / reject)
-        //if accept, it will contain ip and port
-    }
-    
-    /**
-     * Receives Challenge from challenger ClientConnection
+     * Receives challenge from challengerName 
      * @param challengerName 
      */
     public void incomingChallenge(String challengerName){
         lobby.incomingChallenge(challengerName);
-    }
+    } 
     
     /**
      * Sends this ClientConnection's response to the challenger
      * @param accept 
      */
     public void respondToChallenge(boolean accept){
-        
+        if(accept){
+            //host the a new game 
+            //create a ServerSocket
+            //send response to challenge with ip and port
+            //wait for client to connect.
+        }else{
+            //sends a reject response
+        }
     }
+    
+    /**
+     * Receives response to the challenge that this ClientConnection sent
+     * @param response 
+     */
+    public void challengeResponse(String[] response){
+        //response[1] the username of the person who responsed
+        //response[2] their response (accept / reject)
+        //if accept:
+            //response[3] ip 
+            //response[4] port
+    }
+
     /**
      * NEW CONNECTION TO SERVER
      * Connects to a specified IP address and port
