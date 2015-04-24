@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package client.views.dialogues;
+package client.views.lobby;
 
 import client.views.lobby.LobbyController;
 
@@ -32,16 +32,21 @@ import client.views.lobby.LobbyController;
  */
 public class RequestDialog extends javax.swing.JDialog {
     
-    private LobbyController controller;
+    LobbyController controller;
     
     /**
      * CONSTRUCTOR
      * Creates new form RequestDialog
+     * @param parent
+     * @param controller
+     * @param opName
      */
     public RequestDialog(java.awt.Frame parent, LobbyController controller, String opName) {
+        super(parent);
         this.controller = controller;
-        opponentLabel.setText(opName.toUpperCase());
         initComponents();
+        setVisible(true);
+        opponentLabel.setText(opName.toUpperCase());
     }
 
     /**
@@ -195,4 +200,5 @@ public class RequestDialog extends javax.swing.JDialog {
     private javax.swing.JPanel messagePanel;
     private javax.swing.JLabel opponentLabel;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -43,7 +43,7 @@ public class ClientController {
     private ClientConnectionController cController;
     
     /**
-     * GameController constructor
+     * ClientController constructor
      */
     public ClientController(){
         cController = new ClientConnectionController(this);
@@ -52,20 +52,36 @@ public class ClientController {
         cController.serverRequest("connect"); //sends a connect request to server
     }
     
+    /**
+     * Sends Challenge from this ClientConnection
+     * @param opName 
+     */
     public void challengeRequest(String opName){
         cController.serverRequest("challengeRequest<&>"+opName);
     }
     
+    /**
+     * Receives response to the challenge that this ClientConnection sent
+     * @param response 
+     */
     public void challengeResponse(String[] response){
         //This will contain the username of the person who responsed
         //their response (accept / reject)
         //if accept, it will contain ip and port
     }
     
+    /**
+     * Receives Challenge from challenger ClientConnection
+     * @param challengerName 
+     */
     public void incomingChallenge(String challengerName){
         lobby.incomingChallenge(challengerName);
     }
     
+    /**
+     * Sends this ClientConnection's response to the challenger
+     * @param accept 
+     */
     public void respondToChallenge(boolean accept){
         
     }

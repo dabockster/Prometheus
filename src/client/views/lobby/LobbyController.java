@@ -7,7 +7,6 @@
 package client.views.lobby;
 
 import client.manager.ClientController;
-import client.views.dialogues.RequestDialog;
 
 /**
  *
@@ -34,6 +33,7 @@ public class LobbyController {
     }
     
     public void incomingChallenge(String opName){
+        System.out.println("Challenger: "+ opName);
         challenger = new RequestDialog(view, this, opName);
     }
     
