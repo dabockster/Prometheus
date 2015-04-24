@@ -266,10 +266,13 @@ public class ClientController {
      * Create a GameView
      * Create a PeerToPeerConnection
      * Open ServerSocket and wait for client to connect
-     * 
+     * @return the port that the game is being hosted on
      */
-    private void hostGame(){
-      
+    private int hostGame(){
+        
+        
+        
+        return 0;
     }
     
     /**
@@ -280,7 +283,7 @@ public class ClientController {
      * Create a PeerToPeerConnection
      * Connect to host
      */
-    private void connectToHost(){
+    private void connectToHost(String ip, int port){
 
     }
 

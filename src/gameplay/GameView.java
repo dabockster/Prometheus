@@ -29,12 +29,36 @@ package gameplay;
  * @author PLUCSCE
  */
 public class GameView extends javax.swing.JPanel {
+    
+    String username = "Me";
+    GameController controller;
 
     /**
      * Creates new form GameView
      */
-    public GameView() {
+    public GameView(GameController controller) {
+        this.controller = controller;
         initComponents();
+    }
+    
+    /**
+     * Appends username to front of msg
+     * Posts message to GameView
+     * Sends message to opponent
+     * @param msg 
+     */
+    private void sendMsg(String msg){
+        msg = username+": "+msg;
+        postMsg(msg);
+        controller.sendMsg(msg);        
+    }
+    
+    /**
+     * Posts message to GameView with a blank line following
+     * @param msg 
+     */
+    public void postMsg(String msg){
+        msgBoardTA.append(msg+"\n\n");
     }
 
     /**
@@ -46,19 +70,149 @@ public class GameView extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        boardPanel = new javax.swing.JPanel();
+        interfacePanel = new javax.swing.JPanel();
+        msgBoardPanel = new javax.swing.JScrollPane();
+        msgBoardTA = new javax.swing.JTextArea();
+        msgTF = new javax.swing.JTextField();
+        sendButton = new javax.swing.JButton();
+        surrenderButton = new javax.swing.JButton();
+        playMoveButton = new javax.swing.JButton();
+
+        setToolTipText("");
+        setMaximumSize(new java.awt.Dimension(880, 600));
+        setMinimumSize(new java.awt.Dimension(880, 600));
+        setPreferredSize(new java.awt.Dimension(880, 600));
+
+        javax.swing.GroupLayout boardPanelLayout = new javax.swing.GroupLayout(boardPanel);
+        boardPanel.setLayout(boardPanelLayout);
+        boardPanelLayout.setHorizontalGroup(
+            boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 570, Short.MAX_VALUE)
+        );
+        boardPanelLayout.setVerticalGroup(
+            boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 570, Short.MAX_VALUE)
+        );
+
+        interfacePanel.setMaximumSize(new java.awt.Dimension(284, 570));
+        interfacePanel.setMinimumSize(new java.awt.Dimension(284, 570));
+
+        msgBoardTA.setColumns(20);
+        msgBoardTA.setRows(5);
+        msgBoardPanel.setViewportView(msgBoardTA);
+
+        msgTF.setText("Write smack-talk here");
+
+        sendButton.setText("Send");
+        sendButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendButtonActionPerformed(evt);
+            }
+        });
+
+        surrenderButton.setFont(new java.awt.Font("Segoe UI Symbol", 0, 18)); // NOI18N
+        surrenderButton.setText("Surrender");
+        surrenderButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                surrenderButtonActionPerformed(evt);
+            }
+        });
+
+        playMoveButton.setFont(new java.awt.Font("Segoe UI Symbol", 0, 18)); // NOI18N
+        playMoveButton.setText("Play Move");
+        playMoveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playMoveButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout interfacePanelLayout = new javax.swing.GroupLayout(interfacePanel);
+        interfacePanel.setLayout(interfacePanelLayout);
+        interfacePanelLayout.setHorizontalGroup(
+            interfacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(msgBoardPanel)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, interfacePanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(interfacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, interfacePanelLayout.createSequentialGroup()
+                        .addComponent(msgTF, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, interfacePanelLayout.createSequentialGroup()
+                        .addComponent(playMoveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(surrenderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        );
+        interfacePanelLayout.setVerticalGroup(
+            interfacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(interfacePanelLayout.createSequentialGroup()
+                .addComponent(msgBoardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(interfacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sendButton)
+                    .addComponent(msgTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addGroup(interfacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(surrenderButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(playMoveButton, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(boardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(interfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(interfacePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(boardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(4, Short.MAX_VALUE))
         );
+
+        getAccessibleContext().setAccessibleName("");
     }// </editor-fold>//GEN-END:initComponents
+
+    /**
+     * SURRENDER BUTTON
+     * Surrenders this game over to the opponent. This Client receives a loss
+     * @param evt 
+     */
+    private void surrenderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_surrenderButtonActionPerformed
+        //send surrender message to opponent (a method 'receiveSurrender' will be implemented)
+        //record game as loss
+        //close GameController (rematch?)        
+    }//GEN-LAST:event_surrenderButtonActionPerformed
+
+    private void playMoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playMoveButtonActionPerformed
+        //sends a message with game play coordinates to other player
+        //plays move (Game model? idk)
+        //end turn
+    }//GEN-LAST:event_playMoveButtonActionPerformed
+
+    private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sendButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel boardPanel;
+    private javax.swing.JPanel interfacePanel;
+    private javax.swing.JScrollPane msgBoardPanel;
+    private javax.swing.JTextArea msgBoardTA;
+    private javax.swing.JTextField msgTF;
+    private javax.swing.JButton playMoveButton;
+    private javax.swing.JButton sendButton;
+    private javax.swing.JButton surrenderButton;
     // End of variables declaration//GEN-END:variables
 }

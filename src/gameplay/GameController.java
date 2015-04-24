@@ -63,4 +63,23 @@ public class GameController {
         //creates PeerToPeerConnection to connect
     }
     
+    /**
+     * Sends a message to opponent and updates view
+     * @param msg the message to be sent
+     */
+    public void sendMsg(String msg){
+        //sends msg to PeerToPeerConnection
+        //update view
+    }
+    
+    /**
+     * Receives a message from opponent and updates view
+     * @param msg the message received
+     */
+    public void receiveMsg(String msg){
+        //updates view
+    }
+    
+    
+    
 }
