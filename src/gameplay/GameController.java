@@ -35,7 +35,11 @@ public class GameController {
     //data fields
     ClientController controller;
     GameView view;
+    
+    
     PeerToPeerConnection connection;
+    private String ip;
+    private int port;
     
     /**
      * HOST CONSTRUCTOR
@@ -45,7 +49,10 @@ public class GameController {
      */
     public GameController(ClientController controller){
         this.controller = controller;
+        this.view = new GameView(this);
         //creates view
+        this.connection = new PeerToPeerConnection(this);
+        
         //creates PeerToPeerConnection to host
     }
     
@@ -59,6 +66,7 @@ public class GameController {
      */
     public GameController(ClientController controller, String ip, int port){
         this.controller = controller;
+        this.view = new GameView(this);
         //creates view
         //creates PeerToPeerConnection to connect
     }
@@ -80,6 +88,10 @@ public class GameController {
         //updates view
     }
     
-    
-    
+    /**
+     * Sets this port to the specified value
+     */
+    public void setPort(int port){
+        this.port = port;
+   }
 }

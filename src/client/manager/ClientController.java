@@ -237,8 +237,8 @@ public class ClientController {
      */
     public void respondToChallenge(boolean accept){
         if(accept){
-            //host the a new game
-            //send response to challenge with ip and port
+            model.addGame(new GameController(this));
+            // creates ip and port
             //wait for client to connect
         }else{
             //sends a reject response

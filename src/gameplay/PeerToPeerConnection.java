@@ -6,23 +6,24 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author PLUCSCE
  */
-public class PeerToPeerConnection {
+public class PeerToPeerConnection implements Runnable{
     
-    private ClientController controller;
-    
+    //Data fields for both connector and host
+    private GameController controller;
     private DataOutputStream streamOut;
     private DataInputStream streamIn;
+    private Socket socket;    
+    protected Thread worker;
     
-    private Socket socket;
     private ServerSocket hostSocket;
-    
-    protected Thread listeningToServer;
-    
+
     public boolean connected = false;    
 
     /**
@@ -30,8 +31,14 @@ public class PeerToPeerConnection {
      * Creates a PeerToPeerConnection to host a game
      * @param controller the GameController for this game
      */
-    public PeerToPeerConnection(ClientController controller){
+    public PeerToPeerConnection(GameController controller){
         this.controller = controller;
+        try{
+            hostSocket = new ServerSocket(0);
+            controller.setPort(hostSocket.getLocalPort());
+        } catch(IOException e){//Add exception
+            
+        }
     }
     
     /**
@@ -41,7 +48,7 @@ public class PeerToPeerConnection {
      * @param ip
      * @param port
      */
-    public PeerToPeerConnection(ClientController controller, String ip, int port){
+    public PeerToPeerConnection(GameController controller, String ip, int port){
         this.controller = controller;
         
     }
@@ -54,6 +61,7 @@ public class PeerToPeerConnection {
         try{
             streamIn = new DataInputStream(socket.getInputStream());
             streamOut = new DataOutputStream(socket.getOutputStream());
+            connected = true;
         }catch(IOException ex){
             connected = false;
         }
@@ -64,14 +72,35 @@ public class PeerToPeerConnection {
      * Closes the InputStream and OutputStream
      */
     private synchronized void close(){
-
+        try{
+            if(socket != null){
+                socket.close();
+            }if(streamIn != null){
+                streamIn.close();
+            }if(streamOut != null){
+                streamOut.close();
+            }
+        }
+        catch(IOException ioe){
+        }
     }
-    
+    public void start() {
+        worker = new Thread(this);
+        worker.start();
+    }
     /**
      * Listens for commands from the socket
      */
     public void run(){
-
+        open();
+        while(connected){
+            try {
+                socket = hostSocket.accept();
+            } catch (IOException ex) {
+                Logger.getLogger(PeerToPeerConnection.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
     }
     
     
