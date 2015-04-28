@@ -24,7 +24,7 @@ public class PeerToPeerConnection {
     protected Thread listeningToServer;
     
     public boolean connected = false;    
-    
+
     /**
      * HOST CLIENT
      * Creates a PeerToPeerConnection to host a game
