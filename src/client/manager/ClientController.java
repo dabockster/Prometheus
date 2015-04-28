@@ -269,8 +269,8 @@ public class ClientController {
      * @return the port that the game is being hosted on
      */
     private int hostGame(){
-        
-        
+        GameController newGame=new GameController(this);
+        model.addGame(newGame);
         
         return 0;
     }
@@ -284,10 +284,6 @@ public class ClientController {
      * Connect to host
      */
     private void connectToHost(String ip, int port){
-        
-    }
-    
-    private void launchGame(){
         GameController newGame=new GameController(this);
         model.addGame(newGame);
     }
