@@ -286,5 +286,10 @@ public class ClientController {
     private void connectToHost(String ip, int port){
         
     }
+    
+    private void launchGame(){
+        GameController newGame=new GameController(this);
+        model.addGame(newGame);
+    }
 
 }
