@@ -8,7 +8,14 @@ import client.manager.ClientController;
  */
 public class PeerToPeerConnection {
     
-
+    /*
+        Dear Tim and Sean,
+    
+            AYY LMAO
+    
+            Sincerely,
+             Steven
+    */  
     
     /**
      * HOST CLIENT
