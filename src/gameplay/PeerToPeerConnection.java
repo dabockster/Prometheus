@@ -1,6 +1,11 @@
 package gameplay;
 
 import client.manager.ClientController;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 /**
  *
@@ -8,7 +13,17 @@ import client.manager.ClientController;
  */
 public class PeerToPeerConnection {
     
-
+    private ClientController controller;
+    
+    private DataOutputStream streamOut;
+    private DataInputStream streamIn;
+    
+    private Socket socket;
+    private ServerSocket hostSocket;
+    
+    protected Thread listeningToServer;
+    
+    public boolean connected = false;    
     
     /**
      * HOST CLIENT
@@ -16,7 +31,7 @@ public class PeerToPeerConnection {
      * @param controller the GameController for this game
      */
     public PeerToPeerConnection(ClientController controller){
-        
+        this.controller = controller;
     }
     
     /**
@@ -27,6 +42,7 @@ public class PeerToPeerConnection {
      * @param port
      */
     public PeerToPeerConnection(ClientController controller, String ip, int port){
+        this.controller = controller;
         
     }
     
@@ -35,7 +51,12 @@ public class PeerToPeerConnection {
      * Gets InputStream and OutputStream from socket
      */
     public synchronized void open(){
-        //do it.
+        try{
+            streamIn = new DataInputStream(socket.getInputStream());
+            streamOut = new DataOutputStream(socket.getOutputStream());
+        }catch(IOException ex){
+            connected = false;
+        }
     }
     
     /**
@@ -43,14 +64,14 @@ public class PeerToPeerConnection {
      * Closes the InputStream and OutputStream
      */
     private synchronized void close(){
-        //do it, man. do it!
+
     }
     
     /**
      * Listens for commands from the socket
      */
     public void run(){
-        //Cmon man! just do it already!
+
     }
     
     
