@@ -1,26 +1,4 @@
-/*
- * The MIT License
- *
- * Copyright 2015 PLUCSCE.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
+
 
 package gameplay;
 
@@ -33,13 +11,10 @@ import client.manager.ClientController;
 public class GameController {
     
     //data fields
-    ClientController controller;
-    GameView view;
-    
-    
-    PeerToPeerConnection connection;
-    private String ip;
-    private int port;
+    private ClientController controller;
+    private GameView view;
+    private PeerToPeerConnection connection;
+    private String opName; //opponent's name
     
     /**
      * HOST CONSTRUCTOR
@@ -47,13 +22,11 @@ public class GameController {
      * PeerToPeerConnection where it will accept the connecting client.
      * @param controller the client controller to which this will communicate
      */
-    public GameController(ClientController controller){
+    public GameController(String opName, ClientController controller){
+        this.opName = opName;
         this.controller = controller;
-        this.view = new GameView(this);
-        //creates view
         this.connection = new PeerToPeerConnection(this);
-        
-        //creates PeerToPeerConnection to host
+        this.view = new GameView(this);
     }
     
     /**
@@ -64,11 +37,28 @@ public class GameController {
      * @param ip the IP address of the host
      * @param port the port number of the host
      */
-    public GameController(ClientController controller, String ip, int port){
+    public GameController(String opName, ClientController controller, String ip, int port){
+        this.opName = opName;
         this.controller = controller;
+        this.connection = new PeerToPeerConnection(this, ip, port);
         this.view = new GameView(this);
-        //creates view
-        //creates PeerToPeerConnection to connect
+    }
+    
+    /**
+     * INTERPRET COMMUNICATIONS
+     * Receives a string, assesses the string's purpose, then executes an operation.
+     * This method takes an array of Strings and interprets the first index 
+     * to determine an operation. The method then passes the unused indexes
+     * of the string array to the method of the subsequent operation.
+     * @param request the string array to be interpreted 
+     */
+    public synchronized void interpretRequest(String[] request){
+        switch(request[0]){
+            case "message" :
+                this.receiveMsg(request[1]);
+                break;
+                
+        }
     }
     
     /**
@@ -76,8 +66,8 @@ public class GameController {
      * @param msg the message to be sent
      */
     public void sendMsg(String msg){
-        //sends msg to PeerToPeerConnection
-        //update view
+        connection.request(msg);
+        //updateView
     }
     
     /**
@@ -91,7 +81,7 @@ public class GameController {
     /**
      * Sets this port to the specified value
      */
-    public void setPort(int port){
-        this.port = port;
+    public void sendHostAddress(String ip, int port){
+        controller.sendHostAddress(opName, ip,port); 
    }
 }

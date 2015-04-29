@@ -21,7 +21,6 @@ public class UserConnection implements Runnable{
     
     private final ServerController controller;    
     private final Socket socket;
-    private final int port;
     protected Thread handler;
     
     private DataInputStream streamIn = null;
@@ -44,7 +43,6 @@ public class UserConnection implements Runnable{
     public UserConnection(ServerController controller, Socket clientSocket){
         this.controller = controller;
         this.socket = clientSocket;
-        this.port = socket.getPort();
         controller.addConnection(this);
     }
     
@@ -221,21 +219,21 @@ public class UserConnection implements Runnable{
         }else{
             controller.relayChallengeResponse(true, challengerUsername, request[3], Integer.parseInt(request[4]));
             sendClientFeedback("challenge accepted from "+challengerUsername);
-
         }
     }
     
     /**
      * RESPONSE - RELAY CHALLENGE RESPONSE
      * Receives a challenge response from the server on behalf of another client.
-     * @param details if they accepted this will contain the address to connect
-     * @param accept true if they accepted challenge
+     * @param response if they accepted this will contain the address to connect
+     * @param accepted true if they accepted challenge
      */
     public void relayChallengeResponse(boolean accepted, String response){
+        //response = uname, ip, port
         if(accepted){
-            sendResponse("challengeAccepted<&>"+response);
+            sendResponse("challengeResponse<&>accept"+response);
         }else{
-            sendResponse("challengeRejected<&>"+response);
+            sendResponse("challengeResponse<&>reject"+response);
         }
     }
     

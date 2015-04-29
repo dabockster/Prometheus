@@ -46,8 +46,8 @@ public class ClientConnection implements Runnable{
     }
     
     /**
-     * SETUP
-     * Opens the client socket
+     * Opens the  socket.
+     * Gets InputStream and OutputStream from socket
      */
     private void open(){
         String serverName = serverAddr.getHostName();
@@ -86,8 +86,8 @@ public class ClientConnection implements Runnable{
         open();
         while(connected){
             try{
-                String cmnd = streamIn.readUTF();
-                String response[] = cmnd.split("<&>");
+                String request = streamIn.readUTF();
+                String response[] = request.split("<&>");
                 System.out.println("Received Response: "+response[0]);
                 if(response[0].equals("disconnect")){
                         connected = false;

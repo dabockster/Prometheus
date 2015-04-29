@@ -33,6 +33,7 @@ import client.views.lobby.LobbyController;
 public class RequestDialog extends javax.swing.JDialog {
     
     LobbyController controller;
+    String opName;
     
     /**
      * CONSTRUCTOR
@@ -43,6 +44,7 @@ public class RequestDialog extends javax.swing.JDialog {
      */
     public RequestDialog(java.awt.Frame parent, LobbyController controller, String opName) {
         super(parent);
+        this.opName = opName;
         this.controller = controller;
         initComponents();
         setVisible(true);
@@ -181,12 +183,12 @@ public class RequestDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void acceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptButtonActionPerformed
-        controller.acceptChallenge();
+        controller.acceptChallenge(opName);
         dispose();        
     }//GEN-LAST:event_acceptButtonActionPerformed
 
     private void declineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_declineButtonActionPerformed
-        controller.rejectChallenge();
+        controller.rejectChallenge(opName);
         dispose();
     }//GEN-LAST:event_declineButtonActionPerformed
 

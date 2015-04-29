@@ -45,15 +45,15 @@ public class LobbyController {
     /**
      * Sends an accept Challenge response to the challenger
      */
-    public void acceptChallenge(){
-        controller.respondToChallenge(true);
+    public void acceptChallenge(String opName){
+        controller.respondToChallenge(opName, true);
     }
     
     /**
      * Sends a reject Challenge response to the challenger
      */
-    public void rejectChallenge(){
-        controller.respondToChallenge(false);
+    public void rejectChallenge(String opName){
+        controller.respondToChallenge(opName, false);
     }
     
     //update View

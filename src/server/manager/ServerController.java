@@ -65,7 +65,7 @@ public class ServerController {
         view.setVisible(true);
     }
     
-        /** VIEW - FEEDBACK
+    /** VIEW - FEEDBACK
      * Relays a message to the view to be displayed
      * @param feedback the message to be relayed
      */
@@ -109,7 +109,7 @@ public class ServerController {
         if(connection.isStopped){
             this.sendServerFeedback("How does one stop that which never began?");
         }else            
-            connection.stop();
+            connection.close();
         serverUp = false;
     }
     
@@ -232,11 +232,11 @@ public class ServerController {
     /**
      * RELAY CHALLENGE REQUEST
      * Forwards a challenge request from one UserConnection to another.
-     * @param challengerUName the username of the challenger
-     * @param request information containin
+     * @param challengerUsername the username of the challenger
+     * @param opName The opponents username
      */
-    public void relayChallengeRequest(String challengerUsername, String opponentUsername){
-        UserConnection ucon = model.getUserConnection(opponentUsername);
+    public void relayChallengeRequest(String challengerUsername, String opName){
+        UserConnection ucon = model.getUserConnection(opName);
         ucon.relayChallengeRequest(challengerUsername);
     }
     

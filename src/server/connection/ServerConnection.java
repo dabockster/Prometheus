@@ -56,10 +56,10 @@ public class ServerConnection implements Runnable{
     }    
     
     /**
-     * SETUP
+     * Opens the socket
      * Initializes the ServerConnection socket on port serverPort.
      */
-    private void openServerConnection(){
+    private void open(){
         if(this.socket != null){
             sendServerFeedback("Failed to Open - Socket Already In Use");
             return;
@@ -73,10 +73,10 @@ public class ServerConnection implements Runnable{
     }
     
     /**
-     * TEARDOWN
+     * Closes socket
      * Stops the ServerConnection it is no longer accepting new clients.
      */
-    public synchronized void stop(){
+    public synchronized void close(){
         this.isStopped = true;
         try{
             this.socket.close();
@@ -95,7 +95,7 @@ public class ServerConnection implements Runnable{
         synchronized(this){
             this.acceptingNewClients = Thread.currentThread();
         }
-        openServerConnection();
+        open();
         while(! isStopped()){
             Socket client = null;
                 try{

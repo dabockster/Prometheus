@@ -235,57 +235,39 @@ public class ClientController {
      * Sends a response to challenger saying reject
      * @param accept 
      */
-    public void respondToChallenge(boolean accept){
+    public void respondToChallenge(String opName, boolean accept){
         if(accept){
-            model.addGame(new GameController(this));
-            // creates ip and port
-            //wait for client to connect
-        }else{
-            //sends a reject response
+            model.addGame(new GameController(opName, this));
+            //creates GameController which will send a serverRequest containing
+            //IP and port to connect to
+        }else{//reject
+            cController.serverRequest("challengeResponse<&>"+opName+"<&>reject");
         }
+    }
+    
+    /**
+     * Sends the hosting IP and port to the challenging client.
+     * @param opName
+     * @param ip
+     * @param port 
+     */
+    public void sendHostAddress(String opName, String ip, int port){
+        cController.serverRequest("challengeResponse<&>"+opName+"<&>accept<&>"+ip+"<&>"+port);
     }
     
     /**
      * RECEIVE RESPONSE TO CHALLENGE
      * Receives the username and response (true/false) of the person who responded
      * if accept it will call connectToHost
-     * @param response 
+     * @param response contains responseToChallenge, username, ip, port
      */
     public void challengeResponse(String[] response){
-        //response[1] the username of the person who responsed
-        //response[2] their response (accept / reject)
-        //if accept:
-            //response[3] ip 
-            //response[4] port
-    }
-    
-    /**
-     * HOST A PEER2PEER GAME
-     * Creates a GameController
-     * Adds GameController to list of currentGames in ClientModel
-     * Create a GameView
-     * Create a PeerToPeerConnection
-     * Open ServerSocket and wait for client to connect
-     * @return the port that the game is being hosted on
-     */
-    private int hostGame(){
-        GameController newGame=new GameController(this);
-        model.addGame(newGame);
-        
-        return 0;
-    }
-    
-    /**
-     * CONNECT TO A PEER2PEER GAME
-     * Creates a GameController
-     * Adds GamesController to list of currentGames in ClientModel
-     * Creates a GameView
-     * Create a PeerToPeerConnection
-     * Connect to host
-     */
-    private void connectToHost(String ip, int port){
-        GameController newGame=new GameController(this);
-        model.addGame(newGame);
+        String opName = response[2];
+        if(response[1].equals("reject")){
+            //display rejection
+        }else{
+            model.addGame(new GameController(opName,this,response[3],Integer.parseInt(response[4])));
+        }
     }
 
 }
