@@ -57,8 +57,7 @@ public class ServerController {
         model = new ServerModel(this);
         connection = null;
         try{
-            address = InetAddress.getLocalHost();
-            view.setIP(address.getHostAddress());
+            view.setIP(InetAddress.getLocalHost().getHostAddress());
         }catch (UnknownHostException ex){
             view.serverFeedback("Failed to identify this machine's IP address.");
         }
@@ -152,7 +151,6 @@ public class ServerController {
             File file = new File("accounts.txt");
             try (PrintWriter out = new PrintWriter(file)) {
                 while( model.numberOfProfiles()>0 ){
-                    System.out.println(model.registeredUserCount());
                     String nextProfile = model.pullProfileString();
                     sendServerFeedback(nextProfile);
                     out.println(nextProfile);
@@ -161,7 +159,6 @@ public class ServerController {
             }
         }
         catch(IOException ex){
-            System.out.println("Could not write to file." + ex);
             sendServerFeedback("Failed to write UserProfiles to file.");
         }
     }   
@@ -191,7 +188,6 @@ public class ServerController {
         }
         for(int i=0; i<model.numberOfConnections(); i++){
             UserConnection ucon = model.getUserConnection(i);
-            System.out.println("USER CONNECTIONS :  " + ucon.getUsername() + "    CMND : "+response);
             if(ucon.loggedOn)
                 updateConnection(ucon, response);
         }
@@ -243,19 +239,19 @@ public class ServerController {
     /**
      * RELAY CHALLENGE RESPONSE
      * Forwards a challenge response from one UserConnection to another.
-     * @param acceptedChallenge
+     * @param acceptChallenge
      * @param challengerUsername
      * @param ip
      * @param port
      */
-    public void relayChallengeResponse(boolean acceptedChallenge, String challengerUsername, String ip, int port){
+    public void relayChallengeResponse(String myUsername, boolean acceptChallenge, String challengerUsername, String ip, int port){
         UserConnection ucon = model.getUserConnection(challengerUsername);
-        String response = challengerUsername;
-        if(!acceptedChallenge){
-            ucon.relayChallengeResponse(acceptedChallenge,response);
+        String response = myUsername;
+        if(!acceptChallenge){
+            ucon.relayChallengeResponse(acceptChallenge,response);
         }else{
             response = response +"<&>"+ip+"<&>"+port;
-            ucon.relayChallengeResponse(acceptedChallenge,response);
+            ucon.relayChallengeResponse(acceptChallenge,response);
         }
     }
     
@@ -278,7 +274,7 @@ public class ServerController {
             ucon.setUserProfile(profile);
             ucon.setAnon(true);
             ucon.loggedOn = true;
-            ucon.sendResponse("loginResponse<&>success");
+            ucon.sendResponse("loginResponse<&>success<&>"+ucon.getUsername());
             sendClientFeedback(ucon.getUsername()+": Anonymous Login Succssful");
             this.updateViewConnections();
             updateAll();
@@ -294,7 +290,7 @@ public class ServerController {
                 profile.logon();
                 ucon.setUserProfile(profile);
                 ucon.loggedOn = true;
-                ucon.sendResponse("loginResponse<&>success");
+                ucon.sendResponse("loginResponse<&>success<&>"+ucon.getUsername());
                 sendClientFeedback(ucon.getUsername()+": Login Succssful");
                 this.updateViewConnections();
                 updateAll();

@@ -88,7 +88,7 @@ public class ClientConnection implements Runnable{
             try{
                 String request = streamIn.readUTF();
                 String response[] = request.split("<&>");
-                System.out.println("Received Response: "+response[0]);
+  //Tracer              System.out.println("Received Response: "+response[0]);
                 if(response[0].equals("disconnect")){
                         connected = false;
                         this.close();

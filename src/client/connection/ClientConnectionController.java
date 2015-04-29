@@ -91,7 +91,6 @@ public class ClientConnectionController {
      * @param cmnd 
      */
     public void serverRequest(String request){
-        System.out.println("Sent Request: " + request);
         connection.serverRequest(request);
     }
     
@@ -143,7 +142,7 @@ public class ClientConnectionController {
      */
     private void loginResponse(String[] response){
         if(response[1].equals("success")){
-            controller.loginResponse(true, null);
+            controller.loginResponse(true, response[2]);
         }else if(response[1].equals("failure")){
             switch(response[2]){
                 case "nonexistent":
@@ -182,7 +181,6 @@ public class ClientConnectionController {
      * @param request 
      */
     private void updateResponse(String[] request){
-        System.out.println("Method CCC.updateResponse()");        
         controller.updateResponse(request);
     }
     

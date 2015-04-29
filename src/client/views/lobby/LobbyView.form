@@ -6,6 +6,7 @@
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[1100, 700]"/>
     </Property>
+    <Property name="name" type="java.lang.String" value="lobbyView" noResource="true"/>
     <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
@@ -31,7 +32,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="optionInterfacePanel" min="-2" pref="200" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="GameInterfacePanel" min="-2" pref="880" max="-2" attributes="0"/>
+              <Component id="gameInterfacePanel" min="-2" pref="880" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
           </Group>
           <Component id="titleLabel" max="32767" attributes="0"/>
@@ -45,7 +46,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="optionInterfacePanel" pref="612" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="GameInterfacePanel" max="-2" attributes="0"/>
+                      <Component id="gameInterfacePanel" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -54,7 +55,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JTabbedPane" name="GameInterfacePanel">
+    <Container class="javax.swing.JTabbedPane" name="gameInterfacePanel">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>

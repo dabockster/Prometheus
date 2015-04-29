@@ -1,5 +1,6 @@
 package client.views.lobby;
 
+import gameplay.GameView;
 import javax.swing.DefaultListModel;
 
 /*
@@ -16,16 +17,20 @@ public class LobbyView extends javax.swing.JFrame {
     
     private final LobbyController controller;
     String[] onlinePlayers;
+    String username;
     
 
     /**
      * Creates new form GameLobby
+     * @param username
      * @param ctrl
      */
-    public LobbyView(LobbyController ctrl) {
+    public LobbyView(String username, LobbyController ctrl) {
+        onlinePlayers = new String[100];
+        this.username = username;
         controller = ctrl;
-        onlinePlayers = new String[10];
         initComponents();
+        this.setTitle("  Playing as "+username);
     }
 
     /**
@@ -35,9 +40,14 @@ public class LobbyView extends javax.swing.JFrame {
     public void updatePlayers(String[] players){
         DefaultListModel listModel = new DefaultListModel();
         for(int i=0; i<players.length; i++){
-            listModel.addElement(players[i]);
+            if(!players[i].equals(username))
+                listModel.addElement(players[i]);
         }
         onlinePlayersList.setModel(listModel);    
+    }
+    
+    public void addGameView(String opName, GameView newGame){
+        gameInterfacePanel.addTab(opName, newGame);
     }
     
     /**
@@ -49,7 +59,7 @@ public class LobbyView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        GameInterfacePanel = new javax.swing.JTabbedPane();
+        gameInterfacePanel = new javax.swing.JTabbedPane();
         titleLabel = new javax.swing.JLabel();
         optionInterfacePanel = new javax.swing.JPanel();
         challengeButton = new javax.swing.JButton();
@@ -62,13 +72,14 @@ public class LobbyView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1100, 700));
+        setName("lobbyView"); // NOI18N
         setResizable(false);
 
-        GameInterfacePanel.setBackground(new java.awt.Color(255, 255, 255));
-        GameInterfacePanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 4, true));
-        GameInterfacePanel.setMaximumSize(new java.awt.Dimension(880, 600));
-        GameInterfacePanel.setMinimumSize(new java.awt.Dimension(880, 600));
-        GameInterfacePanel.setName(""); // NOI18N
+        gameInterfacePanel.setBackground(new java.awt.Color(255, 255, 255));
+        gameInterfacePanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 4, true));
+        gameInterfacePanel.setMaximumSize(new java.awt.Dimension(880, 600));
+        gameInterfacePanel.setMinimumSize(new java.awt.Dimension(880, 600));
+        gameInterfacePanel.setName(""); // NOI18N
 
         titleLabel.setFont(new java.awt.Font("Magneto", 0, 36)); // NOI18N
         titleLabel.setForeground(new java.awt.Color(70, 170, 235));
@@ -153,7 +164,7 @@ public class LobbyView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(optionInterfacePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(GameInterfacePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 880, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(gameInterfacePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 880, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4))
             .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -165,7 +176,7 @@ public class LobbyView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(optionInterfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(GameInterfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(gameInterfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
 
@@ -178,6 +189,8 @@ public class LobbyView extends javax.swing.JFrame {
      * @param evt 
      */
     private void challengeButtonActionListener(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_challengeButtonActionListener
+        if(onlinePlayersList.isSelectionEmpty())
+            return;
         String challengerName = ""+onlinePlayersList.getSelectedValue();
         controller.challenge(challengerName);
     }//GEN-LAST:event_challengeButtonActionListener
@@ -189,8 +202,8 @@ public class LobbyView extends javax.swing.JFrame {
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTabbedPane GameInterfacePanel;
     private javax.swing.JButton challengeButton;
+    private javax.swing.JTabbedPane gameInterfacePanel;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;

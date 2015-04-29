@@ -4,6 +4,7 @@ import client.manager.ClientController;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -19,7 +20,7 @@ public class PeerToPeerConnection implements Runnable{
     private GameController controller;
     private DataOutputStream streamOut;
     private DataInputStream streamIn;
-    private String clientType;
+    private String clientID;
     private boolean isHost; //isHost
     protected Thread worker;
     public boolean connected = false;   
@@ -37,10 +38,10 @@ public class PeerToPeerConnection implements Runnable{
      */
     public PeerToPeerConnection(GameController controller){
         this.controller = controller;
-        clientType = "HostClient";
+        clientID = "HostClient";
         isHost = true;
         isHost = true;
-        System.out.println("PeerToPeerConnection: /Constructor:HostClient");
+        System.out.println("PeerToPeerConnection: Constructor: HostClient");
     }
     
     /**
@@ -54,9 +55,17 @@ public class PeerToPeerConnection implements Runnable{
         this.controller = controller;
         this.ip = ip;
         this.port = port;
-        clientType = "ConnectingClient";
+        clientID = "ConnectingClient";
         isHost = false;
-        System.out.println("PeerToPeerConnection: /Constructor:ConnectingClient");
+        System.out.println("PeerToPeerConnection: Constructor: ConnectingClient");
+    }
+    
+    /**
+     * Sets this clientID to include a username
+     */
+    public void setID(String username){
+        this.clientID = username+": "+clientID;
+                
     }
     
     /**
@@ -69,9 +78,9 @@ public class PeerToPeerConnection implements Runnable{
             try{
                 streamIn = new DataInputStream(socket.getInputStream());
                 streamOut = new DataOutputStream(socket.getOutputStream());
-                System.out.println("PeerToPeerConnection: /open:"+clientType+" /getStreams:Success");
+                System.out.println(clientID+": open: socket");
             }catch(IOException e){
-                System.out.println("PeerToPeerConnection: /open:"+clientType+" /getStreams:Failed");
+                System.out.println(clientID+": open: socket: failed: IOException: "+e);
             }
         }else if(!isHost) { //ConnectingClient
             try{
@@ -79,19 +88,19 @@ public class PeerToPeerConnection implements Runnable{
                 streamIn = new DataInputStream(socket.getInputStream());
                 streamOut = new DataOutputStream(socket.getOutputStream());
                 connected = true;
-                System.out.println("PeerToPeerConnection: /open:"+clientType+" /IP:"+ip+" /Port:"+port);
+                System.out.println(clientID+": open: socket: IP:"+ip+" Port:"+port);
             }catch(IOException ex){
                 connected = false;
-                System.out.println("PeerToPeerConnection: /open:"+clientType+" /IP:"+ip+" /Port:"+port+" /IOException:"+ex);
+                System.out.println(clientID+": open: socket: failed: IOException: "+ex);
             }
         }else if(isHost){ //HostClient
             try{
                 hostSocket = new ServerSocket(0);
                 port = hostSocket.getLocalPort();
-                ip = hostSocket.getInetAddress().getHostAddress();
-                System.out.println("PeerToPeerConnection: /open:"+clientType+" /IP:"+ip+" /Port:"+port);
+                ip = InetAddress.getLocalHost().getHostAddress();
+                System.out.println(clientID+": open: hostSocket: IP:"+ip+" Port:"+port);
             }catch(IOException e){
-                System.out.println("PeerToPeerConnection: /open:"+clientType+" /IP:"+ip+" /Port:"+port+" /IOException:"+e);
+                System.out.println(clientID+": open: hostSocket: failed: IOException: "+e);
             }
         }
     }
@@ -100,22 +109,22 @@ public class PeerToPeerConnection implements Runnable{
      * Closes the socket
      * Closes the InputStream and OutputStream
      */
-    private synchronized void close(){
+    public synchronized void close(){
         if(connected){
             try{
                 socket.close();
                 streamIn.close();
                 streamOut.close();
-                System.out.println("PeerToPeerConnection: /close:"+clientType);        
+                System.out.println(clientID+": close: socket");        
             }catch(IOException ioe){
-                System.out.println("PeerToPeerConnection: /close:"+clientType+" /IOException:"+ioe);
+                System.out.println(clientID+": close: IOException:"+ioe);
             }
         }else if(isHost){
             try{
                 hostSocket.close();
-                System.out.println("PeerToPeerConnection: /close:"+clientType);        
+                System.out.println(clientID+": close: hostSocket");        
             }catch(IOException ioe){
-                System.out.println("PeerToPeerConnection: /close:"+clientType+" /IOException:"+ioe);
+                System.out.println(clientID+": close: IOException:"+ioe);
             }
         }
     }
@@ -123,7 +132,7 @@ public class PeerToPeerConnection implements Runnable{
     public void start() {
         worker = new Thread(this);
         worker.start();
-        System.out.println("PeerToPeerConnection: /start:"+clientType);
+        System.out.println(clientID+": start");
     }
     
     /**
@@ -133,32 +142,33 @@ public class PeerToPeerConnection implements Runnable{
      */
     @Override
     public void run(){
-        System.out.println("PeerToPeerConnection: /run:"+clientType);
+        System.out.println(clientID+" run");
         open();
         if(isHost){ //HostClient listening
             try{
                 controller.sendHostAddress(ip, port);
                 socket = hostSocket.accept();
+                System.out.println(clientID+": run: accept");
                 close(); //closes hostSocket
                 connected = true;
                 open(); //gets streams
-                System.out.println("PeerToPeerConnection: /run:"+clientType+" /accept:Success");
+                controller.sendConnect(); 
             }catch(IOException e){
-                System.out.println("PeerToPeerConnection: /run:"+clientType+" /accept:Failed /stack:"+e);
+                System.out.println(clientID+": run: accept: failed: IOException: "+e);
             }
         }
         while(connected){  //interprets requests from other client
             try{
                 String request = streamIn.readUTF();
+                System.out.println(clientID+": receive: "+request);
                 String response[] = request.split("<&>");
-                System.out.println("Received Response: "+response[0]);
                 if(response[0].equals("disconnect")){
                         connected = false;
                         this.close();
                 }
                 controller.interpretRequest(response);
             }catch(IOException ioe){
-                System.out.println("Failed to receive response." + ioe);
+                System.out.println(clientID+": receive: failed: IOException:"+ioe);
                 connected = false; 
             }
         }
@@ -171,15 +181,15 @@ public class PeerToPeerConnection implements Runnable{
      * Write to socket and sends the command to server
      * @param request the command for the server
      */
-    public void request(String request){
+    public void send(String request){
         try {
             streamOut.writeUTF(request);
             streamOut.flush();
             connected = true;
-            System.out.println("PeerToPeerConnection: /request:"+clientType+" /sucessfullySent:"+request);
+            System.out.println(clientID+": send: "+request);
         } catch (IOException ioe) {
             System.out.println(ioe);
-            System.out.println("PeerToPeerConnection: /request:"+clientType+" /failedToSend:"+request+" /IOException:"+ioe);
+            System.out.println(clientID+": failedToSend: "+request+": IOException: "+ioe);
             //String[] error = {"connect","false"};
             //controller.interpretResponse(error);
         }

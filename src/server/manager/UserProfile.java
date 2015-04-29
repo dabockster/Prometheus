@@ -51,11 +51,8 @@ public class UserProfile {
      * @param profileString the string that has all relevant UserProfile data
      */
     public UserProfile(String profileString){
-        System.out.println(profileString);
         String[] userSpecs = profileString.split(",");
-        System.out.println(userSpecs.length + "Many UserProfile.userSpecs[]s");
         this.username = userSpecs[0];
-        System.out.println(username + userSpecs.length);
         this.password = userSpecs[1];
         this.played = Integer.parseInt(userSpecs[2]);
         this.wins = Integer.parseInt(userSpecs[3]);

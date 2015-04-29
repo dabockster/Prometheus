@@ -7,6 +7,7 @@
 package client.views.lobby;
 
 import client.manager.ClientController;
+import gameplay.GameView;
 
 /**
  *
@@ -19,8 +20,8 @@ public class LobbyController {
     private final ClientController controller;
     
     
-    public LobbyController(ClientController ctrl){
-        view = new LobbyView(this);
+    public LobbyController(String username, ClientController ctrl){
+        view = new LobbyView(username, this);
         view.setVisible(true);
         controller = ctrl;
     }
@@ -38,12 +39,12 @@ public class LobbyController {
      * @param challengerName 
      */
     public void incomingChallenge(String challengerName){
-        System.out.println("Challenger: "+ challengerName);
         challenger = new RequestDialog(view, this, challengerName);
     }
     
     /**
      * Sends an accept Challenge response to the challenger
+     * @param opName
      */
     public void acceptChallenge(String opName){
         controller.respondToChallenge(opName, true);
@@ -51,9 +52,14 @@ public class LobbyController {
     
     /**
      * Sends a reject Challenge response to the challenger
+     * @param opName
      */
     public void rejectChallenge(String opName){
         controller.respondToChallenge(opName, false);
+    }
+    
+    public void addGameView(String opName, GameView newGame){
+        view.addGameView(opName,newGame);
     }
     
     //update View

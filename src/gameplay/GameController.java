@@ -15,6 +15,7 @@ public class GameController {
     private GameView view;
     private PeerToPeerConnection connection;
     private String opName; //opponent's name
+    private String username;
     
     /**
      * HOST CONSTRUCTOR
@@ -27,6 +28,8 @@ public class GameController {
         this.controller = controller;
         this.connection = new PeerToPeerConnection(this);
         this.view = new GameView(this);
+        connection.start();
+        setUsername();
     }
     
     /**
@@ -42,6 +45,8 @@ public class GameController {
         this.controller = controller;
         this.connection = new PeerToPeerConnection(this, ip, port);
         this.view = new GameView(this);
+        connection.start();
+        setUsername();
     }
     
     /**
@@ -54,6 +59,15 @@ public class GameController {
      */
     public synchronized void interpretRequest(String[] request){
         switch(request[0]){
+            case "connect" :
+                this.receiveConnect();
+                break;
+            case "connectConfimation" :
+                this.receiveConnectConfirmation();
+                break;
+            case "disconnect":
+                this.receiveDisconnect();
+                break;
             case "message" :
                 this.receiveMsg(request[1]);
                 break;
@@ -62,12 +76,54 @@ public class GameController {
     }
     
     /**
+     * Sends a connect send to opponent
+     */
+    public void sendConnect(){
+        connection.send("connect");
+    }
+    
+    /**
+     * Receives a connect send from opponent, adds view to LobbyView
+     * and sends a connectConfirmation send to opponent
+     */
+    private void receiveConnect(){
+        controller.addGameViewToLobby(opName, view);
+        view.setVisible(true);
+        sendConnectConfirmation();
+    }
+    
+    /**
+     * Sends a connectConfirmation to the opponent
+     */
+    private void sendConnectConfirmation(){
+        connection.send("connectConfimation");
+    }
+    
+    /**
+     * Receives a connectConfirmation send from opponent and
+     * adds view to LobbyView.
+     */
+    private void receiveConnectConfirmation(){
+        controller.addGameViewToLobby(opName, view);
+        view.setVisible(true);
+    }
+    
+    /**
+     * Closes the connection
+     */
+    private void receiveDisconnect(){
+        //add method for removing a gameController in clientController
+        connection.close();
+    }
+    
+    /**
      * Sends a message to opponent and updates view
      * @param msg the message to be sent
      */
     public void sendMsg(String msg){
-        connection.request(msg);
-        //updateView
+        msg = username+": "+msg;
+        connection.send("message<&>"+msg);
+        view.postMsg(msg);
     }
     
     /**
@@ -75,7 +131,7 @@ public class GameController {
      * @param msg the message received
      */
     public void receiveMsg(String msg){
-        //updates view
+        view.postMsg(msg);
     }
     
     /**
@@ -84,4 +140,12 @@ public class GameController {
     public void sendHostAddress(String ip, int port){
         controller.sendHostAddress(opName, ip,port); 
    }
+    
+    /**
+     * Sets the clientType to include this client's username in p2pConnection
+     */
+    private void setUsername(){
+        username = controller.getUsername();
+        connection.setID(username);
+    }
 }

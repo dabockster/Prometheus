@@ -53,10 +53,8 @@ public class ClientModel {
      */
     public void updateOnlinePlayers(String[] profiles){
         onlinePlayers.clear();
-        System.out.println("ClientModel.updateOnlinePlayers()");
         for(int i=0; i<profiles.length; i++){
             this.addPlayer(profiles[i]);
-            System.out.println(profiles[i].toString());
         }
     }
     
@@ -65,7 +63,6 @@ public class ClientModel {
      * @param ucon 
      */
     private void addPlayer(String profileString){
-        System.out.println("ClientModel.addPlayer()");
          onlinePlayers.add(new UserProfile(profileString));
      }
     

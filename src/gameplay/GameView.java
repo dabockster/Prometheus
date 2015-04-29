@@ -1,27 +1,3 @@
-/*
- * The MIT License
- *
- * Copyright 2015 PLUCSCE.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
 package gameplay;
 
 /**
@@ -30,7 +6,6 @@ package gameplay;
  */
 public class GameView extends javax.swing.JPanel {
     
-    String username = "Me";
     GameController controller;
 
     /**
@@ -42,14 +17,12 @@ public class GameView extends javax.swing.JPanel {
     }
     
     /**
-     * Appends username to front of msg
+     * Appends username to front of message
      * Posts message to GameView
      * Sends message to opponent
      * @param msg 
      */
     private void sendMsg(String msg){
-        msg = username+": "+msg;
-        postMsg(msg);
         controller.sendMsg(msg);        
     }
     
@@ -201,7 +174,9 @@ public class GameView extends javax.swing.JPanel {
     }//GEN-LAST:event_playMoveButtonActionPerformed
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
-        // TODO add your handling code here:
+        String msg = msgTF.getText();
+        msgTF.setText(null);
+        sendMsg(msg);
     }//GEN-LAST:event_sendButtonActionPerformed
 
 

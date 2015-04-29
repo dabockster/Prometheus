@@ -28,6 +28,7 @@ import client.views.lobby.LobbyController;
 import client.views.mainMenu.MainMenuController;
 import client.views.offline.OfflineController;
 import gameplay.GameController;
+import gameplay.GameView;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -36,6 +37,8 @@ import java.util.Arrays;
  * @author dabockster
  */
 public class ClientController {
+    
+    String username;
     
     private MainMenuController mainMenu;
     private OfflineController offline;
@@ -82,6 +85,7 @@ public class ClientController {
         connectedToServer = false;
         mainMenu = new MainMenuController(this);
         cController.serverRequest("connect");
+        username = null;
     }
 
     /**
@@ -161,14 +165,15 @@ public class ClientController {
      * LOGIN RESPONSE
      * Relays whether this client has successfully logged onto the server
      * @param success the state of the login request
-     * @param error any error that has occurred
+     * @param details contains errors or, if successful, contains username
      */
-    public void loginResponse(boolean success, String error){
+    public void loginResponse(boolean success, String details){
         if(success){
-            lobby = new LobbyController(this);
+            this.username = details;
+            lobby = new LobbyController(username, this);
             mainMenu.dispose();            
         }else{
-            displayLoginMessage(error);
+            displayLoginMessage(details);
         }        
     }
     
@@ -263,11 +268,29 @@ public class ClientController {
      */
     public void challengeResponse(String[] response){
         String opName = response[2];
+        String ip = response[3];
+        int port = Integer.parseInt(response[4]);
         if(response[1].equals("reject")){
             //display rejection
         }else{
-            model.addGame(new GameController(opName,this,response[3],Integer.parseInt(response[4])));
+            model.addGame( new GameController( opName,this,ip,port));
         }
+    }
+    
+    /**
+     * Adds a GameView to the lobbyView
+     * @param opName
+     * @param newGame 
+     */
+    public void addGameViewToLobby(String opName, GameView newGame){
+        lobby.addGameView(opName, newGame);
+    }
+    
+    /**
+     * Returns this username
+     */
+    public String getUsername(){
+        return this.username;
     }
 
 }

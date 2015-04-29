@@ -214,10 +214,10 @@ public class UserConnection implements Runnable{
     private synchronized void challengeResponse(String request[]){
         String challengerUsername = request[1];
         if(request[2].equals("reject")){
-            controller.relayChallengeResponse(false, challengerUsername,null,0);
+            controller.relayChallengeResponse(username, false, challengerUsername,null,0);
             sendClientFeedback("challenge denied from "+challengerUsername);
         }else{
-            controller.relayChallengeResponse(true, challengerUsername, request[3], Integer.parseInt(request[4]));
+            controller.relayChallengeResponse(username, true, challengerUsername, request[3], Integer.parseInt(request[4]));
             sendClientFeedback("challenge accepted from "+challengerUsername);
         }
     }
@@ -231,9 +231,9 @@ public class UserConnection implements Runnable{
     public void relayChallengeResponse(boolean accepted, String response){
         //response = uname, ip, port
         if(accepted){
-            sendResponse("challengeResponse<&>accept"+response);
+            sendResponse("challengeResponse<&>accept<&>"+response);
         }else{
-            sendResponse("challengeResponse<&>reject"+response);
+            sendResponse("challengeResponse<&>reject<&>"+response);
         }
     }
     
