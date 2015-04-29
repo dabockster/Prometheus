@@ -16,7 +16,6 @@ import gameplay.GameView;
 public class LobbyController {
     
     private final LobbyView view;
-    private RequestDialog challenger;
     private final ClientController controller;
     
     
@@ -39,7 +38,15 @@ public class LobbyController {
      * @param challengerName 
      */
     public void incomingChallenge(String challengerName){
-        challenger = new RequestDialog(view, this, challengerName);
+        RequestDialog challenger = new RequestDialog(view, this, challengerName);
+    }
+    
+    public void challengeDenied(String challengerName){
+        view.rejectFrame(challengerName);
+    }
+    
+    public void disposeRejectionFrame(noticeFrame frame){
+        frame.dispose();
     }
     
     /**

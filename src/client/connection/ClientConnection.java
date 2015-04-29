@@ -25,14 +25,14 @@ public class ClientConnection implements Runnable{
     private final ClientConnectionController controller;
     private final InetSocketAddress serverAddr;
     
-    private DataOutputStream streamOut;
+    private DataOutputStream streamOut = null;
     private DataInputStream streamIn;
+    private final String[] connectionFailure = {"connect","false"};
     
     private Socket socket;
     protected Thread listeningToServer;
     
     public boolean connected = false;
-
     
     
     /**
@@ -49,7 +49,7 @@ public class ClientConnection implements Runnable{
      * Opens the  socket.
      * Gets InputStream and OutputStream from socket
      */
-    private void open(){
+    private void  open(){
         String serverName = serverAddr.getHostName();
         int serverPort = serverAddr.getPort();
         try{
@@ -58,8 +58,8 @@ public class ClientConnection implements Runnable{
             streamOut = new DataOutputStream(socket.getOutputStream());
             connected = true;
         } catch (IOException ioe){
-            System.out.println("Error building ClientConnection "+ ioe);
-        }       
+            controller.interpretResponse(connectionFailure);
+        }
     }
     
     public void close(){
@@ -108,14 +108,16 @@ public class ClientConnection implements Runnable{
      * @param request the command for the server
      */
     public void serverRequest(String request){
+        if(!connected) {
+            controller.interpretResponse(connectionFailure);
+            return;
+        }
         try {
             streamOut.writeUTF(request);
             streamOut.flush();
-            connected = true;
         } catch (IOException ioe) {
-            System.out.println(ioe);
-            String[] error = {"connect","false"};
-            controller.interpretResponse(error);
+            connected = false;
+            controller.interpretResponse(connectionFailure);
         }
     }
     

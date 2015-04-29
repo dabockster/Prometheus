@@ -1,26 +1,4 @@
-/*
- * The MIT License
- *
- * Copyright 2015 dabockster.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
+
 package client.manager;
 
 import client.connection.ClientConnectionController;
@@ -29,23 +7,24 @@ import client.views.mainMenu.MainMenuController;
 import client.views.offline.OfflineController;
 import gameplay.GameController;
 import gameplay.GameView;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
  * ClientController class
  * @author dabockster
  */
-public class ClientController {
+public final class ClientController {
     
     String username;
     
-    private MainMenuController mainMenu;
+    private MainMenuController mainMenu = null;
     private OfflineController offline;
     private ClientModel model;
     private LobbyController lobby;
     private boolean connectedToServer = false;
     private ClientConnectionController cController;
+    
+    int attemptsToConnect = 0;
     
     
     
@@ -54,10 +33,9 @@ public class ClientController {
      * ClientController constructor
      */
     public ClientController(){
-        cController = new ClientConnectionController(this);
-        mainMenu = new MainMenuController(this);
         model = new ClientModel(this);
-        cController.serverRequest("connect"); //sends a connect request to server
+        mainMenu = new MainMenuController(this);
+        newConnection(null,0);
     }
   
     /**
@@ -80,11 +58,9 @@ public class ClientController {
      * Wipes this ClientController and creates a new clientController
      */
     public void refreshClient(){      
-        cController = new ClientConnectionController(this);
         model = new ClientModel(this);
-        connectedToServer = false;
         mainMenu = new MainMenuController(this);
-        cController.serverRequest("connect");
+        newConnection(null,0);
         username = null;
     }
 
@@ -95,10 +71,19 @@ public class ClientController {
      * @param port 
      */
     public void newConnection(String ip, int port){
-        if(cController != null)
-            cController.close();
-        cController = new ClientConnectionController(this,ip,port);
-        connectRequest();
+        if(ip == null){
+            ip = "localhost";
+            port = 8080;
+        }
+        displayLoginMessage("NOT Connected to Server");
+        if(cController == null){
+            cController = new ClientConnectionController(this,ip,port);
+        }else{
+                cController.close();
+                cController = new ClientConnectionController(this,ip,port);
+        }
+        System.out.print("Connecting to server");
+        cController.serverRequest("connect");
     }
     
     /**
@@ -113,7 +98,7 @@ public class ClientController {
      * Sends a request to server to ensure a connection
      * has been established
      */
-    public void connectRequest(){
+    public synchronized void connectRequest(){
         cController.serverRequest("connect");
     }    
     
@@ -123,11 +108,22 @@ public class ClientController {
      */
     public void connectResponse(boolean connected){
         if(connected){
-            connectedToServer = true;
+            System.out.println("Successfully Connected!");
             displayLoginMessage("Connected to Server");
+            connectedToServer = true;
         }else{
-            connectedToServer = false;
-            displayLoginMessage("NOT Connected to Server");
+            attemptsToConnect++;
+            if(attemptsToConnect == 5){
+                System.out.println("Cannot Connect");
+            }else if(attemptsToConnect < 5){
+                System.out.print("."); 
+                try {
+                    Thread.sleep(1000 * attemptsToConnect);
+                    cController.serverRequest("connect");
+                } catch (InterruptedException ex) {
+                   System.out.println("ClientController: connectResponse: InterruptedException: "+ex);
+                }
+            }
         }   
     }    
     
@@ -268,11 +264,11 @@ public class ClientController {
      */
     public void challengeResponse(String[] response){
         String opName = response[2];
-        String ip = response[3];
-        int port = Integer.parseInt(response[4]);
         if(response[1].equals("reject")){
-            //display rejection
+            lobby.challengeDenied(opName);
         }else{
+            String ip = response[3];
+            int port = Integer.parseInt(response[4]);
             model.addGame( new GameController( opName,this,ip,port));
         }
     }

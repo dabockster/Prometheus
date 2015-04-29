@@ -1,26 +1,4 @@
-/*
- * The MIT License
- *
- * Copyright 2015 Vivo.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
+
 package client.connection;
 
 import client.manager.ClientController;
@@ -36,23 +14,11 @@ public class ClientConnectionController {
     private ClientConnection connection;
     private InetSocketAddress conAddr;
     
-    private String ip;
-    private int port;
+    
     private String opIp;
     private int opPort;
     
-    /**
-     * CONSTRUCTOR - DEFAULT
-     * Creates a new ClientConnectionController
-     */
-    public ClientConnectionController(ClientController controller){
-        this.controller = controller;
-        ip = "localhost"; 
-        port = 8080;
-        conAddr = new InetSocketAddress(ip, port);
-        ClientConnectionController.this.newConnection();
-    }
-    
+
     /**
      * CONSTRUCTOR - MODIFIED
      * @param ip to confirmConnection;
@@ -60,18 +26,15 @@ public class ClientConnectionController {
      */
     public ClientConnectionController(ClientController controller, String ip, int port){
         this.controller = controller;
-        this.ip = ip;
-        this.port = port;
         conAddr = new InetSocketAddress(ip, port);
-        ClientConnectionController.this.newConnection();
+        this.newConnection(ip,port);
     }
-    
-    private void newConnection(){
-        connection = new ClientConnection(this, conAddr);
-        new Thread(connection).start();
-    }
+
     
     public void newConnection(String iP, int portNum){
+        if(connectedToServer()){
+            connection.close();
+        }
         conAddr = new InetSocketAddress(iP,portNum);
         connection = new ClientConnection(this, conAddr);
         new Thread(connection).start();
@@ -91,6 +54,8 @@ public class ClientConnectionController {
      * @param cmnd 
      */
     public void serverRequest(String request){
+        if(!connection.connected)
+            connectionResponse("false");
         connection.serverRequest(request);
     }
     
@@ -189,7 +154,9 @@ public class ClientConnectionController {
      * Checks to see if this client is connected the server
      * @return true if a connection has been established with the server
      */
-    public boolean isConnectedToServer(){
+    public boolean connectedToServer(){
+        if(connection == null)
+            return false;
         return connection.connected;
     }
     

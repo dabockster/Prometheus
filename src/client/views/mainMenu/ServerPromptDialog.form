@@ -50,10 +50,10 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="titleLabel" max="32767" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
                           <Component id="ipLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="ipTF" max="32767" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="ipTF" min="-2" pref="173" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="portLabel" min="-2" max="-2" attributes="0"/>
@@ -114,8 +114,16 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="ipTF">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="11"/>
+            <Property name="text" type="java.lang.String" value="localhost"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="portTF">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="11"/>
+            <Property name="text" type="java.lang.String" value="8080"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="connectButton">
           <Properties>

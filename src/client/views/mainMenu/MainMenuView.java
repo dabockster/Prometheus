@@ -38,7 +38,6 @@ public class MainMenuView extends javax.swing.JFrame {
     public MainMenuView(MainMenuController ctrl) {
         controller = ctrl;
         initComponents();
-        
     }
 
     /**
