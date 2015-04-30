@@ -42,10 +42,14 @@ public class ServerPromptDialog extends javax.swing.JDialog {
         setTitle("Login Error");
         setAlwaysOnTop(true);
         setBackground(new java.awt.Color(0, 0, 0));
+        setResizable(false);
+        setSize(new java.awt.Dimension(300, 150));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         backgroundPanel.setBackground(new java.awt.Color(70, 150, 235));
         backgroundPanel.setMinimumSize(new java.awt.Dimension(300, 150));
+        backgroundPanel.setPreferredSize(new java.awt.Dimension(350, 150));
+        backgroundPanel.setRequestFocusEnabled(false);
 
         portLabel.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
         portLabel.setForeground(new java.awt.Color(10, 10, 10));
@@ -109,7 +113,7 @@ public class ServerPromptDialog extends javax.swing.JDialog {
                     .addComponent(portLabel)
                     .addComponent(portTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(connectButton))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         getContentPane().add(backgroundPanel, new java.awt.GridBagConstraints());
