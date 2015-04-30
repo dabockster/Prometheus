@@ -29,11 +29,16 @@ package client.views.lobby;
  */
 public class RequestFrame extends javax.swing.JInternalFrame {
 
+    private LobbyController controller;
+    private String opName;
     /**
      * Creates new form matchmakingMessenger
      */
-    public RequestFrame() {
+    public RequestFrame(LobbyController controller, String opName) {
+        this.controller = controller;
         initComponents();
+        this.opName = opName;
+        opNameLabel.setText(opName);
     }
 
     /**
@@ -45,57 +50,125 @@ public class RequestFrame extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        backgroundPanel = new javax.swing.JLayeredPane();
+        opNameLabel = new javax.swing.JLabel();
+        statement1Label = new javax.swing.JLabel();
+        statement2Label = new javax.swing.JLabel();
+        acceptButton = new javax.swing.JButton();
+        rejectButton = new javax.swing.JButton();
+
+        setBorder(null);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        backgroundPanel.setBackground(new java.awt.Color(102, 0, 102));
+        backgroundPanel.setOpaque(true);
+
+        opNameLabel.setFont(new java.awt.Font("Trajan Pro", 1, 18)); // NOI18N
+        opNameLabel.setForeground(new java.awt.Color(255, 255, 255));
+        opNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        opNameLabel.setText("opName");
+
+        statement1Label.setFont(new java.awt.Font("Trajan Pro", 1, 14)); // NOI18N
+        statement1Label.setForeground(new java.awt.Color(204, 204, 204));
+        statement1Label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        statement1Label.setText("Challenge");
+
+        statement2Label.setFont(new java.awt.Font("Trajan Pro", 1, 14)); // NOI18N
+        statement2Label.setForeground(new java.awt.Color(204, 204, 204));
+        statement2Label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        statement2Label.setText("Received From :");
+
+        acceptButton.setBackground(new java.awt.Color(200, 255, 200));
+        acceptButton.setFont(new java.awt.Font("Trajan Pro", 1, 12)); // NOI18N
+        acceptButton.setForeground(new java.awt.Color(102, 102, 102));
+        acceptButton.setText("Accept");
+        acceptButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                acceptButtonActionPerformed(evt);
+            }
+        });
+
+        rejectButton.setBackground(new java.awt.Color(255, 200, 200));
+        rejectButton.setFont(new java.awt.Font("Trajan Pro", 1, 12)); // NOI18N
+        rejectButton.setForeground(new java.awt.Color(102, 102, 102));
+        rejectButton.setText("Reject");
+        rejectButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rejectButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
+        backgroundPanel.setLayout(backgroundPanelLayout);
+        backgroundPanelLayout.setHorizontalGroup(
+            backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(backgroundPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(statement1Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(opNameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(statement2Label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
+                        .addComponent(acceptButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(rejectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        backgroundPanelLayout.setVerticalGroup(
+            backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(statement1Label)
+                .addGap(7, 7, 7)
+                .addComponent(statement2Label)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(opNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(acceptButton, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addComponent(rejectButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        backgroundPanel.setLayer(opNameLabel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        backgroundPanel.setLayer(statement1Label, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        backgroundPanel.setLayer(statement2Label, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        backgroundPanel.setLayer(acceptButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        backgroundPanel.setLayer(rejectButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 213, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(backgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 139, Short.MAX_VALUE)
+            .addComponent(backgroundPanel)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RequestFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RequestFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RequestFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RequestFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void acceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptButtonActionPerformed
+        controller.acceptChallenge(opName);
+        dispose();
+    }//GEN-LAST:event_acceptButtonActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RequestFrame().setVisible(true);
-            }
-        });
-    }
+    private void rejectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rejectButtonActionPerformed
+        controller.rejectChallenge(opName);
+        dispose();
+    }//GEN-LAST:event_rejectButtonActionPerformed
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton acceptButton;
+    private javax.swing.JLayeredPane backgroundPanel;
+    private javax.swing.JLabel opNameLabel;
+    private javax.swing.JButton rejectButton;
+    private javax.swing.JLabel statement1Label;
+    private javax.swing.JLabel statement2Label;
     // End of variables declaration//GEN-END:variables
 }

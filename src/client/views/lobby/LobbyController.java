@@ -38,7 +38,7 @@ public class LobbyController {
      * @param challengerName 
      */
     public void incomingChallenge(String challengerName){
-        RequestDialog challenger = new RequestDialog(view, this, challengerName);
+        view.challengeFrame(challengerName);
     }
     
     public void challengeDenied(String challengerName){

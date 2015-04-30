@@ -250,7 +250,6 @@ public class LobbyView extends javax.swing.JFrame {
                         .addComponent(gameInterfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 898, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, basePanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 662, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(124, 124, 124))))
         );
@@ -300,6 +299,12 @@ public class LobbyView extends javax.swing.JFrame {
         RejectionFrame rejection = new RejectionFrame(controller,opName);
         updatePanel.add(rejection);
         rejection.setVisible(true);
+    }
+    
+    public void challengeFrame(String opName){
+        RequestFrame challenge = new RequestFrame(controller,opName);
+        updatePanel.add(challenge);
+        challenge.setVisible(true);
     }
             
     /**
