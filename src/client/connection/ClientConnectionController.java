@@ -95,10 +95,13 @@ public class ClientConnectionController {
      * CONNECT RESPONSE
      */
     private void connectionResponse(String response){
-        if(response.equals("true"))
+        if(response.equals("true")){
+            
             controller.connectResponse(true);
-        else{
+        }else if(response.equals("false")){
             controller.connectResponse(false);
+        }else{
+            System.out.println("FAILED");
         }
     }
     

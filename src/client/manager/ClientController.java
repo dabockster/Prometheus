@@ -75,15 +75,14 @@ public final class ClientController {
             ip = "localhost";
             port = 8080;
         }
-        displayLoginMessage("NOT Connected to Server");
         if(cController == null){
             cController = new ClientConnectionController(this,ip,port);
         }else{
+            if(cController.connectedToServer())
                 cController.close();
-                cController = new ClientConnectionController(this,ip,port);
+            cController.newConnection(ip,port);
         }
         System.out.print("Connecting to server");
-        cController.serverRequest("connect");
     }
     
     /**
@@ -124,6 +123,7 @@ public final class ClientController {
                    System.out.println("ClientController: connectResponse: InterruptedException: "+ex);
                 }
             }
+        displayLoginMessage("NOT Connected to Server");
         }   
     }    
     

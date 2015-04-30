@@ -84,6 +84,7 @@ public class ClientConnection implements Runnable{
             this.listeningToServer = Thread.currentThread();
         }
         open();
+        serverRequest("connect");
         while(connected){
             try{
                 String request = streamIn.readUTF();
@@ -95,7 +96,7 @@ public class ClientConnection implements Runnable{
                 }
                 controller.interpretResponse(response);
             }catch(IOException ioe){
-                System.out.println("Failed to receive response." + ioe);
+                System.out.println("Connection Closed");
                 connected = false; 
             }
         } 
