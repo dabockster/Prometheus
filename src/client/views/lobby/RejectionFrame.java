@@ -27,14 +27,14 @@ package client.views.lobby;
  *
  * @author Timothy Ernst
  */
-public class noticeFrame extends javax.swing.JInternalFrame {
+public class RejectionFrame extends javax.swing.JInternalFrame {
     
     private LobbyController controller;
 
     /**
      * Creates new form noticeFrame
      */
-    public noticeFrame(LobbyController controller, String opName) {
+    public RejectionFrame(LobbyController controller, String opName) {
         this.controller = controller;
         initComponents();
         opNameLabel.setText(opName);
@@ -55,9 +55,11 @@ public class noticeFrame extends javax.swing.JInternalFrame {
         okayButton = new javax.swing.JButton();
         opNameLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBorder(null);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("JUST IN...");
-        setResizable(false);
+        setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        setOpaque(true);
 
         jPanel1.setBackground(new java.awt.Color(153, 0, 0));
 
@@ -91,12 +93,12 @@ public class noticeFrame extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(opNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(statement2Label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+            .addComponent(statement2Label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
             .addComponent(statement1Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(58, 58, 58)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(okayButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(70, 70, 70))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -107,9 +109,9 @@ public class noticeFrame extends javax.swing.JInternalFrame {
                 .addComponent(statement1Label)
                 .addGap(1, 1, 1)
                 .addComponent(statement2Label)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(okayButton)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -122,6 +124,8 @@ public class noticeFrame extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
+        getAccessibleContext().setAccessibleName("REJECTED");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

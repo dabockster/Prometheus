@@ -1,8 +1,6 @@
 
 package client.manager;
 
-import client.manager.ClientController;
-import server.manager.ServerController;
 
 /**
  *
@@ -14,4 +12,5 @@ public class ClientStartup {
      */
     public static void main(String[] args) {
         ClientController client = new ClientController();
-    }}
+    }
+}
