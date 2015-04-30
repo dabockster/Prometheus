@@ -297,7 +297,7 @@ public class LobbyView extends javax.swing.JFrame {
      * @param opName
      */
     public void rejectFrame(String opName){
-        noticeFrame rejection = new noticeFrame(controller,opName);
+        RejectionFrame rejection = new RejectionFrame(controller,opName);
         updatePanel.add(rejection);
         rejection.setVisible(true);
     }

@@ -26,9 +26,6 @@ public final class ClientController {
     
     int attemptsToConnect = 0;
     
-    
-    
-    
     /**
      * ClientController constructor
      */

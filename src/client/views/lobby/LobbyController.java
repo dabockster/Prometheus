@@ -45,7 +45,7 @@ public class LobbyController {
         view.rejectFrame(challengerName);
     }
     
-    public void disposeRejectionFrame(noticeFrame frame){
+    public void disposeRejectionFrame(RejectionFrame frame){
         frame.dispose();
     }
     
