@@ -153,6 +153,6 @@ public class GameController {
         if(wonGame)
             controller.sendGameResults("victory");
         else
-            controller.sendGameResults("notVictory");
+            controller.sendGameResults("defeat");
     }
 }
