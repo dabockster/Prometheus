@@ -85,6 +85,7 @@ public class LobbyView extends javax.swing.JFrame {
         setResizable(false);
 
         basePanel.setBackground(new java.awt.Color(100, 180, 240));
+        basePanel.setFocusable(false);
         basePanel.setMaximumSize(new java.awt.Dimension(1100, 700));
         basePanel.setMinimumSize(new java.awt.Dimension(1100, 700));
         basePanel.setOpaque(true);
@@ -92,6 +93,7 @@ public class LobbyView extends javax.swing.JFrame {
         optionInterfacePanel.setBackground(new java.awt.Color(62, 98, 151));
         optionInterfacePanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 51, 51), 2, true));
         optionInterfacePanel.setToolTipText("");
+        optionInterfacePanel.setFocusable(false);
         optionInterfacePanel.setMaximumSize(new java.awt.Dimension(200, 600));
         optionInterfacePanel.setMinimumSize(new java.awt.Dimension(200, 600));
         optionInterfacePanel.setPreferredSize(new java.awt.Dimension(250, 600));
@@ -144,6 +146,7 @@ public class LobbyView extends javax.swing.JFrame {
         jLabel1.setText("~ online ~");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jLabel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        jLabel1.setFocusable(false);
         jLabel1.setOpaque(true);
 
         jLabel2.setBackground(new java.awt.Color(0, 51, 102));
@@ -152,6 +155,7 @@ public class LobbyView extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Who is");
         jLabel2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jLabel2.setFocusable(false);
 
         updatePanel.setOpaque(false);
 
@@ -219,11 +223,13 @@ public class LobbyView extends javax.swing.JFrame {
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titleLabel.setText("Prometheus Game Lobby");
         titleLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        titleLabel.setFocusable(false);
         titleLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         titleLabel.setOpaque(true);
 
         gameInterfacePanel.setBackground(new java.awt.Color(255, 255, 255));
         gameInterfacePanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 4, true));
+        gameInterfacePanel.setFocusable(false);
         gameInterfacePanel.setMaximumSize(new java.awt.Dimension(860, 600));
         gameInterfacePanel.setMinimumSize(new java.awt.Dimension(860, 600));
         gameInterfacePanel.setName(""); // NOI18N
