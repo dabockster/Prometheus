@@ -117,14 +117,13 @@ public class UserProfile {
      */
     public void won(){
         this.wins ++;
-        this.played ++;
     }
     
     /**
      * ACTION
      * increments the number of games played and number of wins
      */
-    public void lost(){
+    public void played(){
         this.played ++;
     }
     
