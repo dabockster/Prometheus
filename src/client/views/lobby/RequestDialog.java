@@ -24,8 +24,6 @@
 
 package client.views.lobby;
 
-import client.views.lobby.LobbyController;
-
 /**
  *
  * @author PLUCSCE

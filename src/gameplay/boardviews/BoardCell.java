@@ -24,7 +24,9 @@
 
 package gameplay.boardviews;
 
-import gameplay.GameController;
+import java.awt.Color;
+import java.awt.Cursor;
+import static java.awt.Cursor.DEFAULT_CURSOR;
 
 /**
  *
@@ -32,19 +34,56 @@ import gameplay.GameController;
  */
 public class BoardCell extends javax.swing.JPanel {
     
-    private GameController controller;
+    private BoardView parent;
+    
+    private Color myColor;
+    
     private int column;
     private int row;
 
     /**
      * Creates new form BoardCell
      */
-    public BoardCell(GameController parent, int column, int row) {  // So that means we are formatting like this: array[row][column]
-        this.controller = controller;
-        
+    public BoardCell(BoardView parent, int column, int row) {  // So that means we are formatting like this: array[row][column]
+        this.parent = parent;
+        this.column = column;
+        this.row = row;
         initComponents();
-        
+        myColor = this.getBackground();
     }
+    
+    /**
+     * sets this BoardCell as the selected cell in the Board
+     */
+    private void select(){
+        parent.selectedCell(this);
+        this.setBackground(Color.yellow);
+        //highlight this button
+    }
+    
+    /**
+     * removes this BoardCell as the selected cell in the Board
+     */
+    public void unselect(){
+        this.setBackground(myColor);
+    }
+    
+    
+    /**
+     * sets this BoardCell to a specific player denoted by a color
+     * disables the button  
+     * @param youPlayed if true you played, else opponent played
+     */
+    public void playMove(boolean youPlayed){
+        gameButton.setCursor(new Cursor(DEFAULT_CURSOR));
+        gameButton.enable(false);
+        if( youPlayed ){
+            this.setBackground(Color.white);
+        }else
+            this.setBackground(Color.black);
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -55,23 +94,45 @@ public class BoardCell extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        gameButton = new javax.swing.JButton();
+
+        setBackground(new java.awt.Color(102, 102, 102));
+        setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 153, 0), new java.awt.Color(255, 51, 0), new java.awt.Color(255, 255, 102), new java.awt.Color(153, 153, 153)));
         setMaximumSize(new java.awt.Dimension(100, 100));
         setMinimumSize(new java.awt.Dimension(50, 50));
         setName("basePanel"); // NOI18N
+
+        gameButton.setBackground(new java.awt.Color(243, 228, 122));
+        gameButton.setForeground(new java.awt.Color(204, 204, 0));
+        gameButton.setAutoscrolls(true);
+        gameButton.setContentAreaFilled(false);
+        gameButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        gameButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gameButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(gameButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
+            .addComponent(gameButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void gameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gameButtonActionPerformed
+        select();
+    }//GEN-LAST:event_gameButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton gameButton;
     // End of variables declaration//GEN-END:variables
 }

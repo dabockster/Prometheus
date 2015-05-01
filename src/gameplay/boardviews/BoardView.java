@@ -24,17 +24,44 @@
 
 package gameplay.boardviews;
 
+import java.awt.GridLayout;
+
 /**
  *
  * @author PLUCSCE
  */
-public class Board30x30 extends javax.swing.JPanel {
-
+public class BoardView extends javax.swing.JPanel {
+    
+    private BoardCell selected; //the currently selected BoardCell
+    
     /**
      * Creates new form Board30x30
      */
-    public Board30x30() {
+    public BoardView(int rows, int columns) {
+        this.setLayout(new GridLayout(rows,columns));
         initComponents();
+    }
+    
+    /**
+     * Keeps track of the selected BoardCell
+     * @param selected
+     */
+    public void selectedCell(BoardCell selected){
+        this.selected = selected;
+    }
+    
+    /**
+     * Play Move YOU
+     */
+    private void playMove(){
+        //plays you
+    }
+    
+    /**
+     * Play Move OPPONENT
+     */
+    public void playMove(int row, int column){
+        
     }
 
     /**
