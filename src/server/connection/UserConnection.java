@@ -169,6 +169,8 @@ public class UserConnection implements Runnable{
             case "update" :
                 updateRequest();
                 break;
+            case "endGame" :
+                endGame(request[1]);
             default :
                 sendClientFeedback("Unrecognized request "+request[0]);
                 break;
@@ -295,6 +297,12 @@ public class UserConnection implements Runnable{
      */
     private synchronized void sendClientFeedback(String feedback){
         controller.sendClientFeedback(username+": "+ feedback);
+    }
+    
+    private void endGame(String result){
+        controller.incrementGames(this.profile);
+        if(result.equals("victory"))
+            controller.incrementWins(this.profile);
     }
     
     

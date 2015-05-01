@@ -148,4 +148,11 @@ public class GameController {
         username = controller.getUsername();
         connection.setID(username);
     }
+    
+    public void victory(boolean wonGame){
+        if(wonGame)
+            controller.sendGameResults("victory");
+        else
+            controller.sendGameResults("defeat");
+    }
 }

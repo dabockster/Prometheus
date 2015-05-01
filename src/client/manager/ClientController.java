@@ -285,5 +285,9 @@ public final class ClientController {
     public String getUsername(){
         return this.username;
     }
+    
+    public void sendGameResults(String result){
+        cController.serverRequest("endGame<&>"+result);
+    }
 
 }

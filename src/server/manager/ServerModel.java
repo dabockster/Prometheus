@@ -232,4 +232,18 @@ public class ServerModel {
     public void sendServerFeedback(String feedback){
         controller.sendServerFeedback("Model: "+ feedback);
     }  
+    
+    public void incrementGames(UserProfile profile){
+        for(UserProfile i:accounts){
+            if(i.getUsername().equals(profile.getUsername()))
+                i.played();
+        }
+    }
+    
+    public void incrementWins(UserProfile profile){
+        for(UserProfile i:accounts){
+            if(i.getUsername().equals(profile.getUsername()))
+                i.won();
+        }
+    }
 }

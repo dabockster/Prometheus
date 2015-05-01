@@ -340,4 +340,11 @@ public class ServerController {
         }
     }
     
+    public void incrementGames(UserProfile profile){
+        model.incrementGames(profile);
+    }
+    
+    public void incrementWins(UserProfile profile){
+        model.incrementWins(profile);
+    }    
 }
