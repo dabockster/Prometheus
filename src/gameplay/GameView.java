@@ -76,6 +76,7 @@ public class GameView extends javax.swing.JPanel {
         interfacePanel.setMaximumSize(new java.awt.Dimension(274, 570));
         interfacePanel.setMinimumSize(new java.awt.Dimension(274, 570));
 
+        msgBoardTA.setEditable(false);
         msgBoardTA.setColumns(20);
         msgBoardTA.setRows(5);
         msgBoardPanel.setViewportView(msgBoardTA);
