@@ -215,6 +215,7 @@ public class LobbyView extends javax.swing.JFrame {
         usernameLabel.setText("username");
         usernameLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         usernameLabel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 102), 4, true));
+        usernameLabel.setFocusable(false);
         usernameLabel.setOpaque(true);
 
         titleLabel.setBackground(new java.awt.Color(100, 180, 240));
@@ -222,7 +223,7 @@ public class LobbyView extends javax.swing.JFrame {
         titleLabel.setForeground(new java.awt.Color(255, 255, 255));
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titleLabel.setText("Prometheus Game Lobby");
-        titleLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        titleLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         titleLabel.setFocusable(false);
         titleLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         titleLabel.setOpaque(true);
@@ -239,6 +240,7 @@ public class LobbyView extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 255, 0));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("is ONLINE");
+        jLabel3.setFocusable(false);
 
         javax.swing.GroupLayout basePanelLayout = new javax.swing.GroupLayout(basePanel);
         basePanel.setLayout(basePanelLayout);
