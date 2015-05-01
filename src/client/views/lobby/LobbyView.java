@@ -79,7 +79,6 @@ public class LobbyView extends javax.swing.JFrame {
         setBackground(new java.awt.Color(100, 180, 240));
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setForeground(java.awt.Color.white);
-        setMaximumSize(new java.awt.Dimension(1100, 700));
         setMinimumSize(new java.awt.Dimension(1100, 700));
         setName("lobbyView"); // NOI18N
         setResizable(false);
