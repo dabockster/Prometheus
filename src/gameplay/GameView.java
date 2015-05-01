@@ -81,6 +81,11 @@ public class GameView extends javax.swing.JPanel {
         msgBoardPanel.setViewportView(msgBoardTA);
 
         msgTF.setText("Write smack-talk here");
+        msgTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                msgTFActionPerformed(evt);
+            }
+        });
 
         sendButton.setText("Send");
         sendButton.addActionListener(new java.awt.event.ActionListener() {
@@ -195,6 +200,12 @@ public class GameView extends javax.swing.JPanel {
         msgTF.setText(null);
         sendMsg(msg);
     }//GEN-LAST:event_sendButtonActionPerformed
+
+    private void msgTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_msgTFActionPerformed
+        String msg = msgTF.getText();
+        msgTF.setText(null);
+        sendMsg(msg);
+    }//GEN-LAST:event_msgTFActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
