@@ -307,6 +307,7 @@ public class LobbyView extends javax.swing.JFrame {
         RejectionFrame rejection = new RejectionFrame(controller,opName);
         updatePanel.add(rejection);
         rejection.setVisible(true);
+        controller.timedDispose(rejection);
     }
     
     public void challengeFrame(String opName){

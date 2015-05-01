@@ -23,6 +23,9 @@
  */
 package client.views.lobby;
 
+import java.awt.event.ActionEvent;
+import javax.swing.Timer;
+
 /**
  *
  * @author Timothy Ernst
@@ -39,7 +42,6 @@ public class RejectionFrame extends javax.swing.JInternalFrame {
         initComponents();
         opNameLabel.setText(opName);
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

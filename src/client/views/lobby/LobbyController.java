@@ -8,6 +8,11 @@ package client.views.lobby;
 
 import client.manager.ClientController;
 import gameplay.GameView;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.Timer;
 
 /**
  *
@@ -47,6 +52,19 @@ public class LobbyController {
     
     public void disposeRejectionFrame(RejectionFrame frame){
         frame.dispose();
+    }
+    
+    public void timedDispose(JInternalFrame frame){
+        //source: http://stackoverflow.com/a/16748460
+        int delay = 20000; //20000 ms = 20 sec
+        
+        Timer timer = new Timer(delay, null);
+        timer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+            }
+        });
     }
     
     /**
