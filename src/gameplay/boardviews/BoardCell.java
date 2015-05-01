@@ -24,17 +24,26 @@
 
 package gameplay.boardviews;
 
+import gameplay.GameController;
+
 /**
  *
  * @author PLUCSCE
  */
 public class BoardCell extends javax.swing.JPanel {
+    
+    private GameController controller;
+    private int column;
+    private int row;
 
     /**
      * Creates new form BoardCell
      */
-    public BoardCell() {
+    public BoardCell(GameController parent, int column, int row) {  // So that means we are formatting like this: array[row][column]
+        this.controller = controller;
+        
         initComponents();
+        
     }
 
     /**
@@ -58,7 +67,7 @@ public class BoardCell extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 54, Short.MAX_VALUE)
+            .addGap(0, 50, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
