@@ -57,23 +57,23 @@ public class RejectionFrame extends javax.swing.JInternalFrame {
 
         setBorder(null);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("JUST IN...");
+        setTitle("Sorry.");
         setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
 
         jPanel1.setBackground(new java.awt.Color(153, 0, 0));
 
-        statement1Label.setFont(new java.awt.Font("Trajan Pro", 1, 14)); // NOI18N
+        statement1Label.setFont(new java.awt.Font("Eras Demi ITC", 1, 14)); // NOI18N
         statement1Label.setForeground(new java.awt.Color(204, 204, 204));
         statement1Label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         statement1Label.setText("rejected your");
 
-        statement2Label.setFont(new java.awt.Font("Trajan Pro", 1, 14)); // NOI18N
+        statement2Label.setFont(new java.awt.Font("Eras Demi ITC", 1, 14)); // NOI18N
         statement2Label.setForeground(new java.awt.Color(204, 204, 204));
         statement2Label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         statement2Label.setText("challenge request.");
 
         okayButton.setBackground(new java.awt.Color(255, 255, 255));
-        okayButton.setFont(new java.awt.Font("Trajan Pro", 1, 14)); // NOI18N
+        okayButton.setFont(new java.awt.Font("Eras Demi ITC", 1, 14)); // NOI18N
         okayButton.setForeground(new java.awt.Color(102, 102, 102));
         okayButton.setText("Okay");
         okayButton.addActionListener(new java.awt.event.ActionListener() {
@@ -82,7 +82,7 @@ public class RejectionFrame extends javax.swing.JInternalFrame {
             }
         });
 
-        opNameLabel.setFont(new java.awt.Font("Trajan Pro", 1, 18)); // NOI18N
+        opNameLabel.setFont(new java.awt.Font("Eras Bold ITC", 1, 18)); // NOI18N
         opNameLabel.setForeground(new java.awt.Color(255, 255, 255));
         opNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         opNameLabel.setText("opName");
@@ -92,25 +92,25 @@ public class RejectionFrame extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(opNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(statement2Label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
+            .addComponent(statement2Label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
             .addComponent(statement1Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(60, 60, 60)
+                .addGap(57, 57, 57)
                 .addComponent(okayButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addComponent(opNameLabel)
-                .addGap(7, 7, 7)
+                .addGap(4, 4, 4)
                 .addComponent(statement1Label)
                 .addGap(1, 1, 1)
-                .addComponent(statement2Label)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(statement2Label, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(okayButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

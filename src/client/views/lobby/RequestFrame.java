@@ -59,27 +59,28 @@ public class RequestFrame extends javax.swing.JInternalFrame {
 
         setBorder(null);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Incoming Challenge!");
 
         backgroundPanel.setBackground(new java.awt.Color(102, 0, 102));
         backgroundPanel.setOpaque(true);
 
-        opNameLabel.setFont(new java.awt.Font("Trajan Pro", 1, 18)); // NOI18N
+        opNameLabel.setFont(new java.awt.Font("Eras Bold ITC", 1, 18)); // NOI18N
         opNameLabel.setForeground(new java.awt.Color(255, 255, 255));
         opNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         opNameLabel.setText("opName");
 
-        statement1Label.setFont(new java.awt.Font("Trajan Pro", 1, 14)); // NOI18N
+        statement1Label.setFont(new java.awt.Font("Eras Demi ITC", 1, 14)); // NOI18N
         statement1Label.setForeground(new java.awt.Color(204, 204, 204));
         statement1Label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         statement1Label.setText("Challenge");
 
-        statement2Label.setFont(new java.awt.Font("Trajan Pro", 1, 14)); // NOI18N
+        statement2Label.setFont(new java.awt.Font("Eras Demi ITC", 1, 14)); // NOI18N
         statement2Label.setForeground(new java.awt.Color(204, 204, 204));
         statement2Label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         statement2Label.setText("Received From :");
 
         acceptButton.setBackground(new java.awt.Color(200, 255, 200));
-        acceptButton.setFont(new java.awt.Font("Trajan Pro", 1, 12)); // NOI18N
+        acceptButton.setFont(new java.awt.Font("Eras Demi ITC", 1, 12)); // NOI18N
         acceptButton.setForeground(new java.awt.Color(102, 102, 102));
         acceptButton.setText("Accept");
         acceptButton.addActionListener(new java.awt.event.ActionListener() {
@@ -89,7 +90,7 @@ public class RequestFrame extends javax.swing.JInternalFrame {
         });
 
         rejectButton.setBackground(new java.awt.Color(255, 200, 200));
-        rejectButton.setFont(new java.awt.Font("Trajan Pro", 1, 12)); // NOI18N
+        rejectButton.setFont(new java.awt.Font("Eras Demi ITC", 1, 12)); // NOI18N
         rejectButton.setForeground(new java.awt.Color(102, 102, 102));
         rejectButton.setText("Reject");
         rejectButton.addActionListener(new java.awt.event.ActionListener() {
@@ -121,9 +122,9 @@ public class RequestFrame extends javax.swing.JInternalFrame {
                 .addComponent(statement1Label)
                 .addGap(7, 7, 7)
                 .addComponent(statement2Label)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(opNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(1, 1, 1)
+                .addComponent(opNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(acceptButton, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                     .addComponent(rejectButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -139,9 +140,7 @@ public class RequestFrame extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(backgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(backgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
