@@ -64,7 +64,7 @@ public class LobbyView extends javax.swing.JFrame {
         optionInterfacePanel = new javax.swing.JPanel();
         challengeButton = new javax.swing.JButton();
         logoutButton = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        leaderboardButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         onlinePlayersList = new javax.swing.JList();
         jLabel1 = new javax.swing.JLabel();
@@ -118,13 +118,13 @@ public class LobbyView extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(102, 102, 102));
-        jButton4.setFont(new java.awt.Font("Trajan Pro", 1, 12)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Leaderboard");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        leaderboardButton.setBackground(new java.awt.Color(102, 102, 102));
+        leaderboardButton.setFont(new java.awt.Font("Trajan Pro", 1, 12)); // NOI18N
+        leaderboardButton.setForeground(new java.awt.Color(255, 255, 255));
+        leaderboardButton.setText("Leaderboard");
+        leaderboardButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                leaderboardButtonActionPerformed(evt);
             }
         });
 
@@ -180,7 +180,7 @@ public class LobbyView extends javax.swing.JFrame {
                     .addComponent(logoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(challengeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(leaderboardButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))
                 .addContainerGap())
             .addComponent(updatePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -197,7 +197,7 @@ public class LobbyView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(challengeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(leaderboardButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(updatePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -310,6 +310,12 @@ public class LobbyView extends javax.swing.JFrame {
         updatePanel.add(challenge);
         challenge.setVisible(true);
     }
+    
+    public void leaderboardFrame(){
+        LeaderboardFrame leaderboard=new LeaderboardFrame(controller);
+        updatePanel.add(leaderboard);
+        leaderboard.setVisible(true);
+    }
             
     /**
      * CHALLENGE
@@ -328,22 +334,21 @@ public class LobbyView extends javax.swing.JFrame {
         System.gc();
     }//GEN-LAST:event_logoutButtonActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        LeaderboardFrame leaderboard=new LeaderboardFrame();
-        leaderboard.setVisible(true);
+    private void leaderboardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaderboardButtonActionPerformed
         
-    }//GEN-LAST:event_jButton4ActionPerformed
+        
+    }//GEN-LAST:event_leaderboardButtonActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLayeredPane basePanel;
     private javax.swing.JButton challengeButton;
     private javax.swing.JTabbedPane gameInterfacePanel;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton leaderboardButton;
     private javax.swing.JButton logoutButton;
     private javax.swing.JList onlinePlayersList;
     private javax.swing.JPanel optionInterfacePanel;

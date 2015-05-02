@@ -7,9 +7,12 @@ package client.views.lobby;
  * @author Joe
  */
 public class LeaderboardFrame extends javax.swing.JInternalFrame {
+    
+    private LobbyController controller;
 
     /** Creates new form LeaderboardFrame */
-    public LeaderboardFrame() {
+    public LeaderboardFrame(LobbyController controller) {
+        this.controller=controller;
         initComponents();
     }
     
@@ -104,7 +107,7 @@ public class LeaderboardFrame extends javax.swing.JInternalFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LeaderboardFrame().setVisible(true);
+                new LeaderboardFrame(controller).setVisible(true);
             }
         });
     }
