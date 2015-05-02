@@ -335,8 +335,8 @@ public class LobbyView extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void leaderboardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaderboardButtonActionPerformed
-        
-        
+        controller.leaderboardRequest();
+        leaderboardFrame();
     }//GEN-LAST:event_leaderboardButtonActionPerformed
 
     

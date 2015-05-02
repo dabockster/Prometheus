@@ -107,6 +107,10 @@ public class LobbyController {
     public void dispose(){
         view.dispose();
     }
+    
+    public void leaderboardRequest(){
+        controller.leaderboardRequest();
+    }
      
      
 }

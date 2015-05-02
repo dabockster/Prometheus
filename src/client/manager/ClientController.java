@@ -289,5 +289,9 @@ public final class ClientController {
     public void sendGameResults(String result){
         cController.serverRequest("endGame<&>"+result);
     }
+    
+    public void leaderboardRequest(){
+        cController.serverRequest("leaders");
+    }
 
 }

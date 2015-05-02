@@ -94,6 +94,14 @@ public class UserProfile {
     public String getUsername(){
         return this.username;
     }
+    
+    public int getPlayed(){
+        return played;
+    }
+    
+    public int getWins(){
+        return wins;
+    }
 
     /**
      * ACTION

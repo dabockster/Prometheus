@@ -29,25 +29,25 @@ public class LeaderboardFrame extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        okButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         leaderTA = new javax.swing.JTextArea();
-        okButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(187, 155));
 
-        leaderTA.setEditable(false);
-        leaderTA.setColumns(20);
-        leaderTA.setRows(5);
-        jScrollPane1.setViewportView(leaderTA);
-
-        okButton.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
-        okButton.setText("GET OUT OF MY FACE");
+        okButton.setFont(new java.awt.Font("Eras Demi ITC", 0, 11)); // NOI18N
+        okButton.setText("Get out of my face!");
         okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 okButtonActionPerformed(evt);
             }
         });
+
+        leaderTA.setEditable(false);
+        leaderTA.setColumns(10);
+        leaderTA.setRows(5);
+        jScrollPane1.setViewportView(leaderTA);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -55,19 +55,18 @@ public class LeaderboardFrame extends javax.swing.JInternalFrame {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jScrollPane1)
-                    .add(okButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))
-                .addContainerGap())
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 131, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, okButton))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .addContainerGap()
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 136, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(31, 31, 31)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(okButton)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -79,13 +78,14 @@ public class LeaderboardFrame extends javax.swing.JInternalFrame {
 
     /**
      * @param args the command line arguments
-     */
+     *
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
+    /**
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -104,13 +104,14 @@ public class LeaderboardFrame extends javax.swing.JInternalFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the form *
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LeaderboardFrame(controller).setVisible(true);
+                //new LeaderboardFrame(controller).setVisible(true);
+                this.setVisible(true);
             }
         });
-    }
+    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
