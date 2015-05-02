@@ -22,8 +22,9 @@
  * THE SOFTWARE.
  */
 
-package gameplay.boardviews;
+package gameplay.views;
 
+import gameplay.GameView;
 import java.awt.Color;
 import java.awt.Cursor;
 import static java.awt.Cursor.DEFAULT_CURSOR;
@@ -34,38 +35,52 @@ import static java.awt.Cursor.DEFAULT_CURSOR;
  */
 public class BoardCell extends javax.swing.JPanel {
     
-    private BoardView parent;
+    private GameView parent;
+    
+    private boolean occupied;
+    private boolean scrollOver;
+    private boolean selected;
     
     private Color myColor;
     
     private int column;
     private int row;
+    
+    public BoardCell(){
+        initComponents();
+    }
 
     /**
      * Creates new form BoardCell
+     * @param parent
+     * @param row
+     * @param column
      */
-    public BoardCell(BoardView parent, int column, int row) {  // So that means we are formatting like this: array[row][column]
+    public BoardCell(GameView parent, int row, int column) {  // So that means we are formatting like this: array[row][column]
+        System.out.println(row + " "+column);
         this.parent = parent;
         this.column = column;
         this.row = row;
         initComponents();
-        myColor = this.getBackground();
+        myColor = gameButton.getBackground();
+        occupied = false;
     }
     
     /**
      * sets this BoardCell as the selected cell in the Board
      */
     private void select(){
+        selected = true;
         parent.selectedCell(this);
-        this.setBackground(Color.yellow);
-        //highlight this button
+        gameButton.setBackground(Color.yellow);
     }
     
     /**
      * removes this BoardCell as the selected cell in the Board
      */
     public void unselect(){
-        this.setBackground(myColor);
+        selected = false;
+        gameButton.setBackground(myColor);
     }
     
     
@@ -76,14 +91,30 @@ public class BoardCell extends javax.swing.JPanel {
      */
     public void playMove(boolean youPlayed){
         gameButton.setCursor(new Cursor(DEFAULT_CURSOR));
-        gameButton.enable(false);
-        if( youPlayed ){
-            this.setBackground(Color.white);
-        }else
-            this.setBackground(Color.black);
+        gameButton.setEnabled(false);
+        if( youPlayed ) {
+            gameButton.setBackground(new Color(0,255,128));
+        }else{
+            gameButton.setBackground(new Color(255, 0, 107));
+        }
+        occupied = true;
     }
     
+    /**
+     * returns the row that this is in
+     * @return this row
+     */
+    public int getRow(){
+        return row;
+    }
     
+    /**
+     * returns the column that this is in
+     * @return this column
+     */
+    public int getColumn(){
+        return column;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -97,16 +128,29 @@ public class BoardCell extends javax.swing.JPanel {
         gameButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(102, 102, 102));
-        setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 153, 0), new java.awt.Color(255, 51, 0), new java.awt.Color(255, 255, 102), new java.awt.Color(153, 153, 153)));
-        setMaximumSize(new java.awt.Dimension(100, 100));
-        setMinimumSize(new java.awt.Dimension(50, 50));
+        setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 0, 153), new java.awt.Color(0, 204, 204), new java.awt.Color(0, 0, 102), new java.awt.Color(0, 204, 204)));
+        setMaximumSize(new java.awt.Dimension(30, 30));
+        setMinimumSize(new java.awt.Dimension(10, 10));
         setName("basePanel"); // NOI18N
+        setPreferredSize(new java.awt.Dimension(20, 20));
 
-        gameButton.setBackground(new java.awt.Color(243, 228, 122));
-        gameButton.setForeground(new java.awt.Color(204, 204, 0));
+        gameButton.setBackground(new java.awt.Color(102, 102, 102));
+        gameButton.setForeground(new java.awt.Color(102, 102, 102));
         gameButton.setAutoscrolls(true);
-        gameButton.setContentAreaFilled(false);
+        gameButton.setBorder(null);
+        gameButton.setBorderPainted(false);
         gameButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        gameButton.setMaximumSize(new java.awt.Dimension(30, 30));
+        gameButton.setMinimumSize(new java.awt.Dimension(10, 10));
+        gameButton.setPreferredSize(new java.awt.Dimension(20, 20));
+        gameButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                mouseOverIn(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                mouseOverOut(evt);
+            }
+        });
         gameButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 gameButtonActionPerformed(evt);
@@ -117,19 +161,42 @@ public class BoardCell extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(gameButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(gameButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(gameButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+            .addComponent(gameButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void gameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gameButtonActionPerformed
         select();
     }//GEN-LAST:event_gameButtonActionPerformed
+    
+    /**
+     * If this cell has not been selected, changes background
+     * color when mouse is over
+     * @param evt 
+     */
+    private void mouseOverIn(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseOverIn
+        if(!occupied && !selected){
+            gameButton.setBackground(new Color(229,204,255));
+            scrollOver = true;
+        }
+            
+    }//GEN-LAST:event_mouseOverIn
+    
+    /**
+     * If this cell's color has been changed due to a MouseOver,
+     * this changes the color back.
+     * @param evt 
+     */
+    private void mouseOverOut(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseOverOut
+        if(scrollOver && !selected){
+            scrollOver = false;
+            unselect();
+        }
+    }//GEN-LAST:event_mouseOverOut
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

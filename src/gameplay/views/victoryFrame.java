@@ -1,6 +1,6 @@
 
 
-package gameplay.boardviews;
+package gameplay.views;
 
 /**
  *
@@ -27,8 +27,7 @@ public class victoryFrame extends javax.swing.JInternalFrame {
         yesButton = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         victoryLabel.setFont(new java.awt.Font("Eras Demi ITC", 0, 48)); // NOI18N
         victoryLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

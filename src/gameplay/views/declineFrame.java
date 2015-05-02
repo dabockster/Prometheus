@@ -1,6 +1,6 @@
 
 
-package gameplay.boardviews;
+package gameplay.views;
 
 /**
  *
@@ -25,8 +25,7 @@ public class declineFrame extends javax.swing.JInternalFrame {
         declineLabel = new javax.swing.JLabel();
         okButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         declineLabel.setFont(new java.awt.Font("Eras Demi ITC", 0, 36)); // NOI18N
         declineLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

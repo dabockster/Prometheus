@@ -17,6 +17,8 @@ public class GameController {
     private String opName; //opponent's name
     private String username;
     
+    private boolean myTurn;
+            
     /**
      * HOST CONSTRUCTOR
      * Establishes this client as the Host of the match and creates a 
@@ -30,6 +32,7 @@ public class GameController {
         this.view = new GameView(this);
         connection.start();
         setUsername();
+        turnover(false);
     }
     
     /**
@@ -47,6 +50,7 @@ public class GameController {
         this.view = new GameView(this);
         connection.start();
         setUsername();
+        turnover(true);
     }
     
     /**
@@ -71,7 +75,9 @@ public class GameController {
             case "message" :
                 this.receiveMsg(request[1]);
                 break;
-                
+            case "play"  :
+                this.receivePlay(request);
+                break;             
         }
     }
     
@@ -133,6 +139,42 @@ public class GameController {
     public void receiveMsg(String msg){
         view.postMsg(msg);
     }
+    
+    /**
+     * Sends a play move to opponent
+     * @param x the row that was played in
+     * @param y the column that was played in
+     */
+    public void sendPlay(int x, int y){
+        connection.send("play<&>"+x+"<&>"+y);
+        turnover(false);
+    }
+    
+    /**
+     * Receives a play from an opponent
+     * @param coordinates 
+     */
+    public void receivePlay(String[] coordinates){
+        int x = Integer.parseInt(coordinates[1]);
+        int y = Integer.parseInt(coordinates[2]);
+        view.playMove(x,y);
+        turnover(true);
+    }
+    
+    /**
+     * sets myTurn equal to false
+     * @param iJustPlayed 
+     */
+    private void turnover(boolean turn){
+        if(turn){
+            myTurn = true;
+            view.turnover(true);
+        }else{
+            myTurn = false;   
+            view.turnover(false);
+        }
+    }
+    
     
     /**
      * Sets this port to the specified value

@@ -1,1 +1,2 @@
 timErnst,password,0,0
+Anonymous1,anon,0,0

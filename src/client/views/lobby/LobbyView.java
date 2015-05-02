@@ -83,7 +83,7 @@ public class LobbyView extends javax.swing.JFrame {
         setName("lobbyView"); // NOI18N
         setResizable(false);
 
-        basePanel.setBackground(new java.awt.Color(100, 180, 240));
+        basePanel.setBackground(new java.awt.Color(40, 160, 220));
         basePanel.setFocusable(false);
         basePanel.setMaximumSize(new java.awt.Dimension(1100, 700));
         basePanel.setMinimumSize(new java.awt.Dimension(1100, 700));
@@ -97,9 +97,9 @@ public class LobbyView extends javax.swing.JFrame {
         optionInterfacePanel.setMinimumSize(new java.awt.Dimension(200, 600));
         optionInterfacePanel.setPreferredSize(new java.awt.Dimension(250, 600));
 
-        challengeButton.setBackground(new java.awt.Color(102, 102, 102));
+        challengeButton.setBackground(new java.awt.Color(51, 51, 51));
         challengeButton.setFont(new java.awt.Font("Trajan Pro", 1, 12)); // NOI18N
-        challengeButton.setForeground(new java.awt.Color(153, 0, 0));
+        challengeButton.setForeground(new java.awt.Color(204, 0, 51));
         challengeButton.setText("Challenge");
         challengeButton.setPreferredSize(new java.awt.Dimension(79, 177));
         challengeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -200,14 +200,14 @@ public class LobbyView extends javax.swing.JFrame {
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(updatePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(logoutButton)
                 .addContainerGap())
         );
 
         challengeButton.getAccessibleContext().setAccessibleDescription("");
 
-        usernameLabel.setBackground(new java.awt.Color(40, 120, 200));
+        usernameLabel.setBackground(new java.awt.Color(62, 98, 151));
         usernameLabel.setFont(new java.awt.Font("Monotype Corsiva", 0, 36)); // NOI18N
         usernameLabel.setForeground(new java.awt.Color(255, 255, 255));
         usernameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -225,18 +225,17 @@ public class LobbyView extends javax.swing.JFrame {
         titleLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         titleLabel.setFocusable(false);
         titleLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        titleLabel.setOpaque(true);
 
         gameInterfacePanel.setBackground(new java.awt.Color(255, 255, 255));
         gameInterfacePanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 4, true));
         gameInterfacePanel.setFocusable(false);
-        gameInterfacePanel.setMaximumSize(new java.awt.Dimension(860, 600));
-        gameInterfacePanel.setMinimumSize(new java.awt.Dimension(860, 600));
+        gameInterfacePanel.setMaximumSize(new java.awt.Dimension(970, 690));
+        gameInterfacePanel.setMinimumSize(new java.awt.Dimension(970, 690));
         gameInterfacePanel.setName(""); // NOI18N
-        gameInterfacePanel.setPreferredSize(new java.awt.Dimension(860, 600));
+        gameInterfacePanel.setPreferredSize(new java.awt.Dimension(970, 690));
 
         jLabel3.setFont(new java.awt.Font("Perpetua Titling MT", 1, 20)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 255, 0));
+        jLabel3.setForeground(new java.awt.Color(40, 255, 40));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("is ONLINE");
         jLabel3.setFocusable(false);
@@ -253,12 +252,9 @@ public class LobbyView extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(basePanelLayout.createSequentialGroup()
-                        .addComponent(gameInterfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 898, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, basePanelLayout.createSequentialGroup()
-                        .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 662, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(124, 124, 124))))
+                    .addComponent(gameInterfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 974, Short.MAX_VALUE)
+                    .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         basePanelLayout.setVerticalGroup(
             basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,16 +262,16 @@ public class LobbyView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(basePanelLayout.createSequentialGroup()
-                        .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(gameInterfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(basePanelLayout.createSequentialGroup()
                         .addComponent(usernameLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(optionInterfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(optionInterfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(basePanelLayout.createSequentialGroup()
+                        .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(gameInterfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 709, Short.MAX_VALUE))))
         );
         basePanel.setLayer(optionInterfacePanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
         basePanel.setLayer(usernameLabel, javax.swing.JLayeredPane.DEFAULT_LAYER);
