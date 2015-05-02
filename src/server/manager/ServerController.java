@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.*;
 import server.connection.ServerConnection;
 import server.connection.UserConnection;
 
@@ -351,4 +352,19 @@ public class ServerController {
     public void leaderboard(UserConnection ucon) {
         
     }
+    
+    public void topFive(){
+        double top=0;
+        double next=0;
+        UserProfile lead=null;
+        ArrayList<UserProfile> accounts=new ArrayList<UserProfile>();
+        for(UserProfile i:accounts){
+            if(i.getScore()>top){
+                top=i.getScore();
+                lead=i;
+            }
+        }
+        next=top;
+    }
+    
 }

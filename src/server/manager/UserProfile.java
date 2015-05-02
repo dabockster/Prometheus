@@ -102,6 +102,11 @@ public class UserProfile {
     public int getWins(){
         return wins;
     }
+    
+    public double getScore(){
+        double score=(double)played/(double)wins;
+        return score;
+    }
 
     /**
      * ACTION

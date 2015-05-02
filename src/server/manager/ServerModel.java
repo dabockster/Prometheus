@@ -246,4 +246,8 @@ public class ServerModel {
                 i.won();
         }
     }
+    
+    public ArrayList<UserProfile> getAccounts(){
+        return accounts;
+    }
 }
