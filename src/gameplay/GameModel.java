@@ -29,4 +29,179 @@ package gameplay;
  */
 public class GameModel {
     
+    private GameController controller;
+    private int[][] board;
+    private int rows;
+    private int columns;
+    private boolean gameOver;
+    
+    /** 
+     * Default Constructor
+     * @param controller 
+     */
+    public GameModel(GameController controller){
+        this.controller = controller;
+        gameOver = false;
+        newGrid(30,30);
+    }
+    
+    
+    /**
+     * Builds a new grid
+     * @param rows
+     * @param columns 
+     */
+    public void newGrid(int rows, int columns){
+        this.rows = rows;
+        this.columns = columns;
+        board = new int[rows][columns];
+    }
+    
+    /**
+     * Plays the specified move at the desired index (x, y)
+     *      for player:
+     *          0 : nobody has played
+     *          1 : you played
+     *          -1: opponent played
+     * @param x the row that was played in
+     * @param y the column that was played in
+     * @param player 
+     */
+    public void playMove(int x, int y, int player){
+        if(board[x][y] != 0){
+            System.out.println("Move has already been selected.");
+        }else{
+            System.out.println();
+            if(player == 1)
+                System.out.println("I played on space ("+x+", "+y+")");
+            else
+                System.out.println("They played on space ("+x+", "+y+")");
+            board[x][y] = player;
+            winConditionsMet();
+        }
+    }
+    
+    /**
+     * Checks to see if the game is still going
+     */
+    private void winConditionsMet(){
+        int state = sweep();
+        if( state == 1){       //WINNER 
+            controller.gameOver(1);
+        }else if(state == -1){
+            controller.gameOver(-1);
+        }else if( state == 10){
+            controller.gameOver(0);
+        }
+    }
+    
+    /**
+     * Checks each cell to see if it is part of a winning sequence
+     * @return 
+     */
+    private int sweep(){
+        int spaceRemaining = 10;
+        for(int i=0; i<rows; i++){
+            for(int j=0; j<columns; j++ ){
+                if(checkCell(i,j)){
+                    System.out.println(i+" "+ j);
+                    return board[i][j];
+                }else{
+                    spaceRemaining++;
+                }
+            }
+        }
+        return spaceRemaining;
+    }
+    
+    /**
+     * checks a cell to see if it neighboring cells with the same value
+     * @param x
+     * @param y
+     * @return 
+     */
+    private boolean checkCell(int x, int y){
+        int player = board[x][y];
+        if(player == 0)
+            return false;
+        if( x!=0 && y!=columns-1){
+            if(checkDiagonalBack(x-1,y+1,player,0)){
+                return true;
+            }
+        }
+        if( y!=columns-1){
+            if( checkHorizontal(x,y+1,player,0)){
+                return true;
+            }
+        }
+        if( x!=rows-1 && y!=columns-1 ){
+            if( checkDiagonalForward(x+1,y+1,player,0)){
+                return true;
+            }
+        }
+        if( x!=rows-1 ){
+            if ( checkVertical(x+1,y,player,0)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private boolean checkDiagonalBack(int x, int y, int player, int inSequence){
+        inSequence++;
+        if(inSequence == 5)
+            return true;
+        else if( x!=0 && y!=columns-1){
+            if( board[x][y] == player ){
+                System.out.println("DiagonalBack: "+x+","+y+","+player+","+inSequence);
+                return checkDiagonalBack(x-1,y+1,player,inSequence);
+            }else
+                return false;
+        }else
+            return false;
+    }
+    
+    private boolean checkHorizontal(int x, int y, int player, int inSequence){
+        inSequence++;
+        if(inSequence == 5)
+            return true;
+        else if(y!=columns-1){
+            if( board[x][y] == player ){
+            System.out.println("Horizontal: "+x+","+y+","+player+","+inSequence);
+                return checkHorizontal(x,y+1,player,inSequence);
+            }else
+                return false;
+        }else
+            return false;
+    }
+    
+    private boolean checkDiagonalForward(int x, int y, int player, int inSequence){
+        inSequence++;
+        if(inSequence == 5)
+            return true;
+        else if( x!=rows-1 && y!=columns-1 ){
+            if( board[x][y] == player ){
+                System.out.println("DiagonalForward: "+x+","+y+","+player+","+inSequence);
+                return checkDiagonalForward(x+1,y+1,player,inSequence);
+            }else
+                return false;
+        }else
+            return false;
+    }
+    
+    private boolean checkVertical(int x, int y, int player, int inSequence){
+        inSequence++;
+        if(inSequence == 5)
+            return true;
+        else if( x!=rows-1 ){
+            if( board[x][y] == player ){
+                System.out.println("Vertical: "+x+","+y+","+player+","+inSequence);
+                return checkVertical(x+1,y,player,inSequence);
+            }else
+                return false;
+        }else
+            return false;
+    }
+ 
+    
 }

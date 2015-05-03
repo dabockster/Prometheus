@@ -16,7 +16,7 @@ public class GameController {
     private PeerToPeerConnection connection;
     private String opName; //opponent's name
     private String username;
-    
+    private GameModel model;
     private boolean myTurn;
             
     /**
@@ -30,6 +30,7 @@ public class GameController {
         this.controller = controller;
         this.connection = new PeerToPeerConnection(this);
         this.view = new GameView(this);
+        model = new GameModel(this);
         connection.start();
         setUsername();
         turnover(false);
@@ -48,6 +49,7 @@ public class GameController {
         this.controller = controller;
         this.connection = new PeerToPeerConnection(this, ip, port);
         this.view = new GameView(this);
+        model = new GameModel(this);
         connection.start();
         setUsername();
         turnover(true);
@@ -147,6 +149,7 @@ public class GameController {
      */
     public void sendPlay(int x, int y){
         connection.send("play<&>"+x+"<&>"+y);
+        model.playMove(x, y, 1);
         turnover(false);
     }
     
@@ -158,6 +161,7 @@ public class GameController {
         int x = Integer.parseInt(coordinates[1]);
         int y = Integer.parseInt(coordinates[2]);
         view.playMove(x,y);
+        model.playMove(x, y, -1);
         turnover(true);
     }
     
@@ -191,10 +195,20 @@ public class GameController {
         connection.setID(username);
     }
     
-    public void victory(boolean wonGame){
-        if(wonGame)
-            controller.sendGameResults("victory");
-        else
+    /**
+     * Sends these game results to the server
+     * @param results
+     */
+    public void gameOver(int results){
+        if(results == -1){
+            view.loseDisplay();
             controller.sendGameResults("defeat");
+        }else if(results == 0){
+            view.tieDisplay();
+            controller.sendGameResults("defeat");
+        }else if(results == 1){
+            view.winDisplay();
+            controller.sendGameResults("victory");
+        }
     }
 }

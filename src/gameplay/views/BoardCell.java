@@ -57,7 +57,6 @@ public class BoardCell extends javax.swing.JPanel {
      * @param column
      */
     public BoardCell(GameView parent, int row, int column) {  // So that means we are formatting like this: array[row][column]
-        System.out.println(row + " "+column);
         this.parent = parent;
         this.column = column;
         this.row = row;
@@ -93,9 +92,9 @@ public class BoardCell extends javax.swing.JPanel {
         gameButton.setCursor(new Cursor(DEFAULT_CURSOR));
         gameButton.setEnabled(false);
         if( youPlayed ) {
-            gameButton.setBackground(new Color(0,255,128));
+            setGreen();
         }else{
-            gameButton.setBackground(new Color(255, 0, 107));
+            setRed();
         }
         occupied = true;
     }
@@ -197,7 +196,39 @@ public class BoardCell extends javax.swing.JPanel {
             unselect();
         }
     }//GEN-LAST:event_mouseOverOut
-
+    
+    /**
+     * Darkens this square to its original color and sets its to not enabled
+     */
+    public void darken(){
+        unselect();
+        occupied = true;
+        scrollOver = false;
+        gameButton.setEnabled(false);
+        gameButton.setBackground(new Color(0,51,102));
+    }
+    
+    /**
+     * Changes this color to green
+     */
+    public void setGreen(){
+        gameButton.setBackground(new Color(0,255,128));
+    }
+    
+    /**
+     * Changes this color to red
+     */
+    public void setRed(){
+        gameButton.setBackground(new Color(255, 0, 107));
+    }
+    
+    public void setYellow(){
+        gameButton.setBackground(Color.yellow);
+    }
+    
+    public void setWhite(){
+        gameButton.setBackground(new Color(250,250,250));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton gameButton;

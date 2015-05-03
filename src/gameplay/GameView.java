@@ -90,6 +90,7 @@ public class GameView extends javax.swing.JPanel {
      * @param column
      */
     public void playMove(int row, int column){
+        unselect();
         cellGrid[row][column].playMove(false);
     }
     
@@ -125,8 +126,8 @@ public class GameView extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(204, 207, 208));
         setToolTipText("");
-        setMaximumSize(new java.awt.Dimension(880, 590));
-        setMinimumSize(new java.awt.Dimension(880, 590));
+        setMaximumSize(new java.awt.Dimension(880, 680));
+        setMinimumSize(new java.awt.Dimension(880, 680));
         setPreferredSize(new java.awt.Dimension(880, 590));
 
         boardPanel.setBackground(new java.awt.Color(0, 102, 102));
@@ -137,7 +138,7 @@ public class GameView extends javax.swing.JPanel {
 
         for( int i=0; i<30; i++ ){
             for( int j=0; j<30; j++ ){
-                cellGrid[i][j] = new BoardCell(this,i,j);
+                cellGrid[j][i] = new BoardCell(this,j,i);
             }
         }
 
@@ -149,7 +150,7 @@ public class GameView extends javax.swing.JPanel {
         );
         boardPanelLayout.setVerticalGroup(
             boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 648, Short.MAX_VALUE)
         );
 
         boardPanel.setLayout(new GridLayout(30,30));
@@ -239,7 +240,7 @@ public class GameView extends javax.swing.JPanel {
             interfacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(interfacePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(turnLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+                .addComponent(turnLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(msgBoardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -283,6 +284,8 @@ public class GameView extends javax.swing.JPanel {
      * @param evt 
      */
     private void surrenderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_surrenderButtonActionPerformed
+        playAgainDisplay();
+        loseDisplay();
         //send surrender message to opponent (a method 'receiveSurrender' will be implemented)
         //record game as loss
         //close GameController (rematch?)        
@@ -290,10 +293,6 @@ public class GameView extends javax.swing.JPanel {
 
     private void playMoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playMoveButtonActionPerformed
         playMove();
-        
-        //sends a message with game play coordinates to other player
-        //plays move (Game model? idk)
-        //end turn
     }//GEN-LAST:event_playMoveButtonActionPerformed
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
@@ -312,7 +311,160 @@ public class GameView extends javax.swing.JPanel {
         msgTF.selectAll();
     }//GEN-LAST:event_msgTFMouseClicked
 
+    
+    private void clearBoard(){
+        for(int i=0; i < cellGrid.length; i++ ){
+            for (int j=0; j< cellGrid.length; j++ ){
+                cellGrid[i][j].darken();
+            }
+        }
+    }
+    
+    public void winDisplay(){
+        clearBoard();
+        turnLabel.setText("WINNER!");
+        turnLabel.setForeground(Color.black);
+        turnLabel.setBackground(new Color(0,235,128));
+        for(int i=0; i<cellGrid.length; i++){ //highlights border cells green
+            cellGrid[0][i].setGreen();
+            cellGrid[i][0].setGreen();
+            cellGrid[cellGrid.length-1][i].setGreen();
+            cellGrid[i][cellGrid.length-1].setGreen();
+        }
+        hlStraightLine(2,2,2,7,1);   //draw W
+        hlStraightLine(3,7,3,8,1);
+        hlStraightLine(4,8,4,9,1);
+        hlStraightLine(5,7,5,8,1);
+        hlStraightLine(6,6,6,7,1);
+        hlStraightLine(7,7,7,8,1);
+        hlStraightLine(8,8,8,9,1);
+        hlStraightLine(9,7,9,8,1);
+        hlStraightLine(10,2,10,7,1);
+        
+        hlStraightLine(13,3,17,3,1); //draw I
+        hlStraightLine(15,4,15,8,1);
+        hlStraightLine(13,9,17,9,1);
+        
+        hlStraightLine(20,3,20,9,1);
+        hlCell(21,4,1);
+        hlCell(22,5,1);
+        hlCell(23,6,1);
+        hlCell(24,7,1);
+        hlCell(25,8,1);
+        hlStraightLine(26,3,26,9,1);
+        
+        hlStraightLine(2,11,26,11,1);
+    }
+    
+    public void loseDisplay(){
+        clearBoard();
+        turnLabel.setText("LOSER!");
+        turnLabel.setForeground(Color.black);
+        turnLabel.setBackground(new Color(235, 0, 107));
+        for(int i=0; i<cellGrid.length; i++){ //highlights border cells green
+            cellGrid[0][i].setRed();
+            cellGrid[i][0].setRed();
+            cellGrid[cellGrid.length-1][i].setRed();
+            cellGrid[i][cellGrid.length-1].setRed();
+        }
+        
+        hlStraightLine(2,11,27,11,-1); //underline
+        
+        hlStraightLine(2,2,2,9,-1); //draw L
+        hlStraightLine(3,9,6,9,-1);
+        
+        hlStraightLine(8,4,8,8,-1); //draw O
+        hlStraightLine(11,4,11,8,-1);
+        hlStraightLine(9,3,10,3,-1);
+        hlStraightLine(9,9,10,9,-1);
+        
+        hlStraightLine(13,4,13,5,-1); //draw s
+        hlStraightLine(14,3,15,3,-1);
+        hlCell(16,4,-1);
+        hlStraightLine(14,6,15,6,-1);
+        hlStraightLine(16,7,16,8,-1);
+        hlStraightLine(14,9,15,9,-1);
+        hlCell(13,8,-1);
+        
+        hlStraightLine(18,3,18,9,-1);
+        hlStraightLine(19,3,21,3,-1);
+        hlStraightLine(19,6,20,6,-1);
+        hlStraightLine(19,9,21,9,-1);
 
+        hlStraightLine(23,3,23,9,-1);
+        hlCell(24,4,-1);
+        hlStraightLine(25,3,26,3,-1);
+        hlCell(27,4,-1);
+    }
+    
+    public void tieDisplay(){
+        clearBoard();
+        turnLabel.setText("TIE GAME!");
+        turnLabel.setForeground(Color.black);
+        turnLabel.setBackground(Color.yellow);
+        for(int i=0; i<cellGrid.length; i++){ //highlights border cells green
+            cellGrid[0][i].setYellow();
+            cellGrid[i][0].setYellow();
+            cellGrid[cellGrid.length-1][i].setYellow();
+            cellGrid[i][cellGrid.length-1].setYellow();
+        }
+    }
+    
+      
+    private void playAgainDisplay(){
+        hlStraightLine(3,13,3,17,2); //draw p
+        hlCell(4,13,2);
+        hlCell(5,14,2);
+        hlCell(4,15,2);
+        
+        hlStraightLine(7,13,7,17,2); //draw l
+        
+        hlStraightLine(9,14,9,16,2); //draw A
+        hlStraightLine(11,14,11,16,2);
+        hlCell(12,13,2);
+        hlCell(14,15,2);
+    }
+    
+    /**
+     * Highlights a line of buttons from (xStart, yStart) to (xEnd, yEnd) in
+     * a specific color.
+     *      color -1: red
+     *      color  0: yellow
+     *      color  1: green
+     * @param xStart begin x coord
+     * @param yStart begin y coord
+     * @param xEnd end x coord
+     * @param yEnd end y coord
+     * @param color specified in method highlightCell()
+     */
+    private void hlStraightLine(int xStart,int yStart,int xEnd,int yEnd, int color){
+        for( int i=xStart; i<=xEnd; i++ ){
+            for( int j=yStart; j<=yEnd; j++ ){
+                hlCell(i,j,color);
+            }
+        }
+    }
+    /**
+     * highlights a specific cell
+     *  @param color 
+     *      color -1: red
+     *      color  0: yellow
+     *      color  1: green
+     *      color  2: idk yet
+     */
+    private void hlCell(int x, int y, int color){
+        if(color == -1)
+            cellGrid[y][x].setRed();
+        else if(color == 0)
+            cellGrid[y][x].setYellow();
+        else if(color == 1)
+            cellGrid[y][x].setGreen();
+        else if(color == 1)
+            cellGrid[y][x].setWhite();
+    }
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel boardPanel;
     private javax.swing.JPanel interfacePanel;
