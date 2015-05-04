@@ -165,7 +165,6 @@ public class GameView extends javax.swing.JPanel {
         
         hlStraightLine(2,11,26,11,1);
         
-        playAgainDisplay();
     }
     
     public void loseDisplay(){
@@ -202,7 +201,6 @@ public class GameView extends javax.swing.JPanel {
         hlCell(24,4,-1);
         hlStraightLine(25,3,26,3,-1);
         hlCell(27,4,-1);
-        playAgainDisplay();
     }
     
     public void tieDisplay(){
@@ -229,7 +227,7 @@ public class GameView extends javax.swing.JPanel {
         
     }
     
-    private void playAgainDisplay(){
+    public void playAgainDisplay(){
         hlStraightLine(3,13,3,17,2); //draw p
         hlStraightLine(4,13,5,13,2);
         hlStraightLine(4,15,5,15,2);
@@ -279,7 +277,7 @@ public class GameView extends javax.swing.JPanel {
         
         for(int i=25; i<28; i++){       //change button action to playAgain = yes
             for(int j=7; j<12; j++){
-                cellGrid[i][j].changeEffect(2);
+                cellGrid[i][j].setEffect(2);
                 cellGrid[i][j].setGreen();
             }
         }
@@ -290,7 +288,7 @@ public class GameView extends javax.swing.JPanel {
         
         for(int i=25; i<28; i++){       //change button action to playAgain = no
             for(int j=19; j<23; j++){
-                cellGrid[i][j].changeEffect(3);
+                cellGrid[i][j].setEffect(3);
                 cellGrid[i][j].setRed();
             }
         }
@@ -301,6 +299,81 @@ public class GameView extends javax.swing.JPanel {
     }
     
     public void opponentLeftDisplay(){
+        for(int i=1; i<cellGrid.length; i++){       
+            for(int j=13; j<cellGrid.length; j++){
+                cellGrid[j][i].scrub();
+                cellGrid[j][i].darken();
+            }
+        }
+        
+        cellGrid[14][5].setLetter("Y");
+        cellGrid[14][6].setLetter("O");
+        cellGrid[14][7].setLetter("U");
+        cellGrid[14][8].setLetter("R");
+        
+        cellGrid[14][11].setLetter("O");
+        cellGrid[14][12].setLetter("P");
+        cellGrid[14][13].setLetter("P");
+        cellGrid[14][14].setLetter("O");
+        cellGrid[14][15].setLetter("N");
+        cellGrid[14][16].setLetter("E");
+        cellGrid[14][17].setLetter("N");
+        cellGrid[14][18].setLetter("T");
+        
+        cellGrid[14][21].setLetter("L");
+        cellGrid[14][22].setLetter("E");
+        cellGrid[14][23].setLetter("F");
+        cellGrid[14][24].setLetter("T");
+        
+        cellGrid[16][9].setLetter("C");
+        cellGrid[16][10].setLetter("L");
+        cellGrid[16][11].setLetter("O");
+        cellGrid[16][12].setLetter("S");
+        cellGrid[16][13].setLetter("E");
+        
+        cellGrid[16][16].setLetter("V");
+        cellGrid[16][17].setLetter("I");
+        cellGrid[16][18].setLetter("E"); 
+        cellGrid[16][19].setLetter("W");
+        
+        for(int i=18; i<21; i++){       //change button action to playAgain = yes
+            for(int j=12; j<18; j++){
+                cellGrid[i][j].setEffect(4);
+                cellGrid[i][j].setBlack();
+            }
+        }
+        
+        cellGrid[19][13].setLetter("O");
+        cellGrid[19][14].setLetter("K");
+        cellGrid[19][15].setLetter("A");
+        cellGrid[19][16].setLetter("Y");
+    }
+    
+    public void receiveSurrender(){
+        hlStraightLine(2,11,27,11,2); //underline
+        
+        cellGrid[11][4].setLetter("O");
+        cellGrid[11][5].setLetter("P");
+        cellGrid[11][6].setLetter("P");
+        cellGrid[11][7].setLetter("O");
+        cellGrid[11][8].setLetter("N");
+        cellGrid[11][9].setLetter("E");
+        cellGrid[11][10].setLetter("N");
+        cellGrid[11][11].setLetter("T");
+        
+        
+        cellGrid[11][14].setLetter("S");
+        cellGrid[11][15].setLetter("U");
+        cellGrid[11][16].setLetter("R");
+        cellGrid[11][17].setLetter("R");
+        cellGrid[11][18].setLetter("E");
+        cellGrid[11][19].setLetter("N");
+        cellGrid[11][20].setLetter("D");
+        cellGrid[11][21].setLetter("E");
+        cellGrid[11][22].setLetter("R");
+        cellGrid[11][23].setLetter("E");
+        cellGrid[11][24].setLetter("D");
+        
         
     }
     
@@ -315,7 +388,6 @@ public class GameView extends javax.swing.JPanel {
         hlStraightLine(cellGrid.length-1,0,cellGrid.length-1,cellGrid.length-1,color);
         hlStraightLine(0,0,cellGrid.length-1,0,color);
         hlStraightLine(0,cellGrid.length-1,cellGrid.length-1,cellGrid.length-1,color);
-        playAgainDisplay();
     }
     /**
      * Highlights a line of buttons from (xStart, yStart) to (xEnd, yEnd) in
@@ -564,12 +636,18 @@ public class GameView extends javax.swing.JPanel {
         msgTF.selectAll();
     }//GEN-LAST:event_msgTFMouseClicked
 
+    /**
+     * Forwards the users response to playing again to the GameController
+     * @param rematch 
+     */
     public void playAgain(boolean rematch){
         darkenBoard();
-        controller.myChoice(rematch);
-        
+        controller.myChoice(rematch);      
     }
     
+    /**
+     * Scrubs the GameView to have a rematch
+     */
     public void newGame(){
         for(int i=0; i<cellGrid.length; i++){
             for(int j=0; j<cellGrid.length; j++){

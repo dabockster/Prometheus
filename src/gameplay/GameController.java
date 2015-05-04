@@ -21,6 +21,7 @@ public class GameController {
     private boolean myTurn;
     private boolean wentFirstLast;
     private boolean rematch = false;
+    private boolean playing;
             
     /**
      * HOST CONSTRUCTOR
@@ -36,6 +37,7 @@ public class GameController {
         model = new GameModel(this);
         connection.start();
         setUsername();
+        playing = true;
         myTurn(false);
         wentFirstLast = false;
     }
@@ -55,6 +57,7 @@ public class GameController {
         this.view = new GameView(this);
         model = new GameModel(this);
         connection.start();
+        playing = true;
         setUsername();
         myTurn(true);
         wentFirstLast = true;
@@ -76,17 +79,20 @@ public class GameController {
             case "connectConfimation" :
                 this.receiveConnectConfirmation();
                 break;
-            case "disconnect":
+            case "disconnect" :
                 this.receiveDisconnect();
+                break;
+            case "leave" :
+                this.opponentLeft();
                 break;
             case "message" :
                 this.receiveMsg(request[1]);
                 break;
-            case "play"  :
+            case "play" :
                 this.receivePlay(request);
                 break;            
             case "playAgain" :
-                this.opponentChoice(request[1]);
+                this.opponentChoice();
                 break;
             case "surrender" :
                 this.receiveSurrender();
@@ -125,6 +131,11 @@ public class GameController {
     private void receiveConnectConfirmation(){
         controller.addGameViewToLobby(opName, view);
         view.setVisible(true);
+    }
+    
+    private void sendDisconnect(){
+        //remove GameController
+        connection.close();
     }
     
     /**
@@ -184,16 +195,16 @@ public class GameController {
      */
     public void sendSurrender(){
         connection.send("surrender");
-        controller.sendGameResults("defeat");
-        view.loseDisplay();
+        gameOver(-1);
+        view.playAgainDisplay();
     }
     
     /**
      * Receives a surrender from the opposing client and displays a winDisplay
      */
     public void receiveSurrender(){
-        controller.sendGameResults("victory");
-        view.winDisplay();
+        gameOver(1);
+        view.receiveSurrender();
     }
     
     /**
@@ -230,36 +241,56 @@ public class GameController {
      * @param results
      */
     public void gameOver(int results){
+        playing = false;
         if(results == -1){  
             view.loseDisplay();         //loss
             controller.sendGameResults("defeat");
+            view.playAgainDisplay();
         }else if(results == 0){
             view.tieDisplay();          //tie
             controller.sendGameResults("defeat");
+            view.playAgainDisplay();
         }else if(results == 1){
             view.winDisplay();          //win
             controller.sendGameResults("victory");
+            view.playAgainDisplay();
+
         }
     }
     
     /**
-     * Receives the opponents decision on playing another game
-     * @param choice 
+     * If this player has to leave in the middle of a game
+     * This method is called from the ClientController
      */
-    public void opponentChoice(String choice){
-        if(choice.equals("true"))
-            playAgain();
-        else
-            System.out.println("your opponent does not want to play");
-            //you opponent does not want to play again
+    public void leave(){
+        if(playing)
+            gameOver(-1);
+        connection.send("leave");
+        view.close();
+    }
+    
+    private void opponentLeft(){
+        if(playing){
+            gameOver(1);
+        }
+        view.opponentLeftDisplay();
+        sendDisconnect();
+    }
+    
+    /**
+     * Receives the opponents decision on playing another game
+     */
+    public void opponentChoice(){
+        playAgain();
     }
     
     public void myChoice(boolean choice){
         if(choice){
             playAgain();
             connection.send("playAgain<&>true");
-        }else
-            connection.send("playAgain<&>false");
+        }else{
+            controller.leaveGame(this);
+        }
     }
     
     /**
@@ -272,7 +303,11 @@ public class GameController {
             rematch = true;
     }
     
+    /**
+     * Builds a new GameModel and scrubs the GameView to have a new game
+     */
     private void newGame(){
+        playing = true;
         rematch = false;
         view.newGame();
         view.toggleGameButtons(true);

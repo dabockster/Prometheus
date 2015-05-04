@@ -91,6 +91,8 @@ public class BoardCell extends javax.swing.JPanel {
             parent.playAgain(true);
         }else if(effect == 3){      //play again no
             parent.playAgain(false);
+        }else if(effect == 4){
+            parent.close();
         }
     }
     
@@ -252,12 +254,16 @@ public class BoardCell extends javax.swing.JPanel {
         gameButton.setBackground(new Color(240,240,240));
     }
     
+    public void setBlack(){
+        gameButton.setBackground(Color.black);
+    }
+    
     public void setLetter(String letter){
         gameButton.setText(letter);
         setWhite();
     }
     
-    public void changeEffect(int newEffect){
+    public void setEffect(int newEffect){
         this.effect = newEffect;
         gameButton.setEnabled(true);
     }

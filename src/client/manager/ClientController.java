@@ -179,6 +179,9 @@ public final class ClientController {
      */
     public void logoutRequest(){
         cController.serverRequest("logout");
+        while(model.hasGame()){
+            model.popGame().leave();
+        }
         lobby.dispose();
         refreshClient();
     }
@@ -238,8 +241,6 @@ public final class ClientController {
     public void respondToChallenge(String opName, boolean accept){
         if(accept){
             model.addGame(new GameController(opName, this));
-            //creates GameController which will send a serverRequest containing
-            //IP and port to connect to
         }else{//reject
             cController.serverRequest("challengeResponse<&>"+opName+"<&>reject");
         }
@@ -279,6 +280,11 @@ public final class ClientController {
      */
     public void addGameViewToLobby(String opName, GameView newGame){
         lobby.addGameView(opName, newGame);
+    }
+    
+    public void leaveGame(GameController oldGame){
+        oldGame.leave();
+        model.removeGame(oldGame);
     }
     
     /**

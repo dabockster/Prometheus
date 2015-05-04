@@ -114,6 +114,11 @@ public class ServerView extends javax.swing.JFrame {
         shutDownButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAutoRequestFocus(false);
+        setMaximumSize(new java.awt.Dimension(700, 550));
+        setMinimumSize(new java.awt.Dimension(650, 500));
+        setPreferredSize(new java.awt.Dimension(670, 525));
+        setResizable(false);
 
         serverFeebackTA.setEditable(false);
         serverFeebackTA.setColumns(20);
@@ -254,7 +259,7 @@ public class ServerView extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(onlineAccountsLabel)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

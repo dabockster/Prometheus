@@ -114,14 +114,23 @@ public class ClientModel {
         currentGames.add(newGame);
     }
     
+    public boolean hasGame(){
+        return numberOfGames() > 0;
+    }
+    
+    public GameController popGame(){
+        if(hasGame())
+            return currentGames.remove(0);
+        else
+            throw new NullPointerException();
+    }
+    
     /**
      * Removes a GameController from the list of CurrentGames
      * @param oldGame 
      */
     public void removeGame(GameController oldGame){
         currentGames.remove(oldGame);
-        //ensure game results are sent to server,
-        //somehow account for crashes
     }
     
     /**
