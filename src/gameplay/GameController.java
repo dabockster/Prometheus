@@ -85,8 +85,8 @@ public class GameController {
             case "play"  :
                 this.receivePlay(request);
                 break;            
-            case "rematch" :
-                this.playAgain(true);
+            case "playAgain" :
+                this.opponentChoice(request[1]);
                 break;
             case "surrender" :
                 this.receiveSurrender();
@@ -177,18 +177,23 @@ public class GameController {
         myTurn(true);
     }
     
+    /**
+     * Forwards a surrender to opponent client.
+     * Notifies the server of a defeat.
+     * Displays the loseDisplay.
+     */
     public void sendSurrender(){
         connection.send("surrender");
-        view.close();
         controller.sendGameResults("defeat");
+        view.loseDisplay();
     }
     
+    /**
+     * Receives a surrender from the opposing client and displays a winDisplay
+     */
     public void receiveSurrender(){
-        //display that opponent left
         controller.sendGameResults("victory");
-        connection.send("disconnect");
-        connection.close();
-        
+        view.winDisplay();
     }
     
     /**
@@ -204,7 +209,6 @@ public class GameController {
             view.turnover(false);
         }
     }
-    
     
     /**
      * Sets this port to the specified value
@@ -236,22 +240,49 @@ public class GameController {
             view.winDisplay();          //win
             controller.sendGameResults("victory");
         }
-    }   
+    }
     
     /**
-     * Starts a new game
-     * @param gameOn 
+     * Receives the opponents decision on playing another game
+     * @param choice 
      */
-    public void playAgain(boolean gameOn){
-        if(gameOn){
-            if(rematch == true){
-                //do new game
-                //model.buildNewGrid(30,30);
-            }else{
-                rematch = true;
-            }
+    public void opponentChoice(String choice){
+        if(choice.equals("true"))
+            playAgain();
+        else
+            System.out.println("your opponent does not want to play");
+            //you opponent does not want to play again
+    }
+    
+    public void myChoice(boolean choice){
+        if(choice){
+            playAgain();
+            connection.send("playAgain<&>true");
+        }else
+            connection.send("playAgain<&>false");
+    }
+    
+    /**
+     * Starts a new game if both players want to play again
+     */
+    public void playAgain(){            
+        if(rematch == true)
+            newGame();
+        else
+            rematch = true;
+    }
+    
+    private void newGame(){
+        rematch = false;
+        view.newGame();
+        view.toggleGameButtons(true);
+        model.buildNewGrid(30,30);
+        if(wentFirstLast){
+            wentFirstLast = false;
+            myTurn(false);
         }else{
-            //send notice that opponent has left
-        }
+            wentFirstLast = true;
+            myTurn(true);
+        }                   
     }
 }

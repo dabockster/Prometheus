@@ -47,6 +47,10 @@ public class GameView extends javax.swing.JPanel {
         msgBoardTA.append(msg+"\n\n");
     }
     
+    /**
+     * Ends your turn
+     * @param turn 
+     */
     public void turnover(boolean turn){
         if(turn){
             turnLabel.setText("Your Turn");
@@ -117,10 +121,10 @@ public class GameView extends javax.swing.JPanel {
         }
     }
    
-   private void toggleGameButtons(boolean buttonsOn){
+   public void toggleGameButtons(boolean buttonsOn){
        if(buttonsOn){
-            playMoveButton.setEnabled(false);
-            surrenderButton.setEnabled(false);
+            playMoveButton.setEnabled(true);
+            surrenderButton.setEnabled(true);
             surrenderButton.setBackground(new Color(240,70,70));
        }else{
             playMoveButton.setEnabled(false);
@@ -296,6 +300,9 @@ public class GameView extends javax.swing.JPanel {
         
     }
     
+    public void opponentLeftDisplay(){
+        
+    }
     
     /**
      * highlights the outer columns and rows of the cellGrid in 
@@ -310,8 +317,6 @@ public class GameView extends javax.swing.JPanel {
         hlStraightLine(0,cellGrid.length-1,cellGrid.length-1,cellGrid.length-1,color);
         playAgainDisplay();
     }
-      
-    
     /**
      * Highlights a line of buttons from (xStart, yStart) to (xEnd, yEnd) in
      * a specific color.
@@ -337,7 +342,7 @@ public class GameView extends javax.swing.JPanel {
      *      color -1: red
      *      color  0: yellow
      *      color  1: green
-     *      color  2: idk yet
+     *      color  2: white
      */
     private void hlCell(int x, int y, int color){
         if(color == -1)
@@ -518,8 +523,8 @@ public class GameView extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(boardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(interfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(interfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(boardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -532,6 +537,7 @@ public class GameView extends javax.swing.JPanel {
      * @param evt 
      */
     private void surrenderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_surrenderButtonActionPerformed
+        //Are you sure?
         controller.sendSurrender();
         //send surrender message to opponent (a method 'receiveSurrender' will be implemented)
         //record game as loss
@@ -559,11 +565,16 @@ public class GameView extends javax.swing.JPanel {
     }//GEN-LAST:event_msgTFMouseClicked
 
     public void playAgain(boolean rematch){
-        if(rematch){
-            //scrubs the board0
-            //they play again
-        }else{
-            //they do not play again
+        darkenBoard();
+        controller.myChoice(rematch);
+        
+    }
+    
+    public void newGame(){
+        for(int i=0; i<cellGrid.length; i++){
+            for(int j=0; j<cellGrid.length; j++){
+                cellGrid[i][j].scrub();
+            }
         }
     }
  

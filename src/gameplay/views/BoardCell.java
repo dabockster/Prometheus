@@ -70,11 +70,13 @@ public class BoardCell extends javax.swing.JPanel {
     /**
      * Restores this cell to its default values
      */
-    public void scrubCell(){
+    public void scrub(){
         this.effect = 1;
         unselect();
         occupied = false;
-        scrollOver = false;        
+        scrollOver = false;  
+        gameButton.setText(null);
+        gameButton.setEnabled(true);
     }
     
     /**
@@ -225,6 +227,7 @@ public class BoardCell extends javax.swing.JPanel {
         scrollOver = false;
         gameButton.setEnabled(false);
         gameButton.setBackground(new Color(0,51,102));
+        gameButton.setText(null);
     }
     
     /**
