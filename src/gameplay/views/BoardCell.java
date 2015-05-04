@@ -40,6 +40,7 @@ public class BoardCell extends javax.swing.JPanel {
     private boolean occupied;
     private boolean scrollOver;
     private boolean selected;
+    private int effect;
     
     private Color myColor;
     
@@ -57,6 +58,7 @@ public class BoardCell extends javax.swing.JPanel {
      * @param column
      */
     public BoardCell(GameView parent, int row, int column) {  // So that means we are formatting like this: array[row][column]
+        this.effect = 1;
         this.parent = parent;
         this.column = column;
         this.row = row;
@@ -69,9 +71,15 @@ public class BoardCell extends javax.swing.JPanel {
      * sets this BoardCell as the selected cell in the Board
      */
     private void select(){
-        selected = true;
-        parent.selectedCell(this);
-        gameButton.setBackground(Color.yellow);
+        if(effect == 1){    //gamePlay
+            selected = true;
+            parent.selectedCell(this);
+            gameButton.setBackground(Color.yellow);
+        }else if(effect == 2){      //play again yes
+            parent.playAgain(true);
+        }else if(effect == 3){      //play again no
+            parent.playAgain(false);
+        }
     }
     
     /**
@@ -134,7 +142,8 @@ public class BoardCell extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(20, 20));
 
         gameButton.setBackground(new java.awt.Color(102, 102, 102));
-        gameButton.setForeground(new java.awt.Color(102, 102, 102));
+        gameButton.setFont(new java.awt.Font("Lucida Sans Unicode", 1, 14)); // NOI18N
+        gameButton.setForeground(new java.awt.Color(0, 0, 102));
         gameButton.setAutoscrolls(true);
         gameButton.setBorder(null);
         gameButton.setBorderPainted(false);
@@ -227,9 +236,19 @@ public class BoardCell extends javax.swing.JPanel {
     }
     
     public void setWhite(){
-        gameButton.setBackground(new Color(250,250,250));
+        gameButton.setBackground(new Color(240,240,240));
     }
-
+    
+    public void setLetter(String letter){
+        gameButton.setText(letter);
+        setWhite();
+    }
+    
+    public void changeEffect(int newEffect){
+        this.effect = newEffect;
+        gameButton.setEnabled(true);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton gameButton;
     // End of variables declaration//GEN-END:variables

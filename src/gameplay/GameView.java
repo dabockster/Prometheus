@@ -102,6 +102,232 @@ public class GameView extends javax.swing.JPanel {
             currentSelected.unselect();
         currentSelected = null;
     }
+    
+   private void darkenBoard(){
+        for(int i=0; i < cellGrid.length; i++ ){
+            for (int j=0; j< cellGrid.length; j++ ){
+                cellGrid[i][j].darken();
+            }
+        }
+    }
+    
+    public void winDisplay(){
+        hlBorders(1);
+        turnLabel.setText("You Win!");
+        turnLabel.setForeground(Color.black);
+        turnLabel.setBackground(new Color(0,235,128));
+        
+        hlStraightLine(2,2,2,7,1);   //draw W
+        hlStraightLine(3,7,3,8,1);
+        hlStraightLine(4,8,4,9,1);
+        hlStraightLine(5,7,5,8,1);
+        hlStraightLine(6,6,6,7,1);
+        hlStraightLine(7,7,7,8,1);
+        hlStraightLine(8,8,8,9,1);
+        hlStraightLine(9,7,9,8,1);
+        hlStraightLine(10,2,10,7,1);
+        
+        hlStraightLine(13,3,17,3,1); //draw I
+        hlStraightLine(15,4,15,8,1);
+        hlStraightLine(13,9,17,9,1);
+        
+        hlStraightLine(20,3,20,9,1);
+        hlCell(21,4,1);
+        hlCell(22,5,1);
+        hlCell(23,6,1);
+        hlCell(24,7,1);
+        hlCell(25,8,1);
+        hlStraightLine(26,3,26,9,1);
+        
+        hlStraightLine(2,11,26,11,1);
+        
+        playAgainDisplay();
+    }
+    
+    public void loseDisplay(){
+        hlBorders(-1);
+        turnLabel.setText("You Lose!");
+        turnLabel.setForeground(Color.black);
+        turnLabel.setBackground(new Color(235, 0, 107));
+        
+        hlStraightLine(2,11,27,11,-1); //underline
+        
+        hlStraightLine(2,2,2,9,-1); //draw L
+        hlStraightLine(3,9,6,9,-1);
+        
+        hlStraightLine(8,4,8,8,-1); //draw O
+        hlStraightLine(11,4,11,8,-1);
+        hlStraightLine(9,3,10,3,-1);
+        hlStraightLine(9,9,10,9,-1);
+        
+        hlStraightLine(13,4,13,5,-1); //draw s
+        hlStraightLine(14,3,15,3,-1);
+        hlCell(16,4,-1);
+        hlStraightLine(14,6,15,6,-1);
+        hlStraightLine(16,7,16,8,-1);
+        hlStraightLine(14,9,15,9,-1);
+        hlCell(13,8,-1);
+        
+        hlStraightLine(18,3,18,9,-1);   //draw E
+        hlStraightLine(19,3,21,3,-1);
+        hlStraightLine(19,6,20,6,-1);
+        hlStraightLine(19,9,21,9,-1);
+
+        hlStraightLine(23,3,23,9,-1);   //draw r
+        hlCell(24,4,-1);
+        hlStraightLine(25,3,26,3,-1);
+        hlCell(27,4,-1);
+        playAgainDisplay();
+    }
+    
+    public void tieDisplay(){
+        hlBorders(0);
+        
+        hlStraightLine(2,11,24,11,0);   //draw underline
+        
+        hlStraightLine(2,2,8,2,0);  //draw T
+        hlStraightLine(5,3,5,9,0);
+        
+        hlStraightLine(11,3,15,3,0); //draw I
+        hlStraightLine(13,4,13,8,0);
+        hlStraightLine(11,9,15,9,0);
+        
+        hlStraightLine(19,3,19,9,0);    //draw E
+        hlStraightLine(20,3,23,3,0);
+        hlStraightLine(20,6,22,6,0);
+        hlStraightLine(20,9,23,9,0);
+        
+        turnLabel.setText("TIE GAME!");
+        turnLabel.setForeground(Color.black);
+        turnLabel.setBackground(Color.yellow);
+        
+    }
+    
+    private void playAgainDisplay(){
+        hlStraightLine(3,13,3,17,2); //draw p
+        hlStraightLine(4,13,5,13,2);
+        hlStraightLine(4,15,5,15,2);
+        hlCell(5,14,2);
+        
+        hlStraightLine(7,13,7,17,2); //draw l
+        
+        hlStraightLine(9,14,9,17,2); //draw A
+        hlStraightLine(11,14,11,17,2);
+        hlCell(10,13,2);
+        hlCell(10,15,2);
+        
+        hlStraightLine(14,15,14,17,2);  //draw Y
+        hlStraightLine(13,13,13,14,2);
+        hlStraightLine(15,13,15,14,2);
+        
+        hlStraightLine(3,20,3,23,2);    //draw A
+        hlStraightLine(5,20,5,23,2);
+        hlCell(4,19,2);
+        hlCell(4,21,2);
+        
+        hlStraightLine(7,19,7,21,2);     //draw g
+        hlCell(8,19,2);
+        hlCell(8,21,2);
+        hlStraightLine(9,19,9,23,2);
+        hlStraightLine(7,23,8,23,2);
+        
+        hlStraightLine(11,20,11,23,2);  //draw A
+        hlStraightLine(13,20,13,23,2);
+        hlCell(12,19,2);
+        hlCell(12,21,2);
+        
+        hlStraightLine(15,19,17,19,2);  //draw I
+        hlStraightLine(15,23,17,23,2);
+        hlStraightLine(16,20,16,22,2);
+        
+        hlStraightLine(19,19,19,23,2);  //draw N
+        hlCell(20,20,2);
+        hlCell(21,19,2);
+        hlStraightLine(22,20,22,23,2);
+        
+        hlCell(24,19,2);    //draw ?
+        hlCell(25,18,2);
+        hlStraightLine(26,19,26,20,2);
+        hlCell(25,21,2);
+        hlCell(25,23,2);
+        
+        for(int i=25; i<28; i++){       //change button action to playAgain = yes
+            for(int j=7; j<12; j++){
+                cellGrid[i][j].changeEffect(2);
+                cellGrid[i][j].setGreen();
+            }
+        }
+        
+        cellGrid[26][8].setLetter("Y");
+        cellGrid[26][9].setLetter("E");
+        cellGrid[26][10].setLetter("S");
+        
+        for(int i=25; i<28; i++){       //change button action to playAgain = no
+            for(int j=19; j<23; j++){
+                cellGrid[i][j].changeEffect(3);
+                cellGrid[i][j].setRed();
+            }
+        }
+        
+        cellGrid[26][20].setLetter("N");
+        cellGrid[26][21].setLetter("O");       
+        
+    }
+    
+    
+    /**
+     * highlights the outer columns and rows of the cellGrid in 
+     * the specified color
+     * @param color the color to be used
+     */
+    private void hlBorders(int color){
+        darkenBoard();
+        hlStraightLine(0,0,0,cellGrid.length-1,color);
+        hlStraightLine(cellGrid.length-1,0,cellGrid.length-1,cellGrid.length-1,color);
+        hlStraightLine(0,0,cellGrid.length-1,0,color);
+        hlStraightLine(0,cellGrid.length-1,cellGrid.length-1,cellGrid.length-1,color);
+        playAgainDisplay();
+    }
+      
+    
+    /**
+     * Highlights a line of buttons from (xStart, yStart) to (xEnd, yEnd) in
+     * a specific color.
+     *      color -1: red
+     *      color  0: yellow
+     *      color  1: green
+     * @param xStart begin x coord
+     * @param yStart begin y coord
+     * @param xEnd end x coord
+     * @param yEnd end y coord
+     * @param color specified in method highlightCell()
+     */
+    private void hlStraightLine(int xStart,int yStart,int xEnd,int yEnd, int color){
+        for( int i=xStart; i<=xEnd; i++ ){
+            for( int j=yStart; j<=yEnd; j++ ){
+                hlCell(i,j,color);
+            }
+        }
+    }
+    /**
+     * highlights a specific cell
+     *  @param color 
+     *      color -1: red
+     *      color  0: yellow
+     *      color  1: green
+     *      color  2: idk yet
+     */
+    private void hlCell(int x, int y, int color){
+        if(color == -1)
+            cellGrid[y][x].setRed();
+        else if(color == 0)
+            cellGrid[y][x].setYellow();
+        else if(color == 1)
+            cellGrid[y][x].setGreen();
+        else if(color == 2)
+            cellGrid[y][x].setWhite();
+    }
+    
 
     //-------------------------------END GRID UPDATING------------------------------
     
@@ -150,7 +376,7 @@ public class GameView extends javax.swing.JPanel {
         );
         boardPanelLayout.setVerticalGroup(
             boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 648, Short.MAX_VALUE)
+            .addGap(0, 646, Short.MAX_VALUE)
         );
 
         boardPanel.setLayout(new GridLayout(30,30));
@@ -284,8 +510,7 @@ public class GameView extends javax.swing.JPanel {
      * @param evt 
      */
     private void surrenderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_surrenderButtonActionPerformed
-        playAgainDisplay();
-        loseDisplay();
+        
         //send surrender message to opponent (a method 'receiveSurrender' will be implemented)
         //record game as loss
         //close GameController (rematch?)        
@@ -311,158 +536,15 @@ public class GameView extends javax.swing.JPanel {
         msgTF.selectAll();
     }//GEN-LAST:event_msgTFMouseClicked
 
-    
-    private void clearBoard(){
-        for(int i=0; i < cellGrid.length; i++ ){
-            for (int j=0; j< cellGrid.length; j++ ){
-                cellGrid[i][j].darken();
-            }
+    public void playAgain(boolean rematch){
+        if(rematch){
+            //scrubs the board
+            //they play again
+        }else{
+            //they do not play again
         }
     }
-    
-    public void winDisplay(){
-        clearBoard();
-        turnLabel.setText("WINNER!");
-        turnLabel.setForeground(Color.black);
-        turnLabel.setBackground(new Color(0,235,128));
-        for(int i=0; i<cellGrid.length; i++){ //highlights border cells green
-            cellGrid[0][i].setGreen();
-            cellGrid[i][0].setGreen();
-            cellGrid[cellGrid.length-1][i].setGreen();
-            cellGrid[i][cellGrid.length-1].setGreen();
-        }
-        hlStraightLine(2,2,2,7,1);   //draw W
-        hlStraightLine(3,7,3,8,1);
-        hlStraightLine(4,8,4,9,1);
-        hlStraightLine(5,7,5,8,1);
-        hlStraightLine(6,6,6,7,1);
-        hlStraightLine(7,7,7,8,1);
-        hlStraightLine(8,8,8,9,1);
-        hlStraightLine(9,7,9,8,1);
-        hlStraightLine(10,2,10,7,1);
-        
-        hlStraightLine(13,3,17,3,1); //draw I
-        hlStraightLine(15,4,15,8,1);
-        hlStraightLine(13,9,17,9,1);
-        
-        hlStraightLine(20,3,20,9,1);
-        hlCell(21,4,1);
-        hlCell(22,5,1);
-        hlCell(23,6,1);
-        hlCell(24,7,1);
-        hlCell(25,8,1);
-        hlStraightLine(26,3,26,9,1);
-        
-        hlStraightLine(2,11,26,11,1);
-    }
-    
-    public void loseDisplay(){
-        clearBoard();
-        turnLabel.setText("LOSER!");
-        turnLabel.setForeground(Color.black);
-        turnLabel.setBackground(new Color(235, 0, 107));
-        for(int i=0; i<cellGrid.length; i++){ //highlights border cells green
-            cellGrid[0][i].setRed();
-            cellGrid[i][0].setRed();
-            cellGrid[cellGrid.length-1][i].setRed();
-            cellGrid[i][cellGrid.length-1].setRed();
-        }
-        
-        hlStraightLine(2,11,27,11,-1); //underline
-        
-        hlStraightLine(2,2,2,9,-1); //draw L
-        hlStraightLine(3,9,6,9,-1);
-        
-        hlStraightLine(8,4,8,8,-1); //draw O
-        hlStraightLine(11,4,11,8,-1);
-        hlStraightLine(9,3,10,3,-1);
-        hlStraightLine(9,9,10,9,-1);
-        
-        hlStraightLine(13,4,13,5,-1); //draw s
-        hlStraightLine(14,3,15,3,-1);
-        hlCell(16,4,-1);
-        hlStraightLine(14,6,15,6,-1);
-        hlStraightLine(16,7,16,8,-1);
-        hlStraightLine(14,9,15,9,-1);
-        hlCell(13,8,-1);
-        
-        hlStraightLine(18,3,18,9,-1);
-        hlStraightLine(19,3,21,3,-1);
-        hlStraightLine(19,6,20,6,-1);
-        hlStraightLine(19,9,21,9,-1);
-
-        hlStraightLine(23,3,23,9,-1);
-        hlCell(24,4,-1);
-        hlStraightLine(25,3,26,3,-1);
-        hlCell(27,4,-1);
-    }
-    
-    public void tieDisplay(){
-        clearBoard();
-        turnLabel.setText("TIE GAME!");
-        turnLabel.setForeground(Color.black);
-        turnLabel.setBackground(Color.yellow);
-        for(int i=0; i<cellGrid.length; i++){ //highlights border cells green
-            cellGrid[0][i].setYellow();
-            cellGrid[i][0].setYellow();
-            cellGrid[cellGrid.length-1][i].setYellow();
-            cellGrid[i][cellGrid.length-1].setYellow();
-        }
-    }
-    
-      
-    private void playAgainDisplay(){
-        hlStraightLine(3,13,3,17,2); //draw p
-        hlCell(4,13,2);
-        hlCell(5,14,2);
-        hlCell(4,15,2);
-        
-        hlStraightLine(7,13,7,17,2); //draw l
-        
-        hlStraightLine(9,14,9,16,2); //draw A
-        hlStraightLine(11,14,11,16,2);
-        hlCell(12,13,2);
-        hlCell(14,15,2);
-    }
-    
-    /**
-     * Highlights a line of buttons from (xStart, yStart) to (xEnd, yEnd) in
-     * a specific color.
-     *      color -1: red
-     *      color  0: yellow
-     *      color  1: green
-     * @param xStart begin x coord
-     * @param yStart begin y coord
-     * @param xEnd end x coord
-     * @param yEnd end y coord
-     * @param color specified in method highlightCell()
-     */
-    private void hlStraightLine(int xStart,int yStart,int xEnd,int yEnd, int color){
-        for( int i=xStart; i<=xEnd; i++ ){
-            for( int j=yStart; j<=yEnd; j++ ){
-                hlCell(i,j,color);
-            }
-        }
-    }
-    /**
-     * highlights a specific cell
-     *  @param color 
-     *      color -1: red
-     *      color  0: yellow
-     *      color  1: green
-     *      color  2: idk yet
-     */
-    private void hlCell(int x, int y, int color){
-        if(color == -1)
-            cellGrid[y][x].setRed();
-        else if(color == 0)
-            cellGrid[y][x].setYellow();
-        else if(color == 1)
-            cellGrid[y][x].setGreen();
-        else if(color == 1)
-            cellGrid[y][x].setWhite();
-    }
-    
+ 
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
