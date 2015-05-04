@@ -204,6 +204,9 @@ public class ServerModel {
      * @return true if the specified user is online
     */
     public boolean userIsOnline(String username){
+        UserProfile profile = getUserProfile(username);
+        if(profile == null)
+            return false;
         return getUserProfile(username).isOnline();
     } 
     

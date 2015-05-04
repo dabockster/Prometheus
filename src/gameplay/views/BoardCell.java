@@ -28,6 +28,7 @@ import gameplay.GameView;
 import java.awt.Color;
 import java.awt.Cursor;
 import static java.awt.Cursor.DEFAULT_CURSOR;
+import timbot.TimbotView;
 
 /**
  *
@@ -36,6 +37,7 @@ import static java.awt.Cursor.DEFAULT_CURSOR;
 public class BoardCell extends javax.swing.JPanel {
     
     private GameView parent;
+    private TimbotView timbot;
     
     private boolean occupied;
     private boolean scrollOver;
@@ -60,6 +62,23 @@ public class BoardCell extends javax.swing.JPanel {
     public BoardCell(GameView parent, int row, int column) {  // So that means we are formatting like this: array[row][column]
         this.effect = 1;
         this.parent = parent;
+        this.column = column;
+        this.row = row;
+        initComponents();
+        myColor = gameButton.getBackground();
+        occupied = false;
+    }
+    
+    /**
+     * FOR TIMMY's AI
+     * Creates new form BoardCell for a Timbot
+     * @param timbot
+     * @param row
+     * @param column
+     */
+    public BoardCell(TimbotView timbot, int row, int column) {  // So that means we are formatting like this: array[row][column]
+        this.effect = 1;
+        this.timbot = timbot;
         this.column = column;
         this.row = row;
         initComponents();

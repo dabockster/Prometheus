@@ -263,9 +263,10 @@ public class GameController {
      * This method is called from the ClientController
      */
     public void leave(){
+        if(connection.connected)
+            connection.send("leave");
         if(playing)
             gameOver(-1);
-        connection.send("leave");
         view.close();
     }
     

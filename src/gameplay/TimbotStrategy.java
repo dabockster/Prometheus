@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 PLUCSCE.
+ * Copyright 2015 Timothy Ernst.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,13 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
-package ernst.additions;
+package gameplay;
 
 /**
  *
- * @author PLUCSCE
+ * @author Timothy Ernst
  */
-public class ernstAI {
+public class TimbotStrategy {
+    
+    private int board[][];
+    private int moves[][][]; //([turn][x][y])
     
 }

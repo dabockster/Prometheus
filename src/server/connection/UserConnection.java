@@ -195,7 +195,7 @@ public class UserConnection implements Runnable{
     private synchronized void challengeRequest(String request[]){
         String opponentUsername = request[1];
         sendClientFeedback("is challenging "+ opponentUsername);
-        controller.relayChallengeRequest(this.username, opponentUsername);
+        controller.relayChallengeRequest(this,this.username, opponentUsername);
     }
     
     /**
@@ -218,13 +218,19 @@ public class UserConnection implements Runnable{
     private synchronized void challengeResponse(String request[]){
         String challengerUsername = request[1];
         if(request[2].equals("reject")){
-            controller.relayChallengeResponse(username, false, challengerUsername,null,0);
+            controller.relayChallengeResponse(this,username, false, challengerUsername,null,0);
             sendClientFeedback("denied a challenge from "+challengerUsername);
         }else{
-            controller.relayChallengeResponse(username, true, challengerUsername, request[3], Integer.parseInt(request[4]));
+            controller.relayChallengeResponse(this,username, true, challengerUsername, request[3], Integer.parseInt(request[4]));
             sendClientFeedback("accepted a challenge from "+challengerUsername);
         }
     }
+    
+    public void opponentNotOnline(String opName){
+        sendResponse("notOnline<&>"+opName);
+    }
+    
+    
     
     /**
      * RESPONSE - RELAY CHALLENGE RESPONSE

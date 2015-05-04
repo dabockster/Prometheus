@@ -10,7 +10,6 @@ import client.manager.ClientController;
 import gameplay.GameView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.Timer;
 
@@ -40,14 +39,22 @@ public class LobbyController {
     
     /**
      * Receives challenge from challengerName and displays a RequestDialogue 
-     * @param challengerName 
+     * @param opName 
      */
-    public void incomingChallenge(String challengerName){
-        view.challengeFrame(challengerName);
+    public void incomingChallenge(String opName){
+        view.challengeFrame(opName);
     }
     
-    public void challengeDenied(String challengerName){
-        view.rejectFrame(challengerName);
+    public void challengeDenied(String opName){
+        view.rejectFrame(opName);
+    }
+    
+    public void notOnlineFrame(String opName){
+        view.notOnlineFrame(opName);
+    }
+    
+    public void disposeNotOnlineFrame(NotOnlineFrame frame){
+        frame.dispose();
     }
     
     public void disposeRejectionFrame(RejectionFrame frame){

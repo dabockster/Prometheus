@@ -87,7 +87,9 @@ public class ClientConnectionController {
             case "updateResponse":
                 this.updateResponse(response);
                 break;
-                
+            case "notOnline" :
+                controller.notOnlineResponse(response[1]);
+                break;
         }
     }
     

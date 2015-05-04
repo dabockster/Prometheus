@@ -229,11 +229,16 @@ public class ServerController {
     /**
      * RELAY CHALLENGE REQUEST
      * Forwards a challenge request from one UserConnection to another.
+     * @param ucon
      * @param challengerUsername the username of the challenger
      * @param opName The opponents username
      */
-    public void relayChallengeRequest(String challengerUsername, String opName){
-        UserConnection ucon = model.getUserConnection(opName);
+    public void relayChallengeRequest(UserConnection ucon, String challengerUsername, String opName){
+        if(!model.userIsOnline(opName)){
+            ucon.opponentNotOnline(opName);
+            return;
+        }        
+        ucon = model.getUserConnection(opName);
         ucon.relayChallengeRequest(challengerUsername);
     }
     
@@ -241,12 +246,19 @@ public class ServerController {
      * RELAY CHALLENGE RESPONSE
      * Forwards a challenge response from one UserConnection to another.
      * @param acceptChallenge
-     * @param challengerUsername
+     * @param opName
      * @param ip
      * @param port
      */
-    public void relayChallengeResponse(String myUsername, boolean acceptChallenge, String challengerUsername, String ip, int port){
-        UserConnection ucon = model.getUserConnection(challengerUsername);
+    public void relayChallengeResponse(UserConnection ucon, String myUsername, boolean acceptChallenge, String opName, String ip, int port){
+        if(!model.userIsOnline(opName)){
+            if(acceptChallenge){
+                ucon.opponentNotOnline(opName);
+                System.out.println("not online "+opName);
+            }
+            return;
+        }
+        ucon = model.getUserConnection(opName);
         String response = myUsername;
         if(!acceptChallenge){
             ucon.relayChallengeResponse(acceptChallenge,response);
@@ -276,7 +288,7 @@ public class ServerController {
             ucon.setAnon(true);
             ucon.loggedOn = true;
             ucon.sendResponse("loginResponse<&>success<&>"+ucon.getUsername());
-            sendClientFeedback("An Unidentified User successfully logged in as "+ucon.getUsername());
+            sendClientFeedback("An Unidentified User logged in as "+ucon.getUsername());
             this.updateViewConnections();
             updateAll();
         }else if( !model.usernameExists(username) ){  //username does not exist

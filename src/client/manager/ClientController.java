@@ -178,10 +178,10 @@ public final class ClientController {
      * Disposes the game lobby, closes ClientConnection, and opens the MainMenuView
      */
     public void logoutRequest(){
-        cController.serverRequest("logout");
         while(model.hasGame()){
             model.popGame().leave();
         }
+        cController.serverRequest("logout");
         lobby.dispose();
         refreshClient();
     }
@@ -219,6 +219,11 @@ public final class ClientController {
      */
     public void challengeRequest(String opName){
         cController.serverRequest("challengeRequest<&>"+opName);
+    }
+    
+    public void notOnlineResponse(String opName){
+        System.out.println("not online controller "+opName);
+        lobby.notOnlineFrame(opName);
     }
     
     /**

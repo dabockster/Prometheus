@@ -343,7 +343,17 @@ public class LobbyView extends javax.swing.JFrame {
         RejectionFrame rejection = new RejectionFrame(controller,opName);
         updatePanel.add(rejection);
         rejection.setVisible(true);
-        controller.timedDispose(rejection);
+    }
+    
+    /**
+     * Not Online Frame
+     * 
+     * @param opName
+     */
+    public void notOnlineFrame(String opName){
+        NotOnlineFrame notFound = new NotOnlineFrame(controller,opName);
+        updatePanel.add(notFound);
+        notFound.setVisible(true);
     }
     
     public void challengeFrame(String opName){
