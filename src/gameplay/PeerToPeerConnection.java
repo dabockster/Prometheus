@@ -159,10 +159,6 @@ public class PeerToPeerConnection implements Runnable{
                 String request = streamIn.readUTF();
                 System.out.println(clientID+": receive: "+request);
                 String response[] = request.split("<&>");
-                if(response[0].equals("disconnect")){
-                        connected = false;
-                        this.close();
-                }
                 controller.interpretRequest(response);
             }catch(IOException ioe){
                 System.out.println(clientID+": receive: failed: IOException:"+ioe);

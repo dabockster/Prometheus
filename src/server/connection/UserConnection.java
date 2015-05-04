@@ -28,7 +28,7 @@ public class UserConnection implements Runnable{
     public boolean connected = true;
     
     private UserProfile profile;
-    private String username = "Unidentified";
+    private String username = "An Unidentified User";
     private boolean playingAnon; //true if User is playing as anonymous
     public boolean loggedOn = false;
     
@@ -54,9 +54,9 @@ public class UserConnection implements Runnable{
         try{
             streamIn = new DataInputStream(socket.getInputStream());
             streamOut = new DataOutputStream(socket.getOutputStream());
-            this.sendClientFeedback("Successfully Opened Connection");
+            this.sendClientFeedback("connected");
         }catch(IOException ex){
-            this.sendClientFeedback("Failed to Open Connection");
+            this.sendClientFeedback("failed to open a connection");
             connected = false;
         }
     }
@@ -94,10 +94,10 @@ public class UserConnection implements Runnable{
             }if(streamOut != null){
                 streamOut.close();
             }
-            this.sendClientFeedback("Client connection closed.");
+            this.sendClientFeedback(": Connection Closed");
         }
         catch(IOException ioe){
-            this.sendClientFeedback("Failed to close client connection");
+            this.sendClientFeedback(": Failed to close client connection");
         }
     }    
     
@@ -116,7 +116,6 @@ public class UserConnection implements Runnable{
             try{
                 String cmnd = streamIn.readUTF();
                 String cmndComp[] = cmnd.split("<&>");
-                sendClientFeedback("Made Request : "+cmndComp[0]);
                 this.interpretRequest(cmndComp);
             }catch(IOException ioe){
                 connected = false;
@@ -134,7 +133,7 @@ public class UserConnection implements Runnable{
             streamOut.writeUTF(cmnd);
             streamOut.flush();
         } catch(IOException e){
-            this.sendClientFeedback("Failed to send command to client.");
+            this.sendClientFeedback("could not send command to client");
         }
     }
     
@@ -175,7 +174,7 @@ public class UserConnection implements Runnable{
                 controller.leaderboard(this);
                 break;
             default :
-                sendClientFeedback("Unrecognized request "+request[0]);
+                sendClientFeedback("received the unrecognized request "+request[0]);
                 break;
             }
     }
@@ -195,8 +194,8 @@ public class UserConnection implements Runnable{
      */
     private synchronized void challengeRequest(String request[]){
         String opponentUsername = request[1];
+        sendClientFeedback("is challenging "+ opponentUsername);
         controller.relayChallengeRequest(this.username, opponentUsername);
-        sendClientFeedback("is Challenging "+ opponentUsername);
     }
     
     /**
@@ -207,7 +206,7 @@ public class UserConnection implements Runnable{
      */
     public void relayChallengeRequest(String challengeUsername){
         sendResponse("incomingChallenge<&>"+challengeUsername);
-        sendClientFeedback("received challenge from "+challengeUsername);
+        sendClientFeedback("received a challenge request from "+challengeUsername);
     }
     
     /**
@@ -220,10 +219,10 @@ public class UserConnection implements Runnable{
         String challengerUsername = request[1];
         if(request[2].equals("reject")){
             controller.relayChallengeResponse(username, false, challengerUsername,null,0);
-            sendClientFeedback("challenge denied from "+challengerUsername);
+            sendClientFeedback("denied a challenge from "+challengerUsername);
         }else{
             controller.relayChallengeResponse(username, true, challengerUsername, request[3], Integer.parseInt(request[4]));
-            sendClientFeedback("challenge accepted from "+challengerUsername);
+            sendClientFeedback("accepted a challenge from "+challengerUsername);
         }
     }
     
@@ -248,6 +247,7 @@ public class UserConnection implements Runnable{
      * @param request the login information used for authentication
      */
     private synchronized void loginRequest(String request[]){
+        sendClientFeedback("is attempting to login");
         controller.login(this, request); //create login
     }
         
@@ -256,7 +256,7 @@ public class UserConnection implements Runnable{
      * Commences logout procedure for this UserConnection
      */
     private synchronized void logoutRequest(){
-        this.sendClientFeedback("Logoff Successful");
+        this.sendClientFeedback("successfully logged off");
         profile.logout();
         controller.logout(this, playingAnon);
         this.sendResponse("disconnect");
@@ -269,6 +269,7 @@ public class UserConnection implements Runnable{
      * @param request
      */
     private synchronized void registerRequest(String[] request){
+        sendClientFeedback("is attempting to register a new profile");
         controller.register(this, request);
     }      
     
@@ -299,13 +300,17 @@ public class UserConnection implements Runnable{
      * @param feedback 
      */
     private synchronized void sendClientFeedback(String feedback){
-        controller.sendClientFeedback(username+": "+ feedback);
+        controller.sendClientFeedback(username+" "+ feedback);
     }
     
     private void endGame(String result){
         controller.incrementGames(this.profile,this);
-        if(result.equals("victory"))
+        if(result.equals("victory")){
             controller.incrementWins(this.profile,this);
+            sendClientFeedback("emerged victorious in Battle");
+        }else
+            sendClientFeedback("was defeated in battle");
+        controller.updateAll();
     }
     
     

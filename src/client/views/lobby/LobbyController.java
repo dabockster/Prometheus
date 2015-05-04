@@ -92,6 +92,10 @@ public class LobbyController {
         view.updatePlayers(onlinePlayers);
     }
     
+    public void updateMyRecords(int wins, int gamesPlayed){
+        view.updateMyRecords(wins,gamesPlayed);
+    }
+    
     /**
      * Logs the user out
      * @return 

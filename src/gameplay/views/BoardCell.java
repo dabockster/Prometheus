@@ -68,6 +68,16 @@ public class BoardCell extends javax.swing.JPanel {
     }
     
     /**
+     * Restores this cell to its default values
+     */
+    public void scrubCell(){
+        this.effect = 1;
+        unselect();
+        occupied = false;
+        scrollOver = false;        
+    }
+    
+    /**
      * sets this BoardCell as the selected cell in the Board
      */
     private void select(){

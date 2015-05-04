@@ -276,28 +276,28 @@ public class ServerController {
             ucon.setAnon(true);
             ucon.loggedOn = true;
             ucon.sendResponse("loginResponse<&>success<&>"+ucon.getUsername());
-            sendClientFeedback(ucon.getUsername()+": Anonymous Login Succssful");
+            sendClientFeedback("An Unidentified User successfully logged in as "+ucon.getUsername());
             this.updateViewConnections();
             updateAll();
         }else if( !model.usernameExists(username) ){  //username does not exist
             ucon.sendResponse("loginResponse<&>failure<&>nonexistent");
-            sendClientFeedback(ucon.getUsername()+": Login Failed - Invalid Username");
+            sendClientFeedback("Unidentified User tried to login with a nonexistent username");
         }else{  
             profile = model.getUserProfile(username);
             if( profile.isOnline() ){   //is already online
                 ucon.sendResponse("loginResponse<&>failure<&>alreadyOnline");
-                sendClientFeedback(ucon.getUsername()+": Login Failed - Profile Already Logged In");
+            sendClientFeedback("Unidentified User tried to log into a profile that is already online");
             }else if(profile.hasPassword(password)){ //succesfful login
                 profile.logon();
                 ucon.setUserProfile(profile);
                 ucon.loggedOn = true;
                 ucon.sendResponse("loginResponse<&>success<&>"+ucon.getUsername());
-                sendClientFeedback(ucon.getUsername()+": Login Succssful");
+                sendClientFeedback("Unidentified User successfully logged in as "+username);
                 this.updateViewConnections();
                 updateAll();
             }else{ //incorrect password
                 ucon.sendResponse("loginResponse<&>failure<&>invalidPassword");
-                sendClientFeedback(ucon.getUsername()+": Login Failed - Invalid Password");
+            sendClientFeedback("Unidentified User tried to log in as "+username+" with an invalid password");
             }
         }
     }

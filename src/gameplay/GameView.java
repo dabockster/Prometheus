@@ -22,6 +22,12 @@ public class GameView extends javax.swing.JPanel {
         initComponents();
     }
     
+    /**
+     * Closes this GameView
+     */
+    public void close(){
+        this.getParent().remove(this);
+    }
     
     /**
      * Appends username to front of message
@@ -79,8 +85,8 @@ public class GameView extends javax.swing.JPanel {
         if(currentSelected == null){
             return;
         }
-        controller.sendPlay(currentSelected.getRow(), currentSelected.getColumn());
         currentSelected.playMove(true);
+        controller.sendPlay(currentSelected.getRow(), currentSelected.getColumn());
         currentSelected = null;
     }
     
@@ -110,8 +116,22 @@ public class GameView extends javax.swing.JPanel {
             }
         }
     }
+   
+   private void toggleGameButtons(boolean buttonsOn){
+       if(buttonsOn){
+            playMoveButton.setEnabled(false);
+            surrenderButton.setEnabled(false);
+            surrenderButton.setBackground(new Color(240,70,70));
+       }else{
+            playMoveButton.setEnabled(false);
+            surrenderButton.setEnabled(false);
+            surrenderButton.setBackground(new Color(96,96,96));
+            playMoveButton.setBackground(new Color(96,96,96));
+       }
+   }
     
     public void winDisplay(){
+        toggleGameButtons(false);
         hlBorders(1);
         turnLabel.setText("You Win!");
         turnLabel.setForeground(Color.black);
@@ -145,6 +165,7 @@ public class GameView extends javax.swing.JPanel {
     }
     
     public void loseDisplay(){
+        toggleGameButtons(false);
         hlBorders(-1);
         turnLabel.setText("You Lose!");
         turnLabel.setForeground(Color.black);
@@ -181,6 +202,7 @@ public class GameView extends javax.swing.JPanel {
     }
     
     public void tieDisplay(){
+        toggleGameButtons(false);
         hlBorders(0);
         
         hlStraightLine(2,11,24,11,0);   //draw underline
@@ -510,7 +532,7 @@ public class GameView extends javax.swing.JPanel {
      * @param evt 
      */
     private void surrenderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_surrenderButtonActionPerformed
-        
+        controller.sendSurrender();
         //send surrender message to opponent (a method 'receiveSurrender' will be implemented)
         //record game as loss
         //close GameController (rematch?)        
@@ -538,7 +560,7 @@ public class GameView extends javax.swing.JPanel {
 
     public void playAgain(boolean rematch){
         if(rematch){
-            //scrubs the board
+            //scrubs the board0
             //they play again
         }else{
             //they do not play again

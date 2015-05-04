@@ -17,7 +17,10 @@ public class GameController {
     private String opName; //opponent's name
     private String username;
     private GameModel model;
+    
     private boolean myTurn;
+    private boolean wentFirstLast;
+    private boolean rematch = false;
             
     /**
      * HOST CONSTRUCTOR
@@ -33,7 +36,8 @@ public class GameController {
         model = new GameModel(this);
         connection.start();
         setUsername();
-        turnover(false);
+        myTurn(false);
+        wentFirstLast = false;
     }
     
     /**
@@ -52,7 +56,8 @@ public class GameController {
         model = new GameModel(this);
         connection.start();
         setUsername();
-        turnover(true);
+        myTurn(true);
+        wentFirstLast = true;
     }
     
     /**
@@ -79,7 +84,13 @@ public class GameController {
                 break;
             case "play"  :
                 this.receivePlay(request);
-                break;             
+                break;            
+            case "rematch" :
+                this.playAgain(true);
+                break;
+            case "surrender" :
+                this.receiveSurrender();
+                break;
         }
     }
     
@@ -121,6 +132,7 @@ public class GameController {
      */
     private void receiveDisconnect(){
         //add method for removing a gameController in clientController
+        // you opponent has fled the battlefield you are victorious
         connection.close();
     }
     
@@ -150,7 +162,7 @@ public class GameController {
     public void sendPlay(int x, int y){
         connection.send("play<&>"+x+"<&>"+y);
         model.playMove(x, y, 1);
-        turnover(false);
+        myTurn(false);
     }
     
     /**
@@ -162,14 +174,28 @@ public class GameController {
         int y = Integer.parseInt(coordinates[2]);
         view.playMove(x,y);
         model.playMove(x, y, -1);
-        turnover(true);
+        myTurn(true);
+    }
+    
+    public void sendSurrender(){
+        connection.send("surrender");
+        view.close();
+        controller.sendGameResults("defeat");
+    }
+    
+    public void receiveSurrender(){
+        //display that opponent left
+        controller.sendGameResults("victory");
+        connection.send("disconnect");
+        connection.close();
+        
     }
     
     /**
      * sets myTurn equal to false
      * @param iJustPlayed 
      */
-    private void turnover(boolean turn){
+    private void myTurn(boolean turn){
         if(turn){
             myTurn = true;
             view.turnover(true);
@@ -200,15 +226,32 @@ public class GameController {
      * @param results
      */
     public void gameOver(int results){
-        if(results == -1){
-            view.loseDisplay();
+        if(results == -1){  
+            view.loseDisplay();         //loss
             controller.sendGameResults("defeat");
         }else if(results == 0){
-            view.tieDisplay();
+            view.tieDisplay();          //tie
             controller.sendGameResults("defeat");
         }else if(results == 1){
-            view.winDisplay();
+            view.winDisplay();          //win
             controller.sendGameResults("victory");
+        }
+    }   
+    
+    /**
+     * Starts a new game
+     * @param gameOn 
+     */
+    public void playAgain(boolean gameOn){
+        if(gameOn){
+            if(rematch == true){
+                //do new game
+                //model.buildNewGrid(30,30);
+            }else{
+                rematch = true;
+            }
+        }else{
+            //send notice that opponent has left
         }
     }
 }

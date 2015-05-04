@@ -142,6 +142,7 @@ public final class ClientController {
        String[] players = Arrays.copyOfRange(update, 1, update.length);        
         model.updateOnlinePlayers(players);
         lobby.updateOnlinePlayers(model.getPlayerNames());
+        lobby.updateMyRecords(model.getMyWins(), model.getMyPlayed());
     }
     
     /**
@@ -163,6 +164,7 @@ public final class ClientController {
     public void loginResponse(boolean success, String details){
         if(success){
             this.username = details;
+            model.setUsername(username);
             lobby = new LobbyController(username, this);
             mainMenu.dispose();            
         }else{

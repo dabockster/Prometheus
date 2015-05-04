@@ -16,8 +16,8 @@ import javax.swing.DefaultListModel;
 public class LobbyView extends javax.swing.JFrame {
     
     private final LobbyController controller;
-    String[] onlinePlayers;
-    String username;
+    private String[] onlinePlayers;
+    private String username;
     
 
     /**
@@ -47,6 +47,11 @@ public class LobbyView extends javax.swing.JFrame {
         onlinePlayersList.setModel(listModel);    
     }
     
+    public void updateMyRecords(int wins, int gamesPlayed){
+        gamesPlayedLabel.setText(gamesPlayed+"");
+        winsLabel.setText(wins+"");
+    }
+    
     public void addGameView(String opName, GameView newGame){
         gameInterfacePanel.addTab(opName, newGame);
     }
@@ -70,10 +75,14 @@ public class LobbyView extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         updatePanel = new javax.swing.JPanel();
+        gamesPlayedTextLabel = new javax.swing.JLabel();
+        winsTextLabel = new javax.swing.JLabel();
+        winsLabel = new javax.swing.JLabel();
+        gamesPlayedLabel = new javax.swing.JLabel();
         usernameLabel = new javax.swing.JLabel();
         titleLabel = new javax.swing.JLabel();
         gameInterfacePanel = new javax.swing.JTabbedPane();
-        jLabel3 = new javax.swing.JLabel();
+        onlineLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(100, 180, 240));
@@ -162,45 +171,77 @@ public class LobbyView extends javax.swing.JFrame {
         updatePanel.setLayout(updatePanelLayout);
         updatePanelLayout.setHorizontalGroup(
             updatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 196, Short.MAX_VALUE)
         );
         updatePanelLayout.setVerticalGroup(
             updatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 214, Short.MAX_VALUE)
+            .addGap(0, 223, Short.MAX_VALUE)
         );
+
+        gamesPlayedTextLabel.setFont(new java.awt.Font("Magneto", 1, 16)); // NOI18N
+        gamesPlayedTextLabel.setForeground(new java.awt.Color(255, 255, 255));
+        gamesPlayedTextLabel.setText("Total Played :");
+
+        winsTextLabel.setFont(new java.awt.Font("Magneto", 0, 16)); // NOI18N
+        winsTextLabel.setForeground(new java.awt.Color(255, 255, 255));
+        winsTextLabel.setText("Games Won :");
+
+        winsLabel.setFont(new java.awt.Font("Magneto", 0, 14)); // NOI18N
+        winsLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        winsLabel.setText("0");
+
+        gamesPlayedLabel.setFont(new java.awt.Font("Magneto", 0, 14)); // NOI18N
+        gamesPlayedLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        gamesPlayedLabel.setText("0");
 
         javax.swing.GroupLayout optionInterfacePanelLayout = new javax.swing.GroupLayout(optionInterfacePanel);
         optionInterfacePanel.setLayout(optionInterfacePanelLayout);
         optionInterfacePanelLayout.setHorizontalGroup(
             optionInterfacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(updatePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(optionInterfacePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(optionInterfacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(logoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addComponent(challengeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(leaderboardButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(optionInterfacePanelLayout.createSequentialGroup()
+                        .addGroup(optionInterfacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(gamesPlayedTextLabel)
+                            .addComponent(winsTextLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(optionInterfacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(winsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(gamesPlayedLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
-            .addComponent(updatePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         optionInterfacePanelLayout.setVerticalGroup(
             optionInterfacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, optionInterfacePanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(4, 4, 4)
+                .addGroup(optionInterfacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(winsTextLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(winsLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(optionInterfacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(gamesPlayedTextLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(gamesPlayedLabel))
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(challengeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(leaderboardButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(updatePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(updatePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(logoutButton)
                 .addContainerGap())
         );
@@ -234,11 +275,11 @@ public class LobbyView extends javax.swing.JFrame {
         gameInterfacePanel.setName(""); // NOI18N
         gameInterfacePanel.setPreferredSize(new java.awt.Dimension(970, 690));
 
-        jLabel3.setFont(new java.awt.Font("Perpetua Titling MT", 1, 20)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(40, 255, 40));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("is ONLINE");
-        jLabel3.setFocusable(false);
+        onlineLabel.setFont(new java.awt.Font("Perpetua Titling MT", 1, 20)); // NOI18N
+        onlineLabel.setForeground(new java.awt.Color(40, 255, 40));
+        onlineLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        onlineLabel.setText("is ONLINE");
+        onlineLabel.setFocusable(false);
 
         javax.swing.GroupLayout basePanelLayout = new javax.swing.GroupLayout(basePanel);
         basePanel.setLayout(basePanelLayout);
@@ -249,7 +290,7 @@ public class LobbyView extends javax.swing.JFrame {
                 .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(usernameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(optionInterfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(onlineLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(gameInterfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 974, Short.MAX_VALUE)
@@ -261,23 +302,23 @@ public class LobbyView extends javax.swing.JFrame {
             .addGroup(basePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(basePanelLayout.createSequentialGroup()
                         .addComponent(usernameLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(onlineLabel)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(basePanelLayout.createSequentialGroup()
                         .addComponent(optionInterfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
                         .addContainerGap())
-                    .addGroup(basePanelLayout.createSequentialGroup()
-                        .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(gameInterfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 709, Short.MAX_VALUE))))
+                    .addComponent(gameInterfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)))
         );
         basePanel.setLayer(optionInterfacePanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
         basePanel.setLayer(usernameLabel, javax.swing.JLayeredPane.DEFAULT_LAYER);
         basePanel.setLayer(titleLabel, javax.swing.JLayeredPane.DEFAULT_LAYER);
         basePanel.setLayer(gameInterfacePanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        basePanel.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        basePanel.setLayer(onlineLabel, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -344,16 +385,20 @@ public class LobbyView extends javax.swing.JFrame {
     private javax.swing.JLayeredPane basePanel;
     private javax.swing.JButton challengeButton;
     private javax.swing.JTabbedPane gameInterfacePanel;
+    private javax.swing.JLabel gamesPlayedLabel;
+    private javax.swing.JLabel gamesPlayedTextLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton leaderboardButton;
     private javax.swing.JButton logoutButton;
+    private javax.swing.JLabel onlineLabel;
     private javax.swing.JList onlinePlayersList;
     private javax.swing.JPanel optionInterfacePanel;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JPanel updatePanel;
     private javax.swing.JLabel usernameLabel;
+    private javax.swing.JLabel winsLabel;
+    private javax.swing.JLabel winsTextLabel;
     // End of variables declaration//GEN-END:variables
 }

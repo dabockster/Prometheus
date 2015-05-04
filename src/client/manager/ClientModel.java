@@ -36,8 +36,8 @@ public class ClientModel {
     private ClientController controller;
     private ArrayList<UserProfile> onlinePlayers;
     private ArrayList<GameController> currentGames;
-
-    
+    private String username;
+    private UserProfile profile;
     /**
      * GameModel constructor
      */
@@ -48,13 +48,21 @@ public class ClientModel {
     }
     
     /**
-     * UPDATE ONLINE PLAYERS
-     * @param profiles 
+     * sets this username equal to newName
+     * @param newName 
      */
-    public void updateOnlinePlayers(String[] profiles){
+    public void setUsername(String newName){
+        this.username = newName;
+    }
+    
+    /**
+     * UPDATE ONLINE PLAYERS
+     * @param newProfiles 
+     */
+    public void updateOnlinePlayers(String[] newProfiles){
         onlinePlayers.clear();
-        for(int i=0; i<profiles.length; i++){
-            this.addPlayer(profiles[i]);
+        for(int i=0; i<newProfiles.length; i++){
+            this.addPlayer(newProfiles[i]);
         }
     }
     
@@ -63,7 +71,12 @@ public class ClientModel {
      * @param ucon 
      */
     private void addPlayer(String profileString){
-         onlinePlayers.add(new UserProfile(profileString));
+        UserProfile newProfile = new UserProfile(profileString);
+        if(newProfile.getUsername().equals(username)){
+            this.profile = newProfile;
+        }else{
+            onlinePlayers.add(newProfile);
+        }
      }
     
     /**
@@ -79,6 +92,18 @@ public class ClientModel {
            playerNames[i] = onlinePlayers.get(i).getUsername();
         }
         return playerNames;
+    }
+    
+    public int getMyPlayed(){
+        if(profile == null)
+            return 0;
+        return profile.getPlayed();
+    }
+    
+    public int getMyWins(){
+        if(profile == null)
+            return 0;
+        return profile.getWins();
     }
     
     /**

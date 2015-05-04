@@ -42,7 +42,7 @@ public class GameModel {
     public GameModel(GameController controller){
         this.controller = controller;
         gameOver = false;
-        newGrid(30,30);
+        buildNewGrid(30,30);
     }
     
     
@@ -51,7 +51,7 @@ public class GameModel {
      * @param rows
      * @param columns 
      */
-    public void newGrid(int rows, int columns){
+    public void buildNewGrid(int rows, int columns){
         this.rows = rows;
         this.columns = columns;
         board = new int[rows][columns];
