@@ -306,5 +306,14 @@ public final class ClientController {
     public void leaderboardRequest(){
         cController.serverRequest("leaders");
     }
+    
+    public void leaders(String[] leaders){
+        String[] topFive=new String[5];
+        for(int i=1;i<leaders.length;i++){
+            topFive[i]=leaders[i];
+        }
+        
+        lobby.leaders(leaders);
+    }
 
 }

@@ -366,6 +366,17 @@ public class LobbyView extends javax.swing.JFrame {
         LeaderboardFrame leaderboard=new LeaderboardFrame(controller);
         updatePanel.add(leaderboard);
         leaderboard.setVisible(true);
+        
+    }
+    
+    public void updateLeaderboard(String[] leaders){
+        LeaderboardFrame leaderboard=new LeaderboardFrame(controller);
+        updatePanel.add(leaderboard);
+        leaderboard.setVisible(true);
+        
+        for(int i=0;i<leaders.length;i++){
+            leaderboard.update(leaders[i]+"\n");
+        }
     }
             
     /**
@@ -387,7 +398,6 @@ public class LobbyView extends javax.swing.JFrame {
 
     private void leaderboardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaderboardButtonActionPerformed
         controller.leaderboardRequest();
-        leaderboardFrame();
     }//GEN-LAST:event_leaderboardButtonActionPerformed
 
     

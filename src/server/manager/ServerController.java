@@ -362,21 +362,34 @@ public class ServerController {
     }    
 
     public void leaderboard(UserConnection ucon) {
-        
+        String leader="leader<&>"+topFive();
+        ucon.sendResponse(leader);
     }
     
-    public void topFive(){
-        double top=0;
-        double next=0;
+    public String topFive(){
+        int top=0;
+        int next=0;
         UserProfile lead=null;
-        ArrayList<UserProfile> accounts=new ArrayList<UserProfile>();
-        for(UserProfile i:accounts){
-            if(i.getScore()>top){
-                top=i.getScore();
-                lead=i;
-            }
+        String top5="";
+        ArrayList<UserProfile> newAccounts=new ArrayList<UserProfile>();
+        for(UserProfile i:model.getAccounts()){
+            newAccounts.add(i);
         }
-        next=top;
+        int x=0;
+        while(x<5){
+            for(UserProfile i:newAccounts){
+                if(i.getWins()>top){
+                    top=i.getWins();
+                    lead=i;    
+                    }
+                }
+            newAccounts.remove(lead);
+            top5+=lead.getUsername()+": "+top+" wins";
+            if(x<4)
+                top5+="<&>";
+            x++;
+        }
+        return top5;
     }
     
 }

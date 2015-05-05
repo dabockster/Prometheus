@@ -122,6 +122,10 @@ public class LobbyController {
     public void leaderboardRequest(){
         controller.leaderboardRequest();
     }
+    
+    public void leaders(String[] leaders){
+        view.updateLeaderboard(leaders);
+    }
      
      
 }
