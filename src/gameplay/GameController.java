@@ -134,7 +134,7 @@ public class GameController {
     }
     
     private void sendDisconnect(){
-        //remove GameController
+        connection.send("disconnect");
         connection.close();
     }
     
@@ -171,8 +171,8 @@ public class GameController {
      * @param y the column that was played in
      */
     public void sendPlay(int x, int y){
-        connection.send("play<&>"+x+"<&>"+y);
         model.playMove(x, y, 1);
+        connection.send("play<&>"+x+"<&>"+y);
         myTurn(false);
     }
     
@@ -265,9 +265,9 @@ public class GameController {
     public void leave(){
         if(connection.connected)
             connection.send("leave");
+        view.close();
         if(playing)
             gameOver(-1);
-        view.close();
     }
     
     private void opponentLeft(){
