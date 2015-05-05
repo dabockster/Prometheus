@@ -233,9 +233,9 @@ public class BoardCell extends javax.swing.JPanel {
      * @param evt 
      */
     private void mouseOverOut(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseOverOut
-        if(scrollOver && !selected){
+        if(scrollOver && !selected && !occupied){
+            gameButton.setBackground(myColor);
             scrollOver = false;
-            unselect();
         }
     }//GEN-LAST:event_mouseOverOut
     

@@ -35,6 +35,7 @@ public class UserProfile {
     private final String password;
     private int played;
     private int wins;
+    private boolean anon;
     
     //constructor default
     public UserProfile(){
@@ -42,6 +43,7 @@ public class UserProfile {
         password = "undefined";
         played = -1;
         wins = -1;
+        anon = false;
     }
     
     /**
@@ -56,6 +58,7 @@ public class UserProfile {
         this.password = userSpecs[1];
         this.played = Integer.parseInt(userSpecs[2]);
         this.wins = Integer.parseInt(userSpecs[3]);
+        anon = false;
     }
     
     /**
@@ -71,6 +74,7 @@ public class UserProfile {
         this.password = password; 
         this.played = total;
         this.wins = won;
+        anon = false;
     }
     
     /**
@@ -84,6 +88,21 @@ public class UserProfile {
         this.password = password; 
         this.played = 0;
         this.wins = 0;
+        anon = false;
+    }
+    
+    /**
+     * CONSTRUCTOR - NEW PROFILE
+     * Constructor for UserProfile
+     * @param username - String of the user's name
+     * @param password - String of the password
+    */
+    public UserProfile(String username, String password, boolean isAnon){
+        this.username = username; 
+        this.password = password; 
+        this.played = 0;
+        this.wins = 0;
+        anon = true;
     }
     
     /**
@@ -106,6 +125,10 @@ public class UserProfile {
     public double getScore(){
         double score=(double)played/(double)wins;
         return score;
+    }
+    
+    public boolean isAnon(){
+        return anon;
     }
 
     /**

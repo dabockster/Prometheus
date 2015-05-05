@@ -152,9 +152,12 @@ public class ServerController {
             File file = new File("accounts.txt");
             try (PrintWriter out = new PrintWriter(file)) {
                 while( model.numberOfProfiles()>0 ){
-                    String nextProfile = model.pullProfileString();
-                    sendServerFeedback(nextProfile);
-                    out.println(nextProfile);
+                    UserProfile nextProfile = model.pullProfile();
+                    if( !nextProfile.isAnon() ){
+                        String profileString = nextProfile.toString();
+                        sendServerFeedback("Removed profile "+nextProfile.getUsername());
+                        out.println(nextProfile);
+                    }
                 }
                 out.close();
             }
@@ -280,7 +283,7 @@ public class ServerController {
         String password = request[2];
         UserProfile profile;
         if(username.equals("anonymous")){    //For anonymous gameplay
-            profile = new UserProfile(model.getAnonName(), password);
+            profile = new UserProfile(model.getAnonName(), password, true);
             model.addProfile(profile);
             view.addRegisteredProfile(profile.getUsername());
             profile.logon();
