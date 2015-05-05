@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package gameplay.views;
+package gameplay;
 
 import gameplay.GameView;
 import java.awt.Color;
