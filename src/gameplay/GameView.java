@@ -2,8 +2,10 @@ package gameplay;
 
 import gameplay.views.BoardCell;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.GridLayout;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 /**
  *
@@ -26,7 +28,11 @@ public class GameView extends javax.swing.JPanel {
      * Closes this GameView
      */
     public void close(){
-        this.getParent().remove(this);
+        try{
+            this.getParent().remove(this);
+        }catch(NullPointerException ex){
+            System.out.println("View was already closed");
+        }
     }
     
     /**

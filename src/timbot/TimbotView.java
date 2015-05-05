@@ -481,7 +481,6 @@ public class TimbotView extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLayeredPane baseLayeredPanel;
-    private javax.swing.JPanel boardPanel;
     private javax.swing.JButton playMoveButton;
     private javax.swing.JButton surrenderButton;
     private javax.swing.JPanel timbotBoardPanel;
