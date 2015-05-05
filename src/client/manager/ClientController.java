@@ -24,6 +24,9 @@ public final class ClientController {
     private boolean connectedToServer = false;
     private ClientConnectionController cController;
     
+    private String ip = "localhost";
+    private int port = 8080;
+    
     int attemptsToConnect = 0;
     
     /**
@@ -64,20 +67,22 @@ public final class ClientController {
     /**
      * NEW CONNECTION TO SERVER
      * Connects to a specified IP address and port
-     * @param ip
-     * @param port 
+     * @param newIp
+     * @param newPort 
      */
-    public void newConnection(String ip, int port){
-        if(ip == null){
-            ip = "localhost";
-            port = 8080;
+    public void newConnection(String newIp, int newPort){
+        if(newIp == null){
+            newIp = ip;
+            newPort = port;
         }
+        ip=newIp;
+        port=newPort;
         if(cController == null){
-            cController = new ClientConnectionController(this,ip,port);
+            cController = new ClientConnectionController(this,newIp,newPort);
         }else{
             if(cController.connectedToServer())
                 cController.close();
-            cController.newConnection(ip,port);
+            cController.newConnection(newIp,newPort);
         }
         System.out.print("Connecting to server");
     }
@@ -305,6 +310,15 @@ public final class ClientController {
     
     public void leaderboardRequest(){
         cController.serverRequest("leaders");
+    }
+    
+    public void leaders(String[] leaders){
+        String[] topFive=new String[5];
+        for(int i=1;i<leaders.length;i++){
+            topFive[i]=leaders[i];
+        }
+        
+        lobby.leaders(leaders);
     }
 
 }

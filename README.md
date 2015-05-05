@@ -15,16 +15,8 @@ NOTE: This program requires a minimum of Java 8 installed.
 
 ### Setup
 
-1. Open a Terminal in the ```src/edu/plu/cs``` folder.
+Run the .jar file from the ```releases``` folder.
 
-2. Run ```javac Prometheus.java```
+NOTE: This program is not compatible with Mac OS X. There are several graphical bugs in regards to how OS X renders Java Swing objects. Because of time constraints in our class, we will not have a chance to implement fixes for these graphics bugs.
 
-3. Run ```java Prometheus```
-
-4. ...
-
-5. Profit!
-
----
-
-...Or just run the .jar file from the ```releases``` folder.
+Windows and Linux should be unaffected.

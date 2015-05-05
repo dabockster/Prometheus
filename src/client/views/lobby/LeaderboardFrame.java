@@ -16,8 +16,8 @@ public class LeaderboardFrame extends javax.swing.JInternalFrame {
         initComponents();
     }
     
-    public void setText(String leaders){
-        leaderTA.setText(leaders);
+    public void update(String leaders){
+        leaderTA.append(leaders);
     }
 
     /** This method is called from within the constructor to

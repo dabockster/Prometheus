@@ -152,9 +152,12 @@ public class ServerController {
             File file = new File("accounts.txt");
             try (PrintWriter out = new PrintWriter(file)) {
                 while( model.numberOfProfiles()>0 ){
-                    String nextProfile = model.pullProfileString();
-                    sendServerFeedback(nextProfile);
-                    out.println(nextProfile);
+                    UserProfile nextProfile = model.pullProfile();
+                    if( !nextProfile.isAnon() ){
+                        String profileString = nextProfile.toString();
+                        sendServerFeedback("Removed profile "+nextProfile.getUsername());
+                        out.println(nextProfile);
+                    }
                 }
                 out.close();
             }
@@ -280,7 +283,7 @@ public class ServerController {
         String password = request[2];
         UserProfile profile;
         if(username.equals("anonymous")){    //For anonymous gameplay
-            profile = new UserProfile(model.getAnonName(), password);
+            profile = new UserProfile(model.getAnonName(), password, true);
             model.addProfile(profile);
             view.addRegisteredProfile(profile.getUsername());
             profile.logon();
@@ -362,21 +365,34 @@ public class ServerController {
     }    
 
     public void leaderboard(UserConnection ucon) {
-        
+        String leader="leader<&>"+topFive();
+        ucon.sendResponse(leader);
     }
     
-    public void topFive(){
-        double top=0;
-        double next=0;
+    public String topFive(){
+        int top=0;
+        int next=0;
         UserProfile lead=null;
-        ArrayList<UserProfile> accounts=new ArrayList<UserProfile>();
-        for(UserProfile i:accounts){
-            if(i.getScore()>top){
-                top=i.getScore();
-                lead=i;
-            }
+        String top5="";
+        ArrayList<UserProfile> newAccounts=new ArrayList<UserProfile>();
+        for(UserProfile i:model.getAccounts()){
+            newAccounts.add(i);
         }
-        next=top;
+        int x=0;
+        while(x<5){
+            for(UserProfile i:newAccounts){
+                if(i.getWins()>top){
+                    top=i.getWins();
+                    lead=i;    
+                    }
+                }
+            newAccounts.remove(lead);
+            top5+=lead.getUsername()+": "+top+" wins";
+            if(x<4)
+                top5+="<&>";
+            x++;
+        }
+        return top5;
     }
     
 }

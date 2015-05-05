@@ -90,6 +90,9 @@ public class ClientConnectionController {
             case "notOnline" :
                 controller.notOnlineResponse(response[1]);
                 break;
+            case "leader":
+                controller.leaders(response);
+                break;
         }
     }
     

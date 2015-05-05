@@ -124,12 +124,12 @@ public class ServerModel {
      * Removes the UserProfile from ArrayList accounts at index 0.
      * @return a string representation of the UserProfile removed
      */
-    public String pullProfileString(){
+    public UserProfile pullProfile(){
         if( accounts.isEmpty() ){
             sendServerFeedback("Model Is Empty");
             return null;
         }else{
-            return accounts.remove(0).toString();
+            return accounts.remove(0);
         }
     }
     

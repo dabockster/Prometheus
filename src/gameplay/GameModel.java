@@ -31,6 +31,7 @@ public class GameModel {
     
     private GameController controller;
     private int[][] board;
+    private int[][][] tracker;
     private int rows;
     private int columns;
     private boolean gameOver;
@@ -100,6 +101,7 @@ public class GameModel {
      * @return 
      */
     private int sweep(){
+        tracker = new int[board.length][board.length][5];
         int spaceRemaining = 10;
         for(int i=0; i<rows; i++){
             for(int j=0; j<columns; j++ ){
@@ -114,6 +116,29 @@ public class GameModel {
         return spaceRemaining;
     }
     
+    
+    private void checkOff(int x, int y, int sequenceChecked){
+        tracker[x][y][sequenceChecked] = 1;
+        if(sequenceChecked == 4){
+            checkOff(x,y,0);
+            checkOff(x,y,1);
+            checkOff(x,y,2);
+            checkOff(x,y,3);
+            checkOff(x,y,4);
+        }
+    }
+    
+    private boolean wasChecked(int x, int y){
+        if(tracker[x][y][4]==1)
+            return true;
+        for(int i=0;i<4;i++){
+            if(tracker[x][y][i]==0)
+                return false;
+        }
+        tracker[x][y][4] = 1;
+    return true;
+    }
+    
     /**
      * checks a cell to see if it neighboring cells with the same value
      * @param x
@@ -122,8 +147,11 @@ public class GameModel {
      */
     private boolean checkCell(int x, int y){
         int player = board[x][y];
-        if(player == 0)
+        //Still need to check values of checked cells
+        if(player == 0){
+            checkOff(x,y,4);
             return false;
+        }
         if( x!=0 && y!=columns-1){
             if(checkDiagonalBack(x-1,y+1,player,0)){
                 return true;
