@@ -23,7 +23,7 @@
  */
 package timbot;
 
-import gameplay.views.BoardCell;
+import gameplay.BoardCell;
 import java.awt.Color;
 import java.awt.GridLayout;
 
