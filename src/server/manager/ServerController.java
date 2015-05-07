@@ -370,7 +370,7 @@ public class ServerController {
     }
     
     public String topFive(){
-        int top=0;
+       /** int top=0;
         int next=0;
         UserProfile lead=null;
         String top5="";
@@ -392,7 +392,8 @@ public class ServerController {
                 top5+="<&>";
             x++;
         }
-        return top5;
+        return top5;*/
+        return "";
     }
     
 }
