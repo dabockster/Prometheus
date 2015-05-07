@@ -1,3 +1,5 @@
-timErnst,password,0,0
-Joeses,password,0,0
+timErnst,password,14,9
+Joeses,password,13,5
 Steven,Steven,0,0
+joeWright,password,1,0
+notSteven,Steven,3,0
