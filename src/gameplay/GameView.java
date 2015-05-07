@@ -498,6 +498,7 @@ public class GameView extends javax.swing.JPanel {
 
         msgBoardTA.setEditable(false);
         msgBoardTA.setColumns(20);
+        msgBoardTA.setLineWrap(true);
         msgBoardTA.setRows(5);
         msgBoardPanel.setViewportView(msgBoardTA);
 
