@@ -39,13 +39,16 @@ public class TimbotView extends javax.swing.JFrame {
     
     /**
      * Creates new form timbotView
+     * @param controller
      */
     public TimbotView(TimbotController controller) {
         this.controller = controller;
         initComponents();
     }
     
-    
+    public void close(){
+        controller.toLogin();    
+    }
     
     /**
      * Keeps track of the selected BoardCell
@@ -335,14 +338,14 @@ public class TimbotView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(800, 760));
-        setMinimumSize(new java.awt.Dimension(800, 760));
-        setPreferredSize(new java.awt.Dimension(800, 760));
+        setMinimumSize(new java.awt.Dimension(900, 760));
+        setPreferredSize(new java.awt.Dimension(900, 760));
         setResizable(false);
 
-        baseLayeredPanel.setMaximumSize(new java.awt.Dimension(800, 760));
-        baseLayeredPanel.setMinimumSize(new java.awt.Dimension(800, 760));
+        baseLayeredPanel.setMaximumSize(new java.awt.Dimension(900, 750));
+        baseLayeredPanel.setMinimumSize(new java.awt.Dimension(900, 750));
         baseLayeredPanel.setName(""); // NOI18N
-        baseLayeredPanel.setPreferredSize(new java.awt.Dimension(800, 740));
+        baseLayeredPanel.setPreferredSize(new java.awt.Dimension(900, 750));
 
         timbotBoardPanel.setBackground(new java.awt.Color(0, 102, 102));
         timbotBoardPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(0, 153, 153), new java.awt.Color(51, 51, 51), new java.awt.Color(0, 153, 153), new java.awt.Color(51, 51, 51)));
@@ -355,7 +358,7 @@ public class TimbotView extends javax.swing.JFrame {
 
         for( int i=0; i<30; i++ ){
             for( int j=0; j<30; j++ ){
-                cellGrid[j][i] = new BoardCell(this,j,i);
+                cellGrid[j][i] = new BoardCell(true,this,j,i);
             }
         }
 
@@ -409,24 +412,24 @@ public class TimbotView extends javax.swing.JFrame {
         baseLayeredPanelLayout.setHorizontalGroup(
             baseLayeredPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(baseLayeredPanelLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addGap(14, 14, 14)
                 .addComponent(timbotBoardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(baseLayeredPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(turnLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
                     .addComponent(surrenderButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(playMoveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(turnLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)))
+                    .addComponent(playMoveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         baseLayeredPanelLayout.setVerticalGroup(
             baseLayeredPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, baseLayeredPanelLayout.createSequentialGroup()
+            .addGroup(baseLayeredPanelLayout.createSequentialGroup()
                 .addContainerGap(102, Short.MAX_VALUE)
-                .addGroup(baseLayeredPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(baseLayeredPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(baseLayeredPanelLayout.createSequentialGroup()
-                        .addComponent(turnLabel)
+                        .addComponent(turnLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(playMoveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(surrenderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(timbotBoardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
@@ -441,13 +444,12 @@ public class TimbotView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(baseLayeredPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(baseLayeredPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 910, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(baseLayeredPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 763, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(baseLayeredPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 763, Short.MAX_VALUE)
         );
 
         pack();

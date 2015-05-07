@@ -24,7 +24,6 @@
 package timbot;
 
 import client.manager.ClientController;
-
 /**
  *
  * @author Timothy Ernst
@@ -32,17 +31,22 @@ import client.manager.ClientController;
 public class TimbotController {
     
     private TimbotView view;
-    private TimbotAI model;
+    private TimbotModel model;
     private ClientController controller;
     private boolean myTurn;
     private boolean wentFirstLast;
     
-    public TimbotController(ClientController controller, int difficulty){
+    public TimbotController(ClientController controller){
         this.controller = controller;
         this.view = new TimbotView(this);
-        
+        view.setVisible(true);
         wentFirstLast = true; //method for picking
-        
+        model = new TimbotModel(this);
+    }
+    
+    public void toLogin(){
+        view.dispose();
+        controller.refreshClient();
     }
     
     public void userPlay(int x, int y){

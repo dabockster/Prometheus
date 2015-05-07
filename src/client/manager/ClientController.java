@@ -8,6 +8,7 @@ import client.views.offline.OfflineController;
 import gameplay.GameController;
 import gameplay.GameView;
 import java.util.Arrays;
+import timbot.TimbotController;
 
 /**
  * ClientController class
@@ -18,7 +19,7 @@ public final class ClientController {
     String username;
     
     private MainMenuController mainMenu = null;
-    private OfflineController offline;
+    private TimbotController offline;
     private ClientModel model;
     private LobbyController lobby;
     private boolean connectedToServer = false;
@@ -91,7 +92,7 @@ public final class ClientController {
      * Creates an offline game 
      */
     public void offlineGame(){
-        offline = new OfflineController(this);
+        offline = new TimbotController(this);
     }
 
     /**
@@ -313,11 +314,6 @@ public final class ClientController {
     }
     
     public void leaders(String[] leaders){
-        String[] topFive=new String[5];
-        for(int i=1;i<leaders.length;i++){
-            topFive[i]=leaders[i];
-        }
-        
         lobby.leaders(leaders);
     }
 

@@ -92,6 +92,7 @@ public class ClientConnectionController {
                 break;
             case "leader":
                 controller.leaders(response);
+                System.out.println(response[1]);
                 break;
         }
     }

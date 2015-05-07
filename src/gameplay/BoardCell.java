@@ -38,6 +38,7 @@ public class BoardCell extends javax.swing.JPanel {
     
     private GameView parent;
     private TimbotView timbot;
+    private boolean ai;
     
     private boolean occupied;
     private boolean scrollOver;
@@ -76,11 +77,12 @@ public class BoardCell extends javax.swing.JPanel {
      * @param row
      * @param column
      */
-    public BoardCell(TimbotView timbot, int row, int column) {  // So that means we are formatting like this: array[row][column]
+    public BoardCell(boolean wtf, TimbotView timbot, int row, int column) {  // So that means we are formatting like this: array[row][column]
         this.effect = 1;
         this.timbot = timbot;
         this.column = column;
         this.row = row;
+        ai=true;
         initComponents();
         myColor = gameButton.getBackground();
         occupied = false;
@@ -104,14 +106,26 @@ public class BoardCell extends javax.swing.JPanel {
     private void select(){
         if(effect == 1){    //gamePlay
             selected = true;
-            parent.selectedCell(this);
+            if(!ai)
+                parent.selectedCell(this);
+            else
+                timbot.selectedCell(this);
             gameButton.setBackground(Color.yellow);
         }else if(effect == 2){      //play again yes
-            parent.playAgain(true);
+            if(!ai)
+                parent.playAgain(true);
+            else
+                timbot.playAgain(true);
         }else if(effect == 3){      //play again no
-            parent.playAgain(false);
+            if(!ai)
+                parent.playAgain(false);
+            else
+                timbot.playAgain(false);
         }else if(effect == 4){
-            parent.close();
+            if(!ai)
+                parent.close();
+            else
+                timbot.close();
         }
     }
     

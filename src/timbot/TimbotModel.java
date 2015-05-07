@@ -27,7 +27,7 @@ package timbot;
  *
  * @author Timothy Ernst
  */
-public class TimbotAI {
+public class TimbotModel {
     
     private TimbotController controller;
     private int[][] board;
@@ -38,7 +38,7 @@ public class TimbotAI {
      * Default Constructor
      * @param controller 
      */
-    public TimbotAI(TimbotController controller){
+    public TimbotModel(TimbotController controller){
         this.controller = controller;
         buildNewGrid(30,30);
     }
@@ -96,7 +96,7 @@ public class TimbotAI {
   
     
     
-//--------------------------------END TimbotAI & BEGIN WIN CONDITIONS ---------------------------    
+//--------------------------------END TimbotModel & BEGIN WIN CONDITIONS ---------------------------    
     /**
      * Checks to see if the game is still going
      */
@@ -106,7 +106,7 @@ public class TimbotAI {
             controller.gameOver(1);
         }else if(state == -1){
             controller.gameOver(-1);
-        }else if( state == 10){
+        }else if( state == 0){
             controller.gameOver(0);
         }
     }
@@ -116,7 +116,7 @@ public class TimbotAI {
      * @return 
      */
     private int sweep(){
-        int spaceRemaining = 10;
+        int spaceRemaining = 0;
         for(int i=0; i<rows; i++){
             for(int j=0; j<columns; j++ ){
                 if(checkCell(i,j)){
@@ -141,22 +141,22 @@ public class TimbotAI {
         if(player == 0)
             return false;
         if( x!=0 && y!=columns-1){
-            if(checkDiagonalBack(x-1,y+1,player,0)){
+            if(checkDiagonalBack(x-1,y+1,player,1)){
                 return true;
             }
         }
         if( y!=columns-1){
-            if( checkHorizontal(x,y+1,player,0)){
+            if( checkHorizontal(x,y+1,player,1)){
                 return true;
             }
         }
         if( x!=rows-1 && y!=columns-1 ){
-            if( checkDiagonalForward(x+1,y+1,player,0)){
+            if( checkDiagonalForward(x+1,y+1,player,1)){
                 return true;
             }
         }
         if( x!=rows-1 ){
-            if ( checkVertical(x+1,y,player,0)){
+            if ( checkVertical(x+1,y,player,1)){
                 return true;
             }
         }
@@ -164,11 +164,11 @@ public class TimbotAI {
     }
     
     private boolean checkDiagonalBack(int x, int y, int player, int inSequence){
-        inSequence++;
-        if(inSequence == 5)
+        if(inSequence == 5 )
             return true;
         else if( x!=0 && y!=columns-1){
             if( board[x][y] == player ){
+                inSequence++;
                 System.out.println("DiagonalBack: "+x+","+y+","+player+","+inSequence);
                 return checkDiagonalBack(x-1,y+1,player,inSequence);
             }else
@@ -178,12 +178,12 @@ public class TimbotAI {
     }
     
     private boolean checkHorizontal(int x, int y, int player, int inSequence){
-        inSequence++;
         if(inSequence == 5)
             return true;
         else if(y!=columns-1){
             if( board[x][y] == player ){
-            System.out.println("Horizontal: "+x+","+y+","+player+","+inSequence);
+                inSequence++;
+                System.out.println("Horizontal: "+x+","+y+","+player+","+inSequence);
                 return checkHorizontal(x,y+1,player,inSequence);
             }else
                 return false;
@@ -192,11 +192,11 @@ public class TimbotAI {
     }
     
     private boolean checkDiagonalForward(int x, int y, int player, int inSequence){
-        inSequence++;
         if(inSequence == 5)
             return true;
         else if( x!=rows-1 && y!=columns-1 ){
             if( board[x][y] == player ){
+                inSequence++;
                 System.out.println("DiagonalForward: "+x+","+y+","+player+","+inSequence);
                 return checkDiagonalForward(x+1,y+1,player,inSequence);
             }else
@@ -206,10 +206,10 @@ public class TimbotAI {
     }
     
     private boolean checkVertical(int x, int y, int player, int inSequence){
-        inSequence++;
         if(inSequence == 5)
             return true;
         else if( x!=rows-1 ){
+            inSequence++;
             if( board[x][y] == player ){
                 System.out.println("Vertical: "+x+","+y+","+player+","+inSequence);
                 return checkVertical(x+1,y,player,inSequence);

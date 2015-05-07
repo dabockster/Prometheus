@@ -31,7 +31,6 @@ public class GameModel {
     
     private GameController controller;
     private int[][] board;
-    private int[][][] tracker;
     private int rows;
     private int columns;
     private boolean gameOver;
@@ -101,7 +100,6 @@ public class GameModel {
      * @return 
      */
     private int sweep(){
-        tracker = new int[board.length][board.length][5];
         int spaceRemaining = 10;
         for(int i=0; i<rows; i++){
             for(int j=0; j<columns; j++ ){
@@ -116,28 +114,8 @@ public class GameModel {
         return spaceRemaining;
     }
     
+  
     
-    private void checkOff(int x, int y, int sequenceChecked){
-        tracker[x][y][sequenceChecked] = 1;
-        if(sequenceChecked == 4){
-            checkOff(x,y,0);
-            checkOff(x,y,1);
-            checkOff(x,y,2);
-            checkOff(x,y,3);
-            checkOff(x,y,4);
-        }
-    }
-    
-    private boolean wasChecked(int x, int y){
-        if(tracker[x][y][4]==1)
-            return true;
-        for(int i=0;i<4;i++){
-            if(tracker[x][y][i]==0)
-                return false;
-        }
-        tracker[x][y][4] = 1;
-    return true;
-    }
     
     /**
      * checks a cell to see if it neighboring cells with the same value
@@ -148,27 +126,26 @@ public class GameModel {
     private boolean checkCell(int x, int y){
         int player = board[x][y];
         //Still need to check values of checked cells
-        if(player == 0){
-            checkOff(x,y,4);
+        if(player == 0 ){
             return false;
         }
         if( x!=0 && y!=columns-1){
-            if(checkDiagonalBack(x-1,y+1,player,0)){
+            if(checkDiagonalBack(x-1,y+1,player,1)){
                 return true;
             }
         }
         if( y!=columns-1){
-            if( checkHorizontal(x,y+1,player,0)){
+            if( checkHorizontal(x,y+1,player,1)){
                 return true;
             }
         }
-        if( x!=rows-1 && y!=columns-1 ){
-            if( checkDiagonalForward(x+1,y+1,player,0)){
+        if( x!=rows-1 && y!=columns-1){
+            if( checkDiagonalForward(x+1,y+1,player,1)){
                 return true;
             }
         }
         if( x!=rows-1 ){
-            if ( checkVertical(x+1,y,player,0)){
+            if ( checkVertical(x+1,y,player,1)){
                 return true;
             }
         }
@@ -176,11 +153,11 @@ public class GameModel {
     }
     
     private boolean checkDiagonalBack(int x, int y, int player, int inSequence){
-        inSequence++;
         if(inSequence == 5)
             return true;
         else if( x!=0 && y!=columns-1){
             if( board[x][y] == player ){
+                inSequence++;
                 System.out.println("DiagonalBack: "+x+","+y+","+player+","+inSequence);
                 return checkDiagonalBack(x-1,y+1,player,inSequence);
             }else
@@ -190,12 +167,12 @@ public class GameModel {
     }
     
     private boolean checkHorizontal(int x, int y, int player, int inSequence){
-        inSequence++;
         if(inSequence == 5)
             return true;
         else if(y!=columns-1){
             if( board[x][y] == player ){
-            System.out.println("Horizontal: "+x+","+y+","+player+","+inSequence);
+                inSequence++;
+                System.out.println("Horizontal: "+x+","+y+","+player+","+inSequence);
                 return checkHorizontal(x,y+1,player,inSequence);
             }else
                 return false;
@@ -204,11 +181,11 @@ public class GameModel {
     }
     
     private boolean checkDiagonalForward(int x, int y, int player, int inSequence){
-        inSequence++;
         if(inSequence == 5)
             return true;
         else if( x!=rows-1 && y!=columns-1 ){
             if( board[x][y] == player ){
+                inSequence++;
                 System.out.println("DiagonalForward: "+x+","+y+","+player+","+inSequence);
                 return checkDiagonalForward(x+1,y+1,player,inSequence);
             }else
@@ -218,11 +195,11 @@ public class GameModel {
     }
     
     private boolean checkVertical(int x, int y, int player, int inSequence){
-        inSequence++;
         if(inSequence == 5)
             return true;
         else if( x!=rows-1 ){
             if( board[x][y] == player ){
+                inSequence++;
                 System.out.println("Vertical: "+x+","+y+","+player+","+inSequence);
                 return checkVertical(x+1,y,player,inSequence);
             }else
