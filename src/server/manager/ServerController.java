@@ -364,13 +364,13 @@ public class ServerController {
         model.incrementWins(profile);
     }    
 
-    public void leaderboard(UserConnection ucon) {
+    /**public void leaderboard(UserConnection ucon) {
         String leader="leader<&>"+topFive();
         ucon.sendResponse(leader);
     }
     
     public String topFive(){
-       /** int top=0;
+        int top=0;
         int next=0;
         UserProfile lead=null;
         String top5="";
@@ -392,8 +392,7 @@ public class ServerController {
                 top5+="<&>";
             x++;
         }
-        return top5;*/
-        return "";
-    }
+        return top5;
+    }*/
     
 }
