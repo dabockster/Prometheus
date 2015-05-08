@@ -49,27 +49,61 @@ public class Cell {
     private Cell nw; //nortwest
    
     /**
-     * 
+     * This holds true for the following four methods
      * @return 0 : no sequence
      *         1 : is first of sequence
      *         2 : is middle of sequence
      *         3 : is end of sequence
-     
-    private int diagonalIncreasing(){
-        if(ne.hasState(presentState)){
-            
-            if(ne.hasState(presentState)){
-                
+     */
+    private int diagIncreasing(int state){
+        if(ne.hasState(state)){
+            if(sw.hasState(state)){
+                return 2;
             }else{
-                return 
+                return 1;
             }
-        }else if(sw.hasState(presentState)){
-            return 
+        }else if(sw.hasState(state)){
+            return 3;
+        }else
+            return 0;
+    }
+    private int diagDecreasing(int state){
+        if(nw.hasState(state)){
+            if(se.hasState(state)){
+                return 2;
+            }else{
+                return 3;
+            }
+        }else if(se.hasState(state)){
+            return 1;
+        }else
+            return 0;
+    }
+    private int horizontal(int state){
+        if(e.hasState(state)){
+            if(w.hasState(state)){
+                return 2;
+            }else{
+                return 1;
+            }
+        }else if(w.hasState(state)){
+            return 3;
+        }else{
+            return 0;
         }
     }
-    */
-    private int checkDecreasing(){
-        return 0;
+    private int vertical(int state){
+        if(n.hasState(state)){
+            if(s.hasState(state)){
+                return 2;
+            }else{
+                return 1;
+            }
+        }else if(s.hasState(state)){
+            return 3;
+        }else{
+            return 0;
+        }
     }
     
     public boolean hasState(int otherState){
