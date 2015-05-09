@@ -21,8 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package timbot;
+package client.views.offline;
 
+import timbot.*;
+import client.views.offline.*;
 import gameplay.BoardCell;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -31,54 +33,110 @@ import java.awt.GridLayout;
  *
  * @author Timothy Ernst
  */
-public class TimbotView extends javax.swing.JFrame {
+public class OfflineGameView extends javax.swing.JFrame {
     
-    private TimbotController controller;
-    private BoardCell currentSelected; //the currently selected BoardCell
-    private BoardCell[][] cellGrid;
+    private OfflineGameController controller;
+    private OfflineBoardCell currentSelected; //the currently selected BoardCell
+    private OfflineBoardCell[][] cellGrid;
     
-    /**
-     * Creates new form timbotView
+    private int numPlayerMoves = 0; // used for determining which HUMAN player move is registered
+    private int bSizeX;
+    private int bSizeY;
+/**
+     * Creates new form GameView
      * @param controller
      */
-    public TimbotView(TimbotController controller) {
+    public OfflineGameView(OfflineGameController controller) {
         this.controller = controller;
+        bSizeX = 30;
+        bSizeY = 30;
         initComponents();
+        this.setVisible(true); 
     }
-    
+    /**
+     * Creates new form GameView, Specifies Dimensions
+     * @param rows - integer size Y, number of board rows
+     * @param columns - integer size X, number of board columns
+     * @param controller
+     */
+    public OfflineGameView(OfflineGameController controller, int columns, int rows) {
+        this.controller = controller;
+        bSizeX = columns;
+        bSizeY = rows;
+        initComponents();
+        System.out.println("Built Game View");
+        this.setVisible(true); 
+    }
     public void close(){
-        controller.toLogin();    
+        //controller.toLogin();    
     }
     
     /**
      * Keeps track of the selected BoardCell
      * @param selected the BoardCell that has been selected
      */
-    public void selectedCell(BoardCell selected){
+    public void selectedCell(OfflineBoardCell selected){
         unselect();
         currentSelected = selected;
     }
     
+    
     /**
-     * Play Move YOU
+     * Play Move HUMAN
+     * Accommodates multiple HUMANS (x2) by using MODULUS to determine the player
+     * Player1 moves first, thus Player1 is elected in the set
+     *      of all sequence numbers N 
+     *      such that N = {x%2 = 0, for all x in R}
+     * Player2 moves second, thus Player2 is elected in the set
+     *      of all sequence numbers S
+     *      such that S = {x%2 = 1, for all x in R}
      */
     public void playMove(){
         if(currentSelected == null){
             return;
         }
-        currentSelected.playMove(true);
-        controller.userPlay(currentSelected.getRow(), currentSelected.getColumn());
+        controller.verifyMove();
+        
+        
+    }
+    /**
+     * Invoked by OfflineGameController to determine which player designation
+     * to ascribe to a the selected cell
+     * @param playerDesignation 
+     */
+    public void playerDesignatedMove(boolean playerDesignation){
+        if(currentSelected == null){
+            return;
+        }
+        if(!currentSelected.getOccupied()){
+            currentSelected.playMove(playerDesignation);
+            controller.sendPlay(currentSelected.getRow(), currentSelected.getColumn()); //updates gameModel
+        }
         currentSelected = null;
     }
     
     /**
-     * Play Move OPPONENT
+     * Play Move AI
+     * !!!!!!!!!!!!!!!DEPRECATE!!!!!!!!!!!!!!!!!!!!!
+     * +++++Use playMoveAI+++++
      * @param row
      * @param column
      */
     public void playMove(int row, int column){
         unselect();
         cellGrid[row][column].playMove(false);
+    }
+    /**
+     * 
+     * @param coord - board coordinates: coord[0] = x-coordinate; coord[1] = y-coordinate
+     * @param player - determines status of AI as Player1 or Player2
+     */
+    public void playMoveAI(int[] coord, int player){
+        
+        unselect();
+        if(player == 0){cellGrid[coord[0]][coord[1]].playMove(true);}
+        else{cellGrid[coord[0]][coord[1]].playMove(false);}
+        
     }
     
     /**
@@ -337,9 +395,7 @@ public class TimbotView extends javax.swing.JFrame {
         surrenderButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(800, 760));
         setMinimumSize(new java.awt.Dimension(900, 760));
-        setPreferredSize(new java.awt.Dimension(900, 760));
         setResizable(false);
 
         baseLayeredPanel.setMaximumSize(new java.awt.Dimension(900, 750));
@@ -353,11 +409,11 @@ public class TimbotView extends javax.swing.JFrame {
         timbotBoardPanel.setMinimumSize(new java.awt.Dimension(570, 650));
         timbotBoardPanel.setName(""); // NOI18N
 
-        cellGrid = new BoardCell[30][30];
+        cellGrid = new OfflineBoardCell[30][30];
 
         for( int i=0; i<30; i++ ){
             for( int j=0; j<30; j++ ){
-                cellGrid[j][i] = new BoardCell(true,this,j,i);
+                cellGrid[i][j] = new OfflineBoardCell(this,i,j);
             }
         }
 
@@ -373,6 +429,7 @@ public class TimbotView extends javax.swing.JFrame {
         );
 
         timbotBoardPanel.setLayout(new GridLayout(30,30));
+
         for( int i=0; i<30; i++ ){
             for( int j=0; j<30; j++ ){
                 timbotBoardPanel.add(cellGrid[i][j]);
@@ -460,7 +517,7 @@ public class TimbotView extends javax.swing.JFrame {
 
     private void surrenderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_surrenderButtonActionPerformed
         //Are you sure?
-        controller.surrender();
+        //controller.surrender();
         //send surrender message to opponent (a method 'receiveSurrender' will be implemented)
         //record game as loss
         //close GameController (rematch?)
@@ -471,7 +528,7 @@ public class TimbotView extends javax.swing.JFrame {
      */
     public void playAgain(boolean rematch){
         if(rematch){    
-            controller.newGame();
+            //controller.newGame();
             for(int i=0; i<cellGrid.length; i++){
                 for(int j=0; j<cellGrid.length; j++){
                     cellGrid[i][j].scrub();

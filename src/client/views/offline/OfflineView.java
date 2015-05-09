@@ -32,6 +32,8 @@ import client.views.offline.OfflineController;
 public class OfflineView extends javax.swing.JFrame {
 
     private OfflineController controller;
+    private int rows = 30;
+    private int columns = 30;
     
     
     /**
@@ -52,93 +54,241 @@ public class OfflineView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        backgroundPanel = new javax.swing.JPanel();
-        gamePanel = new javax.swing.JPanel();
-        buttonPanel = new javax.swing.JPanel();
-        surrenderButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        PLAYjButton = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        P1jCBox = new javax.swing.JComboBox();
+        P2jCBox = new javax.swing.JComboBox();
+        SIMULATEjButton = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        SysResponsejTextField = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Offline Game");
+        setTitle("Offline Game Setup");
         setResizable(false);
-        getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        backgroundPanel.setBackground(new java.awt.Color(0, 0, 0));
-        backgroundPanel.setMinimumSize(new java.awt.Dimension(500, 500));
+        jLabel1.setText("Player 1");
 
-        gamePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 51)));
-        gamePanel.setOpaque(false);
+        jLabel2.setText("Player 2");
 
-        javax.swing.GroupLayout gamePanelLayout = new javax.swing.GroupLayout(gamePanel);
-        gamePanel.setLayout(gamePanelLayout);
-        gamePanelLayout.setHorizontalGroup(
-            gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 442, Short.MAX_VALUE)
-        );
-        gamePanelLayout.setVerticalGroup(
-            gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 417, Short.MAX_VALUE)
-        );
-
-        buttonPanel.setOpaque(false);
-
-        surrenderButton.setText("Surrender");
-        surrenderButton.addActionListener(new java.awt.event.ActionListener() {
+        PLAYjButton.setText("PLAY");
+        PLAYjButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                surrenderButtonActionPerformed(evt);
+                PLAYjButtonActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
-        buttonPanel.setLayout(buttonPanelLayout);
-        buttonPanelLayout.setHorizontalGroup(
-            buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(buttonPanelLayout.createSequentialGroup()
-                .addGap(170, 170, 170)
-                .addComponent(surrenderButton)
+        jLabel3.setText("Select Types of Players:");
+
+        P1jCBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "HUMAN", "AI EASY", "AI NORMAL", "AI HARD" }));
+        P1jCBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                P1jCBoxActionPerformed(evt);
+            }
+        });
+
+        P2jCBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "HUMAN", "AI EASY", "AI NORMAL", "AI HARD" }));
+
+        SIMULATEjButton.setText("SIMULATE");
+        SIMULATEjButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SIMULATEjButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("To Simulate AI-vs-AI:");
+
+        jLabel5.setText("Play Game:");
+
+        jTextField1.setText("jTextField1");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("(TODO) Board Size:");
+
+        jLabel7.setText("Game Options:");
+
+        jLabel8.setText("*Both Players must be AI");
+
+        SysResponsejTextField.setEditable(false);
+        SysResponsejTextField.setForeground(new java.awt.Color(204, 0, 0));
+        SysResponsejTextField.setText("Have Fun!");
+        SysResponsejTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SysResponsejTextFieldActionPerformed(evt);
+            }
+        });
+
+        jTextField2.setText("jTextField2");
+
+        jLabel9.setText("X:");
+
+        jLabel10.setText("Y:");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(P1jCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(PLAYjButton)
+                            .addComponent(jLabel5))
+                        .addGap(34, 34, 34)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(SIMULATEjButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel8))
+                            .addComponent(jLabel4)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(P2jCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                    .addComponent(jLabel3)
+                    .addComponent(SysResponsejTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        buttonPanelLayout.setVerticalGroup(
-            buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(surrenderButton)
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
-        backgroundPanel.setLayout(backgroundPanelLayout);
-        backgroundPanelLayout.setHorizontalGroup(
-            backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backgroundPanelLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(buttonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(gamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(27, Short.MAX_VALUE))
-        );
-        backgroundPanelLayout.setVerticalGroup(
-            backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backgroundPanelLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(gamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel2))
+                    .addComponent(jLabel6))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(P1jCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(P2jCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(PLAYjButton)
+                            .addComponent(SIMULATEjButton)))
+                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(12, 12, 12)
+                .addComponent(SysResponsejTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-
-        getContentPane().add(backgroundPanel, new java.awt.GridBagConstraints());
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void surrenderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_surrenderButtonActionPerformed
-        controller.surrender();
-    }//GEN-LAST:event_surrenderButtonActionPerformed
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+    /**
+     * Launches SIMULATION Instance provided two AI players are selected
+     * @param evt 
+     */
+    private void SIMULATEjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SIMULATEjButtonActionPerformed
+        int player1 = P1jCBox.getSelectedIndex();
+        int player2 = P2jCBox.getSelectedIndex();
+        if(player1 != 0 && player2 != 0){
+            //TODO
+            //LAUNCH SIMULATION INSTANCE
+        }else{SysResponsejTextField.setText("Both Players must be an AI variant");}
+    }//GEN-LAST:event_SIMULATEjButtonActionPerformed
+
+    private void SysResponsejTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SysResponsejTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SysResponsejTextFieldActionPerformed
+
+    private void P1jCBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_P1jCBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_P1jCBoxActionPerformed
+    /**
+     * Launches a game provided there is at least one HUMAN player
+     * @param evt 
+     */
+    private void PLAYjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PLAYjButtonActionPerformed
+        int player1 = P1jCBox.getSelectedIndex();
+        int player2 = P2jCBox.getSelectedIndex();
+        //HUMAN vs AI
+        if((player1 == 0 && player2 != 0) || (player1 != 0 && player2 == 0)){
+            //TODO
+            //Launch Game Instance
+            controller.createOffliePlaySession(player1, player2, rows, columns);
+        }
+        //HUMAN vs HUMAN
+        else if (player1 == 0 && player2 == 0){
+            //TODO
+            //Launch Game Instance
+            controller.createOffliePlaySession(player1, player2, rows, columns);
+        }
+        //AI vs AI
+        else if (player1 != 0 && player2 != 0){
+            //TODO
+            //Launch SIMULATION Game Instance
+        }
+        else{SysResponsejTextField.setText("Player Selection Error");}
+    }//GEN-LAST:event_PLAYjButtonActionPerformed
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel backgroundPanel;
-    private javax.swing.JPanel buttonPanel;
-    private javax.swing.JPanel gamePanel;
-    private javax.swing.JButton surrenderButton;
+    private javax.swing.JComboBox P1jCBox;
+    private javax.swing.JComboBox P2jCBox;
+    private javax.swing.JButton PLAYjButton;
+    private javax.swing.JButton SIMULATEjButton;
+    private javax.swing.JTextField SysResponsejTextField;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }

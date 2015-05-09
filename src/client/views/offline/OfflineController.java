@@ -36,6 +36,7 @@ public class OfflineController {
     private ClientController controller;
     private SurrenderDialog surrender;
     private OfflineDefeatDialog defeat;
+    private OfflineGameController gameController;
     
     /**
      * OfflineController constructor
@@ -45,6 +46,13 @@ public class OfflineController {
         view = new OfflineView(this);
         view.setVisible(true);
         controller = ctrl;
+    }
+    /**
+     * 
+     */
+    public void createOffliePlaySession(int playerType1, int playerType2, int rows, int columns){
+        gameController = new OfflineGameController(playerType1, playerType2, rows, columns, controller);
+        view.setVisible(false);
     }
     
     /**
