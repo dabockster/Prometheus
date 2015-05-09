@@ -6,6 +6,7 @@ import gameplay.*;
 import client.manager.ClientController;
 import static java.lang.Math.abs;
 import AISimulationEnvironment.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 
@@ -36,6 +37,9 @@ public class OfflineGameController {
     
     private boolean botMoved;
     private int[] botMove; 
+    
+    //BOT time delay
+    final private int BOTDELAY = 145;
     
     //BOT SEED
     public BotInterface bot; 
@@ -96,9 +100,9 @@ public class OfflineGameController {
             botPlayerDesignationBOOL = true;
             myTurn(true);} //PLAYER1 is HUMAN
         else{
-            this.verifyMove(); //Player 1 is bot, retrieve botMove
             botPlayerDesignationBOOL = false;
-            myTurn(false);}
+            this.verifyMove(); //Player 1 is bot, retrieve botMove
+            myTurn(true);}
         
     }
     
@@ -207,6 +211,7 @@ public class OfflineGameController {
                 view.playMoveAI(botMove, botPlayerDesignation);
                 botMoved = true;
                 //TURNOVER TO HUMAN
+                try{TimeUnit.MILLISECONDS.sleep(BOTDELAY);}catch(InterruptedException e){System.out.println("Sleep Interrupted");}
                 myTurn(true);
             }
             else{
