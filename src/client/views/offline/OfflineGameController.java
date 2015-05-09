@@ -63,18 +63,17 @@ public class OfflineGameController {
     public OfflineGameController(int player1Type, int player2Type, int bSizeX, int bSizeY, ClientController control){
         this.controller = control;
         this.opName = "Generic Player";
+        
+        view = new OfflineGameView(this, bSizeX, bSizeY);
+        model = new OfflineGameModel(this, bSizeX, bSizeY);
+        
         //check if player1 is AI
         if(player1Type != 0){this.setBot(2, player1Type);}
         //check if player2 is AI
         else if(player2Type != 0){this.setBot(3, player2Type);}
         
-        view = new OfflineGameView(this, bSizeX, bSizeY);
-        
-        model = new OfflineGameModel(this, bSizeX, bSizeY);
         playing = true;
-        myTurn(true);
         view.setVisible(true);
-        wentFirstLast = false;
     }
     
     /**
@@ -86,12 +85,18 @@ public class OfflineGameController {
     public void setBot(int player, int difficulty){
         botPlaying = true;
         botMove = new int[2];
+        botMoved = false;
         botPlayerDesignation = abs(player % 2);
+        
+        //TODO: difficulty modifier for bot
+        bot = new randBot();
+        
         if(botPlayerDesignation == 1){
-            botMoved = true; //IF bot is Player2, we proceed as though bot has moved 
+            botMoved = true; // Player2 is bot, botMoved true == player1 moves first
             botPlayerDesignationBOOL = true;
             myTurn(true);} //PLAYER1 is HUMAN
-        else{botMoved = false; 
+        else{
+            this.verifyMove(); //Player 1 is bot, retrieve botMove
             botPlayerDesignationBOOL = false;
             myTurn(false);}
         
@@ -190,11 +195,14 @@ public class OfflineGameController {
      * Player1 moves first; Player2 moves second.
      */
     public void verifyMove(){
+        System.out.println("VERIFY MOVE: botPlaying? " + botPlaying);
         //IF AI PLAYING, DETERMINE PRECEDENCE
         if(botPlaying){
             //IF AI FIRST (!aiMoved)
+            System.out.println("VERIFY MOVE: botMoved? " + botMoved);
             if(!botMoved){
                 //AI fetchMove()
+                System.out.println("VERIFY MOVE: FETCHING BOT MOVE");
                 botMove = bot.fetchMove(model.getBoard());
                 view.playMoveAI(botMove, botPlayerDesignation);
                 botMoved = true;
@@ -207,6 +215,7 @@ public class OfflineGameController {
                  //TURNOVER TO AI
             botMoved = false;
             myTurn(false);
+            this.verifyMove();
             }
         }else{
         //ELSE USE wentFirstLast rotation to determine player designation

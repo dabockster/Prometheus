@@ -38,8 +38,6 @@ package AISimulationEnvironment;
 
 public interface BotInterface{
     
-    //constructor
-    void Bot();
     
     /**
      * 

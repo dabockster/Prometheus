@@ -23,20 +23,37 @@
  */
 package AISimulationEnvironment;
 
+import java.util.Random;
+
 /**
  *
  * @author Vivo
  */
 public class randBot implements BotInterface{
-
-    @Override
-    public void Bot() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private int boardSize;
+    private Random rand;
+    private int[][] gameState;
+    
+    public randBot() {
+        boardSize = 30;
+        rand = new Random();
     }
 
     @Override
     public int[] fetchMove(int[][] boardState) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        gameState = boardState;
+        return calculateMove();
     }
     
+    private int[] calculateMove(){
+        int x = rand.nextInt(boardSize);
+        int y = rand.nextInt(boardSize);
+        System.out.println("randBot, calculateMove(): X Y" + x + " " + y);
+        while(gameState[x][y] != 0){
+            x = rand.nextInt(boardSize);
+            y = rand.nextInt(boardSize);
+        }
+        int[] coordinates = {x, y};
+        return coordinates;
+    }
 }

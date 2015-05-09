@@ -39,8 +39,8 @@ public class SurrenderDialog extends javax.swing.JDialog {
      */
     public SurrenderDialog(OfflineController ctrl) {
         controller = ctrl;
-        this.setVisible(true);
         initComponents();
+        this.setVisible(true);
     }
 
     /**
