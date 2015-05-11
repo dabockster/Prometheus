@@ -100,11 +100,16 @@ public class OfflineGameController {
             myTurn(true);} //PLAYER1 is HUMAN
         else{
             botPlayerDesignationBOOL = false;
-            this.verifyMove(); //Player 1 is bot, retrieve botMove
-            myTurn(true);}
-        //TODO: difficulty modifier for bot
+            ; //Player 1 is bot, retrieve botMove
+            }
+        //TODO: difficulty modifier for bot;
         bot = new SunTzu(botPlayerDesignationBOOL, model.getBoard(), 2);
-        //bot = new RandBot();
+        if(!botPlayerDesignationBOOL){
+            this.verifyMove();
+            myTurn(true);
+        }
+        
+        
     }
     
     /**
