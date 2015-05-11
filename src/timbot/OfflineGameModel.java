@@ -27,9 +27,9 @@ package timbot;
  *
  * @author Timothy Ernst
  */
-public class TimbotModel {
+public class OfflineGameModel {
     
-    private TimbotController controller;
+    private HumanController controller;
     private int[][] board;
     private int rows;
     private int columns;
@@ -38,7 +38,7 @@ public class TimbotModel {
      * Default Constructor
      * @param controller 
      */
-    public TimbotModel(TimbotController controller){
+    public OfflineGameModel(HumanController controller){
         this.controller = controller;
         buildNewGrid(30,30);
     }
@@ -96,7 +96,7 @@ public class TimbotModel {
   
     
     
-//--------------------------------END TimbotModel & BEGIN WIN CONDITIONS ---------------------------    
+//--------------------------------END OfflineGameModel & BEGIN WIN CONDITIONS ---------------------------    
     /**
      * Checks to see if the game is still going
      */

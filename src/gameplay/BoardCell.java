@@ -28,7 +28,7 @@ import gameplay.GameView;
 import java.awt.Color;
 import java.awt.Cursor;
 import static java.awt.Cursor.DEFAULT_CURSOR;
-import timbot.TimbotView;
+import timbot.AIView;
 
 /**
  *
@@ -37,7 +37,7 @@ import timbot.TimbotView;
 public class BoardCell extends javax.swing.JPanel {
     
     private GameView parent;
-    private TimbotView timbot;
+    private AIView timbot;
     private boolean ai;
     
     private boolean occupied;
@@ -77,7 +77,7 @@ public class BoardCell extends javax.swing.JPanel {
      * @param row
      * @param column
      */
-    public BoardCell(boolean wtf, TimbotView timbot, int row, int column) {  // So that means we are formatting like this: array[row][column]
+    public BoardCell(boolean wtf, AIView timbot, int row, int column) {  // So that means we are formatting like this: array[row][column]
         this.effect = 1;
         this.timbot = timbot;
         this.column = column;

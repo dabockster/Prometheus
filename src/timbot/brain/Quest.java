@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package timbot;
+package timbot.brain;
 
 /**
  *

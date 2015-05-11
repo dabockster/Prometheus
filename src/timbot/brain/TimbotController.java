@@ -21,15 +21,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package timbot;
+package timbot.brain;
+
+import timbot.HumanController;
 
 /**
  *
  * @author Timothy Ernst
  */
-public class TimbotStrategy {
+public class TimbotController {
+    private HumanController human;
+    private TimbotModel model;
+    private int gamePhase;
     
-    private int board[][];
-    private int moves[][][]; //([turn][x][y])
+    final int WAITING_FOR_OPPONENT_MOVE = 0;
     
+    private final int HUMAN = 1;
+    private final int TIMBOT = 2;    
+    
+    
+    
+    /**
+     * Constructor
+     * @param controller 
+     */
+    public TimbotController(HumanController controller){
+        this.human = controller;
+        model = new TimbotModel(this,30);
+        gamePhase = WAITING_FOR_OPPONENT_MOVE;
+    }
+    
+    
+    /**
+     * Receives a human play and adds it to the model
+     * @param x
+     * @param y 
+     */
+    public void humanPlay(int x, int y){
+        model.humanMove(x,y);
+    }
+    
+    /**
+     * Sends timbot's play to human
+     * @param x
+     * @param y 
+     */
+    public void timbotPlay(int x, int y){
+        human.botPlay(x,y);
+    }
+    
+
 }

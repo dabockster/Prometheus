@@ -24,24 +24,27 @@
 package timbot;
 
 import client.manager.ClientController;
+import timbot.brain.TimbotController;
 /**
  *
  * @author Timothy Ernst
  */
-public class TimbotController {
+public class HumanController {
     
-    private TimbotView view;
-    private TimbotModel model;
+    private AIView view;
+    private OfflineGameModel model;
     private ClientController controller;
     private boolean myTurn;
     private boolean wentFirstLast;
+    private TimbotController timbot;
     
-    public TimbotController(ClientController controller){
+    public HumanController(ClientController controller){
         this.controller = controller;
-        this.view = new TimbotView(this);
+        this.view = new AIView(this);
         view.setVisible(true);
         wentFirstLast = true; //method for picking
-        model = new TimbotModel(this);
+        model = new OfflineGameModel(this);
+        timbot = new TimbotController(this);
     }
     
     public void toLogin(){
@@ -52,10 +55,10 @@ public class TimbotController {
     public void userPlay(int x, int y){
         model.playMove(x,y,1);
         myTurn(false);
+        timbot.humanPlay(x,y);
     }
     
     public void botPlay(int x, int y){
-        view.playMove(x,y);
         model.playMove(x,y,-1);
         myTurn(true);
     }
@@ -96,7 +99,7 @@ public class TimbotController {
     }
     
         /**
-     * Builds a new GameModel and scrubs the GameView to have a new game
+     * Builds a new OfflineGameModel and scrubs the GameView to have a new game
      */
     public void newGame(){
         model.buildNewGrid(30,30);

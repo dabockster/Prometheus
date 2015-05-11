@@ -8,8 +8,8 @@ import client.views.offline.OfflineController;
 import gameplay.GameController;
 import gameplay.GameView;
 import java.util.Arrays;
-import timbot.TimbotController;
 import client.views.offline.OfflineGameView;
+import timbot.HumanController;
 
 /**
  * ClientController class
@@ -21,8 +21,8 @@ public final class ClientController {
     
     private MainMenuController mainMenu = null;
     //MODIFIED 05/08/15
-    //private TimbotController offline;
-    private OfflineController offline;
+    //private OfflineController offline;
+    private OfflineController offline; 
     private ClientModel model;
     private LobbyController lobby;
     private boolean connectedToServer = false;
@@ -97,8 +97,10 @@ public final class ClientController {
     public void offlineGame(){
         offline = new OfflineController(this);
         
+        //HumanController timbot = new HumanController(this);
+        
         //MODIFIED 05/08/15 
-        //offline = new TimbotController(this);
+        //offline = new OfflineController(this);
     }
 
     /**

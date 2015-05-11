@@ -31,9 +31,9 @@ import java.awt.GridLayout;
  *
  * @author Timothy Ernst
  */
-public class TimbotView extends javax.swing.JFrame {
+public class AIView extends javax.swing.JFrame {
     
-    private TimbotController controller;
+    private HumanController controller;
     private BoardCell currentSelected; //the currently selected BoardCell
     private BoardCell[][] cellGrid;
     
@@ -41,7 +41,7 @@ public class TimbotView extends javax.swing.JFrame {
      * Creates new form timbotView
      * @param controller
      */
-    public TimbotView(TimbotController controller) {
+    public AIView(HumanController controller) {
         this.controller = controller;
         initComponents();
     }
@@ -337,9 +337,7 @@ public class TimbotView extends javax.swing.JFrame {
         surrenderButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(800, 760));
         setMinimumSize(new java.awt.Dimension(900, 760));
-        setPreferredSize(new java.awt.Dimension(900, 760));
         setResizable(false);
 
         baseLayeredPanel.setMaximumSize(new java.awt.Dimension(900, 750));
