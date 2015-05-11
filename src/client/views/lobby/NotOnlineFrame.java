@@ -58,7 +58,6 @@ public class NotOnlineFrame extends javax.swing.JInternalFrame {
         setTitle("Player Not Found");
         setMaximumSize(new java.awt.Dimension(186, 152));
         setMinimumSize(new java.awt.Dimension(186, 152));
-        setPreferredSize(new java.awt.Dimension(186, 152));
 
         jPanel1.setBackground(new java.awt.Color(153, 0, 0));
 
@@ -76,6 +75,8 @@ public class NotOnlineFrame extends javax.swing.JInternalFrame {
         okayButton.setFont(new java.awt.Font("Eras Demi ITC", 1, 14)); // NOI18N
         okayButton.setForeground(new java.awt.Color(102, 102, 102));
         okayButton.setText("Okay");
+        okayButton.setBorderPainted(false);
+        okayButton.setOpaque(true);
         okayButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 okayButtonActionPerformed(evt);

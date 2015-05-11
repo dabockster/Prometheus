@@ -83,6 +83,8 @@ public class RequestFrame extends javax.swing.JInternalFrame {
         acceptButton.setFont(new java.awt.Font("Eras Demi ITC", 1, 12)); // NOI18N
         acceptButton.setForeground(new java.awt.Color(102, 102, 102));
         acceptButton.setText("Accept");
+        acceptButton.setBorderPainted(false);
+        acceptButton.setOpaque(true);
         acceptButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 acceptButtonActionPerformed(evt);
@@ -93,6 +95,8 @@ public class RequestFrame extends javax.swing.JInternalFrame {
         rejectButton.setFont(new java.awt.Font("Eras Demi ITC", 1, 12)); // NOI18N
         rejectButton.setForeground(new java.awt.Color(102, 102, 102));
         rejectButton.setText("Reject");
+        rejectButton.setBorderPainted(false);
+        rejectButton.setOpaque(true);
         rejectButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rejectButtonActionPerformed(evt);

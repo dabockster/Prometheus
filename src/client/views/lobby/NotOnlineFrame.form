@@ -10,9 +10,6 @@
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[186, 152]"/>
     </Property>
-    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[186, 152]"/>
-    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -115,6 +112,8 @@
               <Color blue="66" green="66" red="66" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Okay"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
+            <Property name="opaque" type="boolean" value="true"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="okayButtonActionPerformed"/>

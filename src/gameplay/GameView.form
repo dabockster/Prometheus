@@ -209,6 +209,8 @@
               <Color blue="f0" green="f0" red="f0" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Surrender"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
+            <Property name="opaque" type="boolean" value="true"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="surrenderButtonActionPerformed"/>
@@ -226,6 +228,8 @@
               <Color blue="fa" green="fa" red="fa" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Play Move"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
+            <Property name="opaque" type="boolean" value="true"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="playMoveButtonActionPerformed"/>
@@ -248,7 +252,6 @@
                 </LineBorder>
               </Border>
             </Property>
-            <Property name="opaque" type="boolean" value="true"/>
           </Properties>
         </Component>
       </SubComponents>

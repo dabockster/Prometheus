@@ -110,6 +110,8 @@ public class LobbyView extends javax.swing.JFrame {
         challengeButton.setFont(new java.awt.Font("Trajan Pro", 1, 12)); // NOI18N
         challengeButton.setForeground(new java.awt.Color(204, 0, 51));
         challengeButton.setText("Challenge");
+        challengeButton.setBorderPainted(false);
+        challengeButton.setOpaque(true);
         challengeButton.setPreferredSize(new java.awt.Dimension(79, 177));
         challengeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,6 +123,8 @@ public class LobbyView extends javax.swing.JFrame {
         logoutButton.setFont(new java.awt.Font("Trajan Pro", 1, 12)); // NOI18N
         logoutButton.setForeground(new java.awt.Color(255, 255, 255));
         logoutButton.setText("Logout");
+        logoutButton.setBorderPainted(false);
+        logoutButton.setOpaque(true);
         logoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logoutButtonActionPerformed(evt);
@@ -131,6 +135,8 @@ public class LobbyView extends javax.swing.JFrame {
         leaderboardButton.setFont(new java.awt.Font("Trajan Pro", 1, 12)); // NOI18N
         leaderboardButton.setForeground(new java.awt.Color(255, 255, 255));
         leaderboardButton.setText("Leaderboard");
+        leaderboardButton.setBorderPainted(false);
+        leaderboardButton.setOpaque(true);
         leaderboardButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 leaderboardButtonActionPerformed(evt);
@@ -310,7 +316,7 @@ public class LobbyView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(basePanelLayout.createSequentialGroup()
-                        .addComponent(optionInterfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
+                        .addComponent(optionInterfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 699, Short.MAX_VALUE)
                         .addContainerGap())
                     .addComponent(gameInterfacePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)))
         );

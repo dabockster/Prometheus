@@ -525,6 +525,8 @@ public class GameView extends javax.swing.JPanel {
         surrenderButton.setFont(new java.awt.Font("Segoe UI Symbol", 0, 18)); // NOI18N
         surrenderButton.setForeground(new java.awt.Color(240, 240, 240));
         surrenderButton.setText("Surrender");
+        surrenderButton.setBorderPainted(false);
+        surrenderButton.setOpaque(true);
         surrenderButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 surrenderButtonActionPerformed(evt);
@@ -535,6 +537,8 @@ public class GameView extends javax.swing.JPanel {
         playMoveButton.setFont(new java.awt.Font("Segoe UI Symbol", 0, 18)); // NOI18N
         playMoveButton.setForeground(new java.awt.Color(250, 250, 250));
         playMoveButton.setText("Play Move");
+        playMoveButton.setBorderPainted(false);
+        playMoveButton.setOpaque(true);
         playMoveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 playMoveButtonActionPerformed(evt);
@@ -546,7 +550,6 @@ public class GameView extends javax.swing.JPanel {
         turnLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         turnLabel.setText("turnLabel");
         turnLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51), 4));
-        turnLabel.setOpaque(true);
 
         javax.swing.GroupLayout interfacePanelLayout = new javax.swing.GroupLayout(interfacePanel);
         interfacePanel.setLayout(interfacePanelLayout);
@@ -556,7 +559,7 @@ public class GameView extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(interfacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(interfacePanelLayout.createSequentialGroup()
-                        .addComponent(playMoveButton, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                        .addComponent(playMoveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 127, Short.MAX_VALUE)
                         .addGap(10, 10, 10)
                         .addComponent(surrenderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(interfacePanelLayout.createSequentialGroup()

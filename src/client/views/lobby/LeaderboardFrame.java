@@ -36,8 +36,11 @@ public class LeaderboardFrame extends javax.swing.JInternalFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(187, 155));
 
+        okButton.setBackground(new java.awt.Color(51, 204, 0));
         okButton.setFont(new java.awt.Font("Eras Demi ITC", 0, 11)); // NOI18N
         okButton.setText("Get out of my face!");
+        okButton.setBorderPainted(false);
+        okButton.setOpaque(true);
         okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 okButtonActionPerformed(evt);

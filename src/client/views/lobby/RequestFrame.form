@@ -131,6 +131,8 @@
               <Color blue="66" green="66" red="66" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Accept"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
+            <Property name="opaque" type="boolean" value="true"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="acceptButtonActionPerformed"/>
@@ -148,6 +150,8 @@
               <Color blue="66" green="66" red="66" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Reject"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
+            <Property name="opaque" type="boolean" value="true"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rejectButtonActionPerformed"/>

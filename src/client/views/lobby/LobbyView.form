@@ -96,7 +96,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="optionInterfacePanel" pref="694" max="32767" attributes="0"/>
+                          <Component id="optionInterfacePanel" pref="699" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                       <Component id="gameInterfacePanel" pref="705" max="32767" attributes="0"/>
@@ -205,6 +205,8 @@
                   <Color blue="33" green="0" red="cc" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Challenge"/>
+                <Property name="borderPainted" type="boolean" value="false"/>
+                <Property name="opaque" type="boolean" value="true"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[79, 177]"/>
                 </Property>
@@ -228,6 +230,8 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Logout"/>
+                <Property name="borderPainted" type="boolean" value="false"/>
+                <Property name="opaque" type="boolean" value="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="logoutButtonActionPerformed"/>
@@ -245,6 +249,8 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Leaderboard"/>
+                <Property name="borderPainted" type="boolean" value="false"/>
+                <Property name="opaque" type="boolean" value="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="leaderboardButtonActionPerformed"/>
