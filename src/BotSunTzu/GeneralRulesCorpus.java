@@ -53,18 +53,19 @@ public class GeneralRulesCorpus {
     //8) PRINCIPLE OF CONSERVATION : ABS WEIGHT
     //9) PRINCIPLE OF CHECKMATE TODO
     //10) PRINCIPLE OF PROGRESS : ABS WEIGHT
+    int[] c = {1, 1, 100, 1, 1, 100, 1, 1, 1, 1, 1}; //scalars
     private double[] principleWeightModifiers = {
-        VALMOD, //0
-        VALMOD, //1
-        MAXVAL, //2
-        VALMOD, //3
-        VALMOD, //4
-        MAXVAL, //5
-        VALMOD, //6
-        VALMOD, //7
-        RESCIND, //8
-        VALMOD, //9
-        RESCIND  //10
+        VALMOD * c[0], //0
+        VALMOD * c[1], //1
+        MAXVAL * c[2], //2
+        VALMOD * c[3], //3
+        VALMOD * c[4], //4
+        MAXVAL * c[5], //5
+        VALMOD * c[6], //6
+        VALMOD * c[7], //7
+        RESCIND * c[8], //8
+        VALMOD * c[9], //9
+        RESCIND * c[10]  //10
     };
     //--------------------------------------------------------------------------
     /**
@@ -222,7 +223,7 @@ public class GeneralRulesCorpus {
     //      other priorities are rescinded.
     private double poPRESERVATION(int x, int y){
         //absolute weight effect
-        if(winSequence(opponentID, x, y, 4) || winSequence(opponentID, x, y, 2)){return principleWeightModifiers[2];}
+        if(winSequence(opponentID, x, y, 4) || winSequence(opponentID, x, y, 3)){return principleWeightModifiers[2];}
         else{return MINVAL;}
     }
     //3) PRINCIPLE OF UNITY : INCREASING WEIGHT
