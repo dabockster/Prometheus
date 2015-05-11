@@ -110,7 +110,7 @@ public class OfflineGameView extends javax.swing.JFrame {
         }
         if(!currentSelected.getOccupied()){
             currentSelected.playMove(playerDesignation);
-            controller.sendPlay(currentSelected.getRow(), currentSelected.getColumn()); //updates gameModel
+            controller.sendPlay(currentSelected.getRow(), currentSelected.getColumn(), playerDesignation); //updates gameModel
         }
         currentSelected = null;
     }
@@ -132,10 +132,10 @@ public class OfflineGameView extends javax.swing.JFrame {
      * @param player - determines status of AI as Player1 or Player2
      */
     public void playMoveAI(int[] coord, int player){
-        
         unselect();
-        if(player == 0){cellGrid[coord[0]][coord[1]].playMove(false);}
-        else{cellGrid[coord[0]][coord[1]].playMove(true);}
+        if(player == 0){cellGrid[coord[0]][coord[1]].playMove(false); controller.sendPlay(coord[0], coord[1], false);}
+        else{cellGrid[coord[0]][coord[1]].playMove(true); controller.sendPlay(coord[0], coord[1], true);}
+        
         
     }
     

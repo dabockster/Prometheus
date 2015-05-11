@@ -7,7 +7,7 @@ import client.manager.ClientController;
 import static java.lang.Math.abs;
 import AISimulationEnvironment.*;
 import java.util.concurrent.TimeUnit;
-
+import BotSunTzu.SunTzu;
 /**
  * 
  * @author PLUCSCE
@@ -92,8 +92,7 @@ public class OfflineGameController {
         botMoved = false;
         botPlayerDesignation = abs(player % 2);
         
-        //TODO: difficulty modifier for bot
-        bot = new randBot();
+        
         
         if(botPlayerDesignation == 1){
             botMoved = true; // Player2 is bot, botMoved true == player1 moves first
@@ -103,6 +102,8 @@ public class OfflineGameController {
             botPlayerDesignationBOOL = false;
             this.verifyMove(); //Player 1 is bot, retrieve botMove
             myTurn(true);}
+        //TODO: difficulty modifier for bot
+        bot = new SunTzu(botPlayerDesignationBOOL, model.getBoard(), difficulty);
         
     }
     
@@ -189,8 +190,10 @@ public class OfflineGameController {
      * @param x the row that was played in
      * @param y the column that was played in
      */
-    public void sendPlay(int x, int y){
-        model.playMove(x, y, 1);
+    public void sendPlay(int x, int y, boolean player){
+        if(player){model.playMove(x, y, 1);}
+        else{model.playMove(x, y, -1);}
+        
         //connection.send("play<&>"+x+"<&>"+y);
         //myTurn(false);
     }

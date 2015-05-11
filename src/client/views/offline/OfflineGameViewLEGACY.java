@@ -123,7 +123,7 @@ public class OfflineGameViewLEGACY extends javax.swing.JPanel {
         }
         if(!currentSelected.getOccupied()){
             currentSelected.playMove(playerDesignation);
-            controller.sendPlay(currentSelected.getRow(), currentSelected.getColumn()); //updates gameModel
+            //controller.sendPlay(currentSelected.getRow(), currentSelected.getColumn()); //updates gameModel
         }
         currentSelected = null;
     }

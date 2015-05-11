@@ -21,39 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package AISimulationEnvironment;
-
-import java.util.Random;
+package BotSunTzu;
 
 /**
  *
  * @author Vivo
  */
-public class RandBot implements BotInterface{
-    private int boardSize;
-    private Random rand;
-    private int[][] gameState;
+public class AICell {
+    private int x;
+    private int y;
+    private int playerID;
+    private int weight;
+    public AICell(int playerID, int x, int y, int weight){this.playerID = playerID; this.x = x; this.y = y; this.weight = weight;}
+    public AICell(int x, int y){this.x = x; this. y = y;}
+    public int[] getCoordinates(){int[] coordinates = {x, y}; return coordinates;}
+    public void setPlayerID(int id){playerID = id;}
+    public int getPlayerID(){return playerID;}
+    public int getWeight(){return weight;}
     
-    public RandBot() {
-        boardSize = 30;
-        rand = new Random();
-    }
-
-    @Override
-    public int[] fetchMove(int[][] boardState) {
-        gameState = boardState;
-        return calculateMove();
-    }
-    
-    private int[] calculateMove(){
-        int x = rand.nextInt(boardSize);
-        int y = rand.nextInt(boardSize);
-        System.out.println("randBot, calculateMove(): X Y" + x + " " + y);
-        while(gameState[x][y] != 0){
-            x = rand.nextInt(boardSize);
-            y = rand.nextInt(boardSize);
-        }
-        int[] coordinates = {x, y};
-        return coordinates;
-    }
 }
