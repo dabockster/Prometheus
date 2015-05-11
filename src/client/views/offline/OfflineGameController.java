@@ -103,7 +103,7 @@ public class OfflineGameController {
             this.verifyMove(); //Player 1 is bot, retrieve botMove
             myTurn(true);}
         //TODO: difficulty modifier for bot
-        bot = new SunTzu(botPlayerDesignationBOOL, model.getBoard(), difficulty);
+        bot = new SunTzu(botPlayerDesignationBOOL, model.getBoard(), 2);
         //bot = new RandBot();
     }
     
@@ -202,14 +202,11 @@ public class OfflineGameController {
      * Player1 moves first; Player2 moves second.
      */
     public void verifyMove(){
-        System.out.println("VERIFY MOVE: botPlaying? " + botPlaying);
         //IF AI PLAYING, DETERMINE PRECEDENCE
         if(botPlaying){
             //IF AI FIRST (!aiMoved)
-            System.out.println("VERIFY MOVE: botMoved? " + botMoved);
             if(!botMoved){
                 //AI fetchMove()
-                System.out.println("VERIFY MOVE: FETCHING BOT MOVE");
                 botMove = bot.fetchMove(model.getBoard());
                 view.playMoveAI(botMove, botPlayerDesignation);
                 botMoved = true;

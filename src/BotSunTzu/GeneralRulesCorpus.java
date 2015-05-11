@@ -97,16 +97,16 @@ public class GeneralRulesCorpus {
         System.out.println("Current Game State");
         for(int j = 0; j < boardY; j++){
             for(int i = 0; i < boardX; i++){
-                System.out.print(" " + gameState[i][j]);
+                System.out.print(" " + gameState[j][i]);
             }
             System.out.println();
         }
     }
     public void displayWeightedBoard(){
         System.out.println("Weighted Board");
-        for(int j = 0; j < boardY; j++){
-            for(int i = 0; i < boardX; i++){
-                System.out.print(" " + optimalMatrix[i][j]);
+        for(int j = 0; j < boardX; j++){
+            for(int i = 0; i < boardY; i++){
+                System.out.print(" " + optimalMatrix[j][i]);
             }
             System.out.println();
         }
@@ -219,10 +219,10 @@ public class GeneralRulesCorpus {
     //2) PRINCIPLE OF PRESERVATION : ABS WEIGHT
     //      If the opponent will win within their next move, all other principles
     //      become secondary,and the AI must intercept their winning move; all 
-    //      other priorities are rescended.
+    //      other priorities are rescinded.
     private double poPRESERVATION(int x, int y){
         //absolute weight effect
-        if(winSequence(opponentID, x, y, 4)){return principleWeightModifiers[2];}
+        if(winSequence(opponentID, x, y, 4) || winSequence(opponentID, x, y, 2)){return principleWeightModifiers[2];}
         else{return MINVAL;}
     }
     //3) PRINCIPLE OF UNITY : INCREASING WEIGHT
@@ -340,7 +340,7 @@ public class GeneralRulesCorpus {
             
             
         }
-        if((markUpLeft + markDownRight >= depth) || (markUpRight + markDownLeft >= 4)){win = true; return win;}
+        if((markUpLeft + markDownRight >= depth) || (markUpRight + markDownLeft >= depth)){win = true; return win;}
         //check vertical--------------------------------------------------------
         int markUp = 0;
         int markDown = 0;

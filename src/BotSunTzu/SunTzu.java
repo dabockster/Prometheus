@@ -90,7 +90,7 @@ public class SunTzu implements BotInterface{
         int maxYC = 0;
         for(int j = 0; j < sizeY; j++){
             for(int i = 0; i < sizeX; i++){
-                if(gameState[i][j] != opponentID){ //cell does not belong to opposition
+                if(gameState[i][j] != opponentID && gameState[i][j] != playerID){ //cell does not belong to opposition or to self
                     weight = weightedBoard[i][j];
                     if(weight > 0){ //only consider non-negative and nonzero weights
                         AICell tempCell = new AICell(playerID, i, j, weight);
@@ -115,7 +115,7 @@ public class SunTzu implements BotInterface{
         for(AICell cell : weightCellList){
             meanDif += (Math.pow((cell.getWeight() - mean), 2));
         }
-        stdDeviation = Math.sqrt(meanDif);
+        stdDeviation = Math.sqrt((meanDif / weightCellList.size()));
         
         
         //find a cell that is within at-least one standard deviation away
@@ -135,13 +135,13 @@ public class SunTzu implements BotInterface{
         while(avgSearchCont){
             if(counter == weightCellList.size() - 1){avgSearchCont = false;}
             int cWeight = weightCellList.get(counter).getWeight();
-            //must be within one standard deviation
+            //must be within one standard deviation, up or down
             if(!foundAvg && cWeight >= mean - stdDeviation && cWeight <= mean + stdDeviation){
                 avgCell = weightCellList.get(counter);
                 foundAvg = true;
             }
-            // two standard deviations away - minimal optimal solution
-            if(!foundMin && cWeight >= mean - stdDeviation * 2 && cWeight <= mean - stdDeviation){
+            // two standard deviations, down - minimal optimal solution
+            if(!foundMin && (cWeight >= mean - (stdDeviation * 2)) && (cWeight <= mean)){
                 subAvgCell = weightCellList.get(counter);
                 foundMin = true;
             }
