@@ -74,11 +74,12 @@ public class GeneralRulesCorpus {
      */
     public GeneralRulesCorpus(int playerID, int[][] gameState){
         this.playerID = playerID;
-        this.gameState = gameState;
-        optimalMatrix = gameState;
+        this.gameState = gameState.clone();
+        
         if(this.playerID == 1){this.opponentID = -1;}else{this.opponentID = 1;}
         boardX = this.gameState.length;
         boardY = this.gameState[0].length;
+        optimalMatrix = new int[boardX][boardY];
     }
     
     /**
@@ -90,20 +91,32 @@ public class GeneralRulesCorpus {
                 optimalMatrix[i][j] = weightCell(i, j);
             }
         }
+        
+    }
+    public void displayGameState(){
+        System.out.println("Current Game State");
+        for(int j = 0; j < boardY; j++){
+            for(int i = 0; i < boardX; i++){
+                System.out.print(" " + gameState[i][j]);
+            }
+            System.out.println();
+        }
     }
     public void displayWeightedBoard(){
+        System.out.println("Weighted Board");
         for(int j = 0; j < boardY; j++){
             for(int i = 0; i < boardX; i++){
                 System.out.print(" " + optimalMatrix[i][j]);
             }
             System.out.println();
         }
+        
     }
     public int[][] getWeightedMatrix(){
         //DEBUG CODE
         displayWeightedBoard();
         //END DEBUG CODE
-        return optimalMatrix;}
+        return optimalMatrix.clone();}
     /**
      * Determines the weight to be applied to the cell.
      * Invokes auxiliary method, weightByRule.
@@ -123,29 +136,31 @@ public class GeneralRulesCorpus {
     private double weightByRule(int x, int y){
         double weight = 0;
         weight += poCENTRALITY(x, y);
-        System.out.println("Calculated poCENTRALITY");
+        //System.out.println("Calculated poCENTRALITY " + weight);
         weight += poCONSERVATION(x,y);
-        System.out.println("Calculated poCONSERVATION");
+        //System.out.println("Calculated poCONSERVATION "+ weight);
         weight += poCONTAINMENT(x,y);
-        System.out.println("Calculated poCONTAINMENT");
+        //System.out.println("Calculated poCONTAINMENT "+ weight);
         weight += poGRACE(x, y);
-        System.out.println("Calculated poGRACE");
+        //System.out.println("Calculated poGRACE "+ weight);
         weight += poINTERDICTION(x,y);
-        System.out.println("Calculated poINTERDICTION");
+        //System.out.println("Calculated poINTERDICTION "+ weight);
         weight += poINTERSECTION(x,y);
-        System.out.println("Calculated poINTERSECTION");
+        //System.out.println("Calculated poINTERSECTION "+ weight);
         weight += poOPPORUNITY(x,y);
-        System.out.println("Calculated poOPPORUNITY");
+        //System.out.println("Calculated poOPPORUNITY "+ weight);
         weight += poPRESERVATION(x,y);
-        System.out.println("Calculated poPRESERVATION");
+        //System.out.println("Calculated poPRESERVATION "+ weight);
         weight += poUNITY(x, y);
-        System.out.println("Calculated poUNITY");
-        System.out.println("Weight Calculated: " + weight);
+        //System.out.println("Calculated poUNITY "+ weight);
+        weight += poPROGRESS(x, y);
+        //System.out.println("Calculated poPROGRESS "+ weight);
+        //System.out.println("Weight Calculated: " + weight);
         return weight;
                 
     }
     
-    public void updateGameState(int[][] gameState){this.gameState = gameState;}
+    public void updateGameState(int[][] gameState){this.gameState = gameState.clone();}
     public void setPlayerID(int id){this.playerID = id;}
     
     //ABSTRACT RULES------------------------------------------------------------
