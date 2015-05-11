@@ -104,7 +104,6 @@ public class OfflineGameController {
             myTurn(true);}
         //TODO: difficulty modifier for bot
         bot = new SunTzu(botPlayerDesignationBOOL, model.getBoard(), difficulty);
-        
     }
     
     /**
@@ -195,7 +194,7 @@ public class OfflineGameController {
         else{model.playMove(x, y, -1);}
         
         //connection.send("play<&>"+x+"<&>"+y);
-        //myTurn(false);
+        myTurn(false);
     }
     /**
      * Determine precedence of move acceptance based on Player1 or Player2 status.
