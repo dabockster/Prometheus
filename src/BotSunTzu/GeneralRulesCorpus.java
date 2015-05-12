@@ -53,7 +53,19 @@ public class GeneralRulesCorpus {
     //8) PRINCIPLE OF CONSERVATION : ABS WEIGHT
     //9) PRINCIPLE OF CHECKMATE TODO
     //10) PRINCIPLE OF PROGRESS : ABS WEIGHT
-    int[] c = {1, 1, 100, 1, 1, 100, 1, 1, 1, 1, 1}; //scalars
+    int[] c = {//scalars
+        1, //0
+        1, //1
+        100, //2
+        1, //3
+        1, //4
+        100, //5
+        2, //6
+        1, //7
+        1, //8
+        1, //9
+        1//10
+    }; 
     private double[] principleWeightModifiers = {
         VALMOD * c[0], //0
         VALMOD * c[1], //1
