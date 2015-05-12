@@ -170,9 +170,9 @@ public class UserConnection implements Runnable{
                 break;
             case "endGame" :
                 endGame(request[1]);
-            /**case "leaders":
+            case "leaders":
                 controller.leaderboard(this);
-                break;*/
+                break;
             default :
                 sendClientFeedback("received the unrecognized request "+request[0]);
                 break;

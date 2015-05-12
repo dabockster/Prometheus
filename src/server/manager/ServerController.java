@@ -364,7 +364,7 @@ public class ServerController {
         model.incrementWins(profile);
     }    
 
-    /**public void leaderboard(UserConnection ucon) {
+    public void leaderboard(UserConnection ucon) {
         String leader="leader<&>"+topFive();
         ucon.sendResponse(leader);
     }
@@ -375,11 +375,15 @@ public class ServerController {
         UserProfile lead=null;
         String top5="";
         ArrayList<UserProfile> newAccounts=new ArrayList<UserProfile>();
-        for(UserProfile i:model.getAccounts()){
+        for(UserProfile i:model.sortedAccounts()){
             newAccounts.add(i);
         }
-        int x=0;
+        
+        
+        
+        /**int x=0;
         while(x<5){
+            top=0;
             for(UserProfile i:newAccounts){
                 if(i.getWins()>top){
                     top=i.getWins();
@@ -391,8 +395,8 @@ public class ServerController {
             if(x<4)
                 top5+="<&>";
             x++;
-        }
+        }*/
         return top5;
-    }*/
+    }
     
 }
