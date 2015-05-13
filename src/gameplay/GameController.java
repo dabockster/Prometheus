@@ -35,11 +35,11 @@ public class GameController {
         this.connection = new PeerToPeerConnection(this);
         this.view = new GameView(this);
         model = new GameModel(this);
-        connection.start();
         setUsername();
         playing = true;
         myTurn(false);
         wentFirstLast = false;
+        connection.start();
     }
     
     /**
@@ -56,11 +56,11 @@ public class GameController {
         this.connection = new PeerToPeerConnection(this, ip, port);
         this.view = new GameView(this);
         model = new GameModel(this);
-        connection.start();
         playing = true;
         setUsername();
         myTurn(true);
         wentFirstLast = true;
+        connection.start();
     }
     
     /**
@@ -142,8 +142,6 @@ public class GameController {
      * Closes the connection
      */
     private void receiveDisconnect(){
-        //add method for removing a gameController in clientController
-        // you opponent has fled the battlefield you are victorious
         connection.close();
     }
     
