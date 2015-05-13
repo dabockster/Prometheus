@@ -27,14 +27,18 @@ public class GeneralRulesCorpus {
     private int boardX;
     private int boardY;
     private int[][] optimalMatrix; //the weighted matrix derived from gameState calculus.
+    private boolean DEBUGMODE = false; //to display debugging code
     //method constants----------------------------------------------------------
     //constant declaration for leftHull and rightHull
     final int MINCONTAINMENT = 24;
+    //constant for preservation
+    final int WINCONDITION = 4;
     //--------------------------------------------------------------------------
     
     //constants for matrix weight modification----------------------------------
     final private double MAXVAL = 100;
     final private double MINVAL = 0;
+    final private double DECVAL = -10;
     final private double RESCIND = -100;
     final private double VALMOD = 10;
     
@@ -42,29 +46,31 @@ public class GeneralRulesCorpus {
     //weights for abstract principles-------------------------------------------
     //entries in array correspond to principle
     //  principleWeightModifiers[0] weight is for Principle of Centrality
-    //0) PRINCIPLE OF CENTRALITY : DECREASING WEIGHT
+    //0) PRINCIPLE OF CENTRALITY : INCREASING WEIGHT
     //1) PRINCIPLE OF INTERDICTION : INCREASING WEIGHT
     //2) PRINCIPLE OF PRESERVATION : ABS WEIGHT
     //3) PRINCIPLE OF UNITY : INCREASING WEIGHT
     //4) PRINCIPLE OF INTERSECTION : WEIGHT INCREASING
     //5) PRINCIPLE OF "COUP DE GRACE" : ABS WEIGHT
     //6) PRINCIPLE OF CONTAINMENT : ABS WEIGHT
-    //7) PRINCIPLE OF OPPORTUNITY : INCREASING WEIGHT
+    //7) PRINCIPLE OF OPPORTUNITY : INCREASING WEIGHT 
     //8) PRINCIPLE OF CONSERVATION : ABS WEIGHT
-    //9) PRINCIPLE OF CHECKMATE TODO
+    //9) PRINCIPLE OF DRAGON'S TEETH
     //10) PRINCIPLE OF PROGRESS : ABS WEIGHT
-    int[] c = {//scalars
-        1, //0
-        1, //1
+    //11) PRINCIPLE OF BREAKOUT : DECREASING WEIGHT
+    double[] c = {//scalars
+        .25, //0
+        2.75, //1
         100, //2
-        1, //3
+        .5, //3
         1, //4
         100, //5
-        2, //6
-        1, //7
+        1.5, //6
+        2, //7 
         1, //8
-        1, //9
-        1//10
+        8, //9
+        100, //10
+        6, //11
     }; 
     private double[] principleWeightModifiers = {
         VALMOD * c[0], //0
@@ -77,7 +83,9 @@ public class GeneralRulesCorpus {
         VALMOD * c[7], //7
         RESCIND * c[8], //8
         VALMOD * c[9], //9
-        RESCIND * c[10]  //10
+        RESCIND * c[10], //10
+        DECVAL * c[11]
+        
     };
     //--------------------------------------------------------------------------
     /**
@@ -127,7 +135,7 @@ public class GeneralRulesCorpus {
     }
     public int[][] getWeightedMatrix(){
         //DEBUG CODE
-        displayWeightedBoard();
+        if(DEBUGMODE){displayWeightedBoard();}
         //END DEBUG CODE
         return optimalMatrix.clone();}
     /**
@@ -149,26 +157,30 @@ public class GeneralRulesCorpus {
     private double weightByRule(int x, int y){
         double weight = 0;
         weight += poCENTRALITY(x, y);
-        //System.out.println("Calculated poCENTRALITY " + weight);
+        if(DEBUGMODE){System.out.println("Calculated poCENTRALITY " + weight);}
         weight += poCONSERVATION(x,y);
-        //System.out.println("Calculated poCONSERVATION "+ weight);
+        if(DEBUGMODE){System.out.println("Calculated poCONSERVATION "+ weight);}
         weight += poCONTAINMENT(x,y);
-        //System.out.println("Calculated poCONTAINMENT "+ weight);
+        if(DEBUGMODE){System.out.println("Calculated poCONTAINMENT "+ weight);}
         weight += poGRACE(x, y);
-        //System.out.println("Calculated poGRACE "+ weight);
+        if(DEBUGMODE){System.out.println("Calculated poGRACE "+ weight);}
         weight += poINTERDICTION(x,y);
-        //System.out.println("Calculated poINTERDICTION "+ weight);
+        if(DEBUGMODE){System.out.println("Calculated poINTERDICTION "+ weight);}
         weight += poINTERSECTION(x,y);
-        //System.out.println("Calculated poINTERSECTION "+ weight);
+        if(DEBUGMODE){System.out.println("Calculated poINTERSECTION "+ weight);}
         weight += poOPPORUNITY(x,y);
-        //System.out.println("Calculated poOPPORUNITY "+ weight);
+        if(DEBUGMODE){System.out.println("Calculated poOPPORUNITY "+ weight);}
         weight += poPRESERVATION(x,y);
-        //System.out.println("Calculated poPRESERVATION "+ weight);
+        if(DEBUGMODE){System.out.println("Calculated poPRESERVATION "+ weight);}
         weight += poUNITY(x, y);
-        //System.out.println("Calculated poUNITY "+ weight);
+        if(DEBUGMODE){System.out.println("Calculated poUNITY "+ weight);}
         weight += poPROGRESS(x, y);
-        //System.out.println("Calculated poPROGRESS "+ weight);
-        //System.out.println("Weight Calculated: " + weight);
+        if(DEBUGMODE){System.out.println("Calculated poPROGRESS "+ weight);}
+        weight += poTEETH(x, y);
+        if(DEBUGMODE){System.out.println("Calculated poTEETH " + weight);}
+        weight += poBREAKOUT(x, y);
+        if(DEBUGMODE){System.out.println("Calculated poBREAKOUT " + weight);}
+        if(DEBUGMODE){System.out.println("Weight Calculated: " + weight);}
         return weight;
                 
     }
@@ -180,12 +192,12 @@ public class GeneralRulesCorpus {
     //Note that each principle has a quantified weight change associated
     //  INCREASING, DECREASING, or ABSOLUTE
     //For INCREASING - the more a cell satisfies the principle, the greater its result weight will be.
-    //For DECREASING - the less a cell satisfies the principle, the less weight is derived.
+    //For DECREASING - the more a cell satisfies the principle, the less weight is derived.
     //      EXAMPLE: poCENTRALITY
-    //              1) cells fruther from the center will have smaller weight
+    //              1) cells towards the center will have increasing weight
     //For ABSOLUTE (ABS) - based on the satisfaction of the principle, the weight derived is either MAXVAL or MINVAL
     //The cell with the greatest weight (highest) is ideal.
-    //0) PRINCIPLE OF CENTRALITY : DECREASING WEIGHT
+    //0) PRINCIPLE OF CENTRALITY : INCREASING WEIGHT
     //      Cells nearest the center of the board are preferred, because 
     //      central cell affords a greater possibility of achieving an in-sequence
     //      combination in all directions; unrestricted by board dimensions.
@@ -296,11 +308,15 @@ public class GeneralRulesCorpus {
         if(!winSequence(playerID, x, y, 4) && !winSequence(opponentID, x, y, 4)){return principleWeightModifiers[8];}
         else{return 0;}
     }
-    //9) PRINCIPLE OF CHECKMATE TODO
-    //      We expect the opposition to interdict a winning move. Therefore, the
-    //      AI should seek to create opportunities for multiple winning sequences,
-    //      should one potential winning sequence be interdicted. 
-    
+    //9) PRINCIPLE OF DRAGON'S TEETH : INCREASING WEIGHT
+    //      All other principles are irrelevant, should the player engage in 
+    //      the construction of diagonal-only sequences; woven in close proximity,
+    //      "Dragon's Teeth" weave. Thus, the AI should be programmed to recognize
+    //      this pattern, and pre-empt it by "blunting" the teeth - the end point
+    //      of the player's diagonal sequences.
+    private double poTEETH(int x, int y){
+        return neighborPlayerCountDiagonalOnly(opponentID, x, y, 1) * principleWeightModifiers[9];
+    }
     //10) PRINCIPLE OF PROGRESS : ABS WEIGHT
     //      If the AI or the player has played on the CELL, relegate cell to lowest priority.
     private double poPROGRESS(int x, int y){
@@ -308,6 +324,22 @@ public class GeneralRulesCorpus {
         else{return MINVAL;}
     }
     
+    //11) PRINCIPLE OF BREAKOUT : DECREASING WEIGHT
+    //      Cells which are encircled by hostile cells are unlikely to form winning combinations.
+    //      Therefore, the AI should devalue such cells, and select for cells which are exterior
+    //      to the opposition encirclement, hence "BREAKOUT."
+    private double poBREAKOUT(int x, int y){
+        int op4 = 0;
+        double weight = 0;
+        //cell is completely encircled, set weight to minval
+        op4 = neighborPlayerCount(opponentID, x, y, 1);
+        if(op4 == 8 ){return principleWeightModifiers[11];}
+        op4 = neighborPlayerCountDiagonalOnly(opponentID, x, y, 1);
+        if(op4 == 4){return principleWeightModifiers[11];}
+        op4 = neighborPlayerCountOrthogonalOnly(opponentID, x, y, 1);
+        if(op4 == 4){return principleWeightModifiers[11];}
+        return 0;
+    }
     //END ABSTRACT RULES--------------------------------------------------------
     
     /**
@@ -422,6 +454,63 @@ public class GeneralRulesCorpus {
             
         }
         
+        //check vertical--------------------------------------------------------
+        cX = x;
+        for(int i = 1; i <= depth; i++){
+            cY = y - i;
+            if(cY >= 0 && cY < boardY){if(gameState[cX][cY] == pID){neighborCount++;}}
+            cY = y + i;
+            if(cY >= 0 && cY < boardY){if(gameState[cX][cY] == pID){neighborCount++;}}
+        }
+        
+        
+        //check horizontal------------------------------------------------------
+        cY = y;
+        for(int i = 1; i <= depth; i++){
+            cX = x - i;
+            if(cX >= 0 && cX < boardX){if(gameState[cX][cY] == pID){neighborCount++;}}
+            cX = x + i;
+            if(cX >= 0 && cX < boardX){if(gameState[cX][cY] == pID){neighborCount++;}}
+        }
+        return neighborCount;
+    }
+    
+    private int neighborPlayerCountDiagonalOnly(int pID, int x, int y, int depth){
+        int neighborCount = 0;
+        int cX = 0;
+        int cY = 0;
+        //check diagonal--------------------------------------------------------
+        
+        cY = y;
+        cX = x;
+        for(int i = 1; i <= depth; i++){
+            //searching up and to the left
+            cY = y - i;
+            cX = x - i;
+            if((cY >= 0 && cY < boardY) && (cX >= 0 && cX < boardX)){if(gameState[cX][cY] == pID){neighborCount++;}}
+            
+            //searching up and to the right
+            cY = y - i;
+            cX = x + i;
+            if((cY >= 0 && cY < boardY) && (cX >= 0 && cX < boardX)){if(gameState[cX][cY] == pID){neighborCount++;}}
+            
+            //searching down and to the right
+            cY = y + i;
+            cX = x + i;
+            if((cY >= 0 && cY < boardY) && (cX >= 0 && cX < boardX)){if(gameState[cX][cY] == pID){neighborCount++;}}
+            
+            //searching down and to the left
+            cY = y + i;
+            cX = x - i;
+            if((cY >= 0 && cY < boardY) && (cX >= 0 && cX < boardX)){if(gameState[cX][cY] == pID){neighborCount++;}}
+        }
+        return neighborCount;
+    }
+    
+    private int neighborPlayerCountOrthogonalOnly(int pID, int x, int y, int depth){
+        int neighborCount = 0;
+        int cX = 0;
+        int cY = 0;
         //check vertical--------------------------------------------------------
         cX = x;
         for(int i = 1; i <= depth; i++){
