@@ -27,7 +27,7 @@ public class GeneralRulesCorpus {
     private int boardX;
     private int boardY;
     private int[][] optimalMatrix; //the weighted matrix derived from gameState calculus.
-    private boolean DEBUGMODE = false; //to display debugging code
+    private boolean DEBUGMODE = true; //to display debugging code
     //method constants----------------------------------------------------------
     //constant declaration for leftHull and rightHull
     final int MINCONTAINMENT = 24;
@@ -59,18 +59,18 @@ public class GeneralRulesCorpus {
     //10) PRINCIPLE OF PROGRESS : ABS WEIGHT
     //11) PRINCIPLE OF BREAKOUT : DECREASING WEIGHT
     double[] c = {//scalars
-        .25, //0
-        2.75, //1
+        1, //0
+        1, //1
         100, //2
-        .5, //3
+        1, //3
         1, //4
         100, //5
-        1.5, //6
-        2, //7 
+        1, //6
+        1, //7 
         1, //8
-        8, //9
+        1, //9
         100, //10
-        6, //11
+        1, //11
     }; 
     private double[] principleWeightModifiers = {
         VALMOD * c[0], //0
