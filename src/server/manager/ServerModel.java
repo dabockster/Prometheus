@@ -23,7 +23,7 @@
  */
 package server.manager;
 import server.connection.UserConnection;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * STORES ALL SERVER DATA
@@ -250,7 +250,10 @@ public class ServerModel {
         }
     }
     
-    public ArrayList<UserProfile> getAccounts(){
+    public ArrayList<UserProfile> sortedAccounts(){
+        
+        
+        
         return accounts;
     }
 }
