@@ -265,16 +265,11 @@ public class BoardCell extends javax.swing.JPanel {
         gameButton.setText(null);
     }
     
-    /**
-     * Changes this color to green
-     */
+
     public void setGreen(){
         gameButton.setBackground(new Color(0,255,128));
     }
-    
-    /**
-     * Changes this color to red
-     */
+
     public void setRed(){
         gameButton.setBackground(new Color(255, 0, 107));
     }

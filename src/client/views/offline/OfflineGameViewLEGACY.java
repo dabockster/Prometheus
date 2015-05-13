@@ -624,7 +624,7 @@ public class OfflineGameViewLEGACY extends javax.swing.JPanel {
      */
     private void surrenderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_surrenderButtonActionPerformed
         //Are you sure?
-        controller.sendSurrender();
+        controller.surrender();
         //send surrender message to opponent (a method 'receiveSurrender' will be implemented)
         //record game as loss
         //close GameController (rematch?)        
@@ -640,7 +640,6 @@ public class OfflineGameViewLEGACY extends javax.swing.JPanel {
      */
     public void playAgain(boolean rematch){
         darkenBoard();
-        controller.myChoice(rematch);      
     }
     
     /**

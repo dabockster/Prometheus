@@ -53,9 +53,9 @@ public class GameController {
     public GameController(String opName, ClientController controller, String ip, int port){
         this.opName = opName;
         this.controller = controller;
-        this.connection = new PeerToPeerConnection(this, ip, port);
         this.view = new GameView(this);
         model = new GameModel(this);
+        this.connection = new PeerToPeerConnection(this, ip, port);
         playing = true;
         setUsername();
         myTurn(true);

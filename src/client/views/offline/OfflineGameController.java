@@ -45,22 +45,7 @@ public class OfflineGameController {
     public BotInterface bot; 
     //END AI DECLARATIONS-------------------------------------------------------      
     /**
-     * HOST CONSTRUCTOR
-     * !!!!!!!!!!!!!DEPRECATED!!!!!!!!!!!!!!!!!!
-     * Establishes this client as the Host of the match and creates a 
-     * PeerToPeerConnection where it will accept the connecting client.
-     * @param controller the client controller to which this will communicate
-     */
-    public OfflineGameController(String opName, ClientController controller){
-        this.opName = opName;
-        this.controller = controller;
-        model = new OfflineGameModel(this);
-        connection.start();
-        setUsername();
-        playing = true;
-        myTurn(false);
-        wentFirstLast = false;
-    }
+
     /**
      * OFFLINE CONSTRUCTOR
      */
@@ -72,9 +57,13 @@ public class OfflineGameController {
         model = new OfflineGameModel(this, bSizeX, bSizeY);
         
         //check if player1 is AI
-        if(player1Type != 0){this.setBot(2, player1Type);}
+        if(player1Type != 0){
+            this.setBot(2, player1Type);
+        }
         //check if player2 is AI
-        else if(player2Type != 0){this.setBot(3, player2Type);}
+        else if(player2Type != 0){
+            this.setBot(3, player2Type);
+        }
         
         playing = true;
         view.setVisible(true);
@@ -90,102 +79,26 @@ public class OfflineGameController {
         botPlaying = true;
         botMove = new int[2];
         botMoved = false;
-        botPlayerDesignation = abs(player % 2);
+        botPlayerDesignation = 1;
         
         
         
         if(botPlayerDesignation == 1){
             botMoved = true; // Player2 is bot, botMoved true == player1 moves first
-            botPlayerDesignationBOOL = true;
+            botPlayerDesignationBOOL = false;
             myTurn(true);} //PLAYER1 is HUMAN
         else{
             botPlayerDesignationBOOL = false;
-            ; //Player 1 is bot, retrieve botMove
+             //Player 1 is bot, retrieve botMove
             }
         //TODO: difficulty modifier for bot;
         bot = new SunTzu(botPlayerDesignationBOOL, model.getBoard(), 2);
-        if(!botPlayerDesignationBOOL){
+        if(botPlayerDesignationBOOL){
             this.verifyMove();
             myTurn(true);
         }
         
         
-    }
-    
-    /**
-     * CONNECTING CONSTRUCTOR
-     * Establishes that this client is NOT the host. It will create a
-     * PeerToPeerConnection where it will connect to the host.
-     * @param controller the client controller to which this will communicate
-     * @param ip the IP address of the host
-     * @param port the port number of the host
-     */
-    public OfflineGameController(String opName, ClientController controller, String ip, int port){
-        this.opName = opName;
-        this.controller = controller;
-        //this.view = new OfflineGameView(this);
-        model = new OfflineGameModel(this);
-        connection.start();
-        playing = true;
-        setUsername();
-        myTurn(true);
-        wentFirstLast = true;
-    }
-    
-    /**
-     * INTERPRET COMMUNICATIONS
-     * Receives a string, assesses the string's purpose, then executes an operation.
-     * This method takes an array of Strings and interprets the first index 
-     * to determine an operation. The method then passes the unused indexes
-     * of the string array to the method of the subsequent operation.
-     * @param request the string array to be interpreted 
-     */
-    public synchronized void interpretRequest(String[] request){
-        switch(request[0]){
-            case "leave" :
-                this.opponentLeft();
-                break;
-            case "play" :
-                this.receivePlay(request);
-                break;            
-            case "playAgain" :
-                this.opponentChoice();
-                break;
-            case "surrender" :
-                this.receiveSurrender();
-                break;
-        }
-    }
-    
-    /**
-     * Sends a connect send to opponent
-     */
-    public void sendConnect(){
-        connection.send("connect");
-    }
-    
-   
-    
-    /**
-     * Sends a connectConfirmation to the opponent
-     */
-    private void sendConnectConfirmation(){
-        connection.send("connectConfimation");
-    }
-    
-    
-    private void sendDisconnect(){
-        connection.send("disconnect");
-        connection.close();
-    }
-    
-    /**
-     * Closes the connection
-     */
-    private void receiveDisconnect(){
-        //add method for removing a gameController in clientController
-        // you opponent has fled the battlefield you are victorious
-        connection.close();
     }
     
     
@@ -196,8 +109,12 @@ public class OfflineGameController {
      * @param y the column that was played in
      */
     public void sendPlay(int x, int y, boolean player){
-        if(player){model.playMove(x, y, 1);}
-        else{model.playMove(x, y, -1);}
+        if(player){
+            model.playMove(x, y, 1);
+        }
+        else{
+            model.playMove(x, y, -1);
+        }
         
         //connection.send("play<&>"+x+"<&>"+y);
         //myTurn(false);
@@ -252,15 +169,13 @@ public class OfflineGameController {
         myTurn(true);
     }
     
-    /**
-     * Forwards a surrender to opponent client.
-     * Notifies the server of a defeat.
-     * Displays the loseDisplay.
-     */
-    public void sendSurrender(){
-        connection.send("surrender");
+    public void surrender(){
         gameOver(-1);
-        view.playAgainDisplay();
+    }
+    
+    public void toLogin(){
+        view.dispose();
+        controller.refreshClient();
     }
     
     /**
@@ -308,15 +223,12 @@ public class OfflineGameController {
         playing = false;
         if(results == -1){  
             view.loseDisplay();         //loss
-            controller.sendGameResults("defeat");
             view.playAgainDisplay();
         }else if(results == 0){
             view.tieDisplay();          //tie
-            controller.sendGameResults("defeat");
             view.playAgainDisplay();
         }else if(results == 1){
             view.winDisplay();          //win
-            controller.sendGameResults("victory");
             view.playAgainDisplay();
 
         }
@@ -327,37 +239,15 @@ public class OfflineGameController {
      * This method is called from the ClientController
      */
     public void leave(){
-        if(connection.connected)
-            connection.send("leave");
         view.close();
-        if(playing)
-            gameOver(-1);
     }
-    
-    private void opponentLeft(){
-        if(playing){
-            gameOver(1);
-        }
-//        view.opponentLeftDisplay();
-        sendDisconnect();
-    }
+
     
     /**
      * Receives the opponents decision on playing another game
      */
     public void opponentChoice(){
         playAgain();
-    }
-    
-    public void myChoice(boolean choice){
-        /*
-        if(choice){
-            playAgain();
-            connection.send("playAgain<&>true");
-        }else{
-            controller.leaveGame(this);
-        }
-        */
     }
     
     /**
@@ -373,18 +263,12 @@ public class OfflineGameController {
     /**
      * Builds a new GameModel and scrubs the GameView to have a new game
      */
-    private void newGame(){
+    public void newGame(){
         playing = true;
         rematch = false;
-//        view.newGame();
-//        view.toggleGameButtons(true);
         model.buildNewGrid(30,30);
-        if(wentFirstLast){
-            wentFirstLast = false;
-            myTurn(false);
-        }else{
-            wentFirstLast = true;
-            myTurn(true);
-        }                   
+        wentFirstLast = true;
+        myTurn(true);
+                         
     }
 }

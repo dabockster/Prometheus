@@ -71,18 +71,13 @@ public class GameModel {
         if(board[x][y] != 0){
             System.out.println("Move has already been selected.");
         }else{
-            System.out.println();
-            if(player == 1)
-                System.out.println("I played on space ("+x+", "+y+")");
-            else
-                System.out.println("They played on space ("+x+", "+y+")");
             board[x][y] = player;
             winConditionsMet();
         }
     }
     
     /**
-     * Checks to see if the game is still going
+     * Checks to see if winning conditions have been met
      */
     private void winConditionsMet(){
         int state = sweep();
@@ -152,13 +147,20 @@ public class GameModel {
         return false;
     }
     
+    /**
+     * 
+     * @param x 
+     * @param y
+     * @param player -1:foreign player OR 0:open Cell OR 1:local player 
+     * @param inSequence the number of consecutive cells 
+     * @return true if there is a sequence of 5 in a row
+     */
     private boolean checkDiagonalBack(int x, int y, int player, int inSequence){
         if(inSequence == 5)
             return true;
         else if( x!=0 && y!=columns-1){
             if( board[x][y] == player ){
                 inSequence++;
-                System.out.println("DiagonalBack: "+x+","+y+","+player+","+inSequence);
                 return checkDiagonalBack(x-1,y+1,player,inSequence);
             }else
                 return false;

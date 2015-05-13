@@ -44,7 +44,6 @@ public class OfflineGameModel {
      */
     public OfflineGameModel(OfflineGameController controller){
         this.controller = controller;
-        gameOver = false;
         buildNewGrid(30,30);
     }
     /** 
@@ -53,7 +52,6 @@ public class OfflineGameModel {
      */
     public OfflineGameModel(OfflineGameController controller, int length, int width){
         this.controller = controller;
-        gameOver = false;
         if(length >= minBoardConstraints && width >= minBoardConstraints){buildNewGrid(length,width);}
         else{buildNewGrid(minBoardConstraints, minBoardConstraints);}
         

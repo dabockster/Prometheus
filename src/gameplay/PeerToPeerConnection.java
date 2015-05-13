@@ -183,8 +183,6 @@ public class PeerToPeerConnection implements Runnable{
         } catch (IOException ioe) {
             System.out.println(ioe);
             System.out.println(clientID+": failedToSend: "+request+": IOException: "+ioe);
-            //String[] error = {"connect","false"};
-            //controller.interpretResponse(error);
         }
     }
 }

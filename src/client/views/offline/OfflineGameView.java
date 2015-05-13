@@ -124,7 +124,7 @@ public class OfflineGameView extends javax.swing.JFrame {
      */
     public void playMove(int row, int column){
         unselect();
-        cellGrid[row][column].playMove(false);
+        cellGrid[row][column].playMove(true);
     }
     /**
      * 
@@ -133,8 +133,12 @@ public class OfflineGameView extends javax.swing.JFrame {
      */
     public void playMoveAI(int[] coord, int player){
         unselect();
-        if(player == 0){cellGrid[coord[0]][coord[1]].playMove(false); controller.sendPlay(coord[0], coord[1], false);}
-        else{cellGrid[coord[0]][coord[1]].playMove(true); controller.sendPlay(coord[0], coord[1], true);}
+        if(player == 0){
+            cellGrid[coord[0]][coord[1]].playMove(true); 
+            controller.sendPlay(coord[0], coord[1], true);
+        }else{
+            cellGrid[coord[0]][coord[1]].playMove(false); 
+            controller.sendPlay(coord[0], coord[1], false);}
         
         
     }
@@ -517,7 +521,7 @@ public class OfflineGameView extends javax.swing.JFrame {
 
     private void surrenderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_surrenderButtonActionPerformed
         //Are you sure?
-        //controller.surrender();
+        controller.surrender();
         //send surrender message to opponent (a method 'receiveSurrender' will be implemented)
         //record game as loss
         //close GameController (rematch?)
@@ -528,13 +532,14 @@ public class OfflineGameView extends javax.swing.JFrame {
      */
     public void playAgain(boolean rematch){
         if(rematch){    
-            //controller.newGame();
+            controller.newGame();
             for(int i=0; i<cellGrid.length; i++){
                 for(int j=0; j<cellGrid.length; j++){
                     cellGrid[i][j].scrub();
                 }
             }
-        }
+        }else
+            controller.toLogin();
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
