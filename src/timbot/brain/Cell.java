@@ -37,7 +37,7 @@ public class Cell {
     public int x;
     public int y;
     
-    private int presentState;
+    private int state;
     
     private Cell north;  //north
     private Cell northEast; //northeast
@@ -47,21 +47,32 @@ public class Cell {
     private Cell southWest; //southwest
     private Cell west;  //west
     private Cell northWest; //nortwest
+    
+    private Quest diagonalInc = null;
+    private Quest diagonalDec = null;
+    private Quest vertical = null;
+    private Quest horizontal = null;
+    
+    private TimbotModel model;
    
     private final int NULL = -1;
     private final int OPEN = 0;
     private final int HUMAN = 1;
     private final int TIMBOT = 2;    
-    
+    private final int DIAGONAL_INC = 6;
+    private final int DIAGONAL_DEC = 7;
+    private final int HORIZONTAL = 8;
+    private final int VERTICAL = 9;
 
     /**
      * Default Constructor
      * @param xCoordinate
      * @param yCoordinate 
      */
-    public Cell(int xCoordinate, int yCoordinate){
-        this.x = xCoordinate;
-        this.y = yCoordinate;
+    public Cell(TimbotModel model,int xCoordinate, int yCoordinate){
+        this.model = model;
+        this.x = yCoordinate;
+        this.y = xCoordinate;
     }
     /**
      * Creates a copy of an original cell
@@ -71,7 +82,7 @@ public class Cell {
         this.x = original.x;
         this.y = original.y;
         this.isNull = original.isNull;
-        this.presentState = original.getState();
+        this.state = original.getState();
         if(original.isNull)
             return;
         this.isHuman = original.isHuman;
@@ -229,12 +240,14 @@ public class Cell {
      */
     public void setHuman(){
         setState(HUMAN);
+        this.questSearch();
     }
     /**
      * Sets this cell to a Timbot cell
      */
     public void setTimbot(){
         setState(TIMBOT);
+        this.questSearch();
     }
     /**
      * Sets the boolean value of this Cell's current state as well as
@@ -245,19 +258,19 @@ public class Cell {
         if(this.isNull)
             return;
         
-        this.presentState = state;
+        this.state = state;
         
-        if(presentState == NULL){
+        if(state == NULL){
             this.isNull = true;
             
-        }else if(presentState == OPEN){
+        }else if(state == OPEN){
             this.isOpen = true;
             
-        }else if(presentState == TIMBOT){
+        }else if(state == TIMBOT){
             this.isOpen = false;
             this.isTimbot = true;
             
-        }else if(presentState == HUMAN){
+        }else if(state == HUMAN){
             this.isOpen = false;
             this.isHuman = true;
         }
@@ -267,7 +280,7 @@ public class Cell {
      * @return 
      */
     public int getState(){
-        return this.presentState;
+        return this.state;
     }
     /**
      * Returns true if this cell has the state otherState
@@ -278,64 +291,94 @@ public class Cell {
         if(this.isNull){
             return false;
         }
-        return this.presentState == otherState;
-    }  
+        return this.state == otherState;
+    }
+    public Quest getQuest(int questOrientation){
+        switch(questOrientation){
+            case DIAGONAL_INC :
+                return this.diagonalInc;
+            case DIAGONAL_DEC :
+                return this.diagonalDec;
+            case HORIZONTAL :
+                return this.horizontal;
+            case VERTICAL : 
+                return this.vertical;
+            default :
+                return null;
+        }
+    } 
+    public void setQuest(int questOrientation, Quest quest){
+        switch(questOrientation){
+            case DIAGONAL_INC :
+                this.diagonalInc = quest;
+            case DIAGONAL_DEC :
+                this.diagonalDec = quest;
+            case HORIZONTAL :
+                this.horizontal = quest;
+            case VERTICAL : 
+                this.vertical = quest;
+        }
+    } 
     /**
      * This holds true for the following four methods
      * @return 0 : no sequence
      *         1 : is first of sequence
      *         2 : is middle of sequence
      *         3 : is end of sequence
-     */
-    private int diagIncreasing(int state){
-        if(northEast.hasState(state)){
-            if(southWest.hasState(state)){
-                return 2;
-            }else{
-                return 1;
-            }
-        }else if(southWest.hasState(state)){
-            return 3;
-        }else
-            return 0;
-    }
-    private int diagDecreasing(int state){
-        if(northWest.hasState(state)){
-            if(southEast.hasState(state)){
-                return 2;
-            }else{
-                return 3;
-            }
-        }else if(southEast.hasState(state)){
-            return 1;
-        }else
-            return 0;
-    }
-    private int horizontal(int state){
-        if(east.hasState(state)){
-            if(west.hasState(state)){
-                return 2;
-            }else{
-                return 1;
-            }
-        }else if(west.hasState(state)){
-            return 3;
-        }else{
-            return 0;
+     */ 
+    private Quest findDiagonalIncQuest(){
+        if(this.diagonalInc == null){
+            diagonalInc = new Quest(this, DIAGONAL_INC);
+            model.addQuest(diagonalInc);
         }
-    }
-    private int vertical(int state){
-        if(north.hasState(state)){
-            if(south.hasState(state)){
-                return 2;
-            }else{
-                return 1;
-            }
-        }else if(south.hasState(state)){
-            return 3;
-        }else{
-            return 0;
+        if(!diagonalInc.hasCell(northEast)){
+            diagonalInc.considerCell(northEast, false);
         }
+        if(!diagonalInc.hasCell(southWest))
+            diagonalInc.considerCell(southWest,true);
+        return diagonalInc;
+    }
+    private Quest findDiagonalDecQuest(){
+        if(this.diagonalDec == null){
+            diagonalDec = new Quest(this, DIAGONAL_DEC);
+            model.addQuest(diagonalDec);
+        }
+        if(!diagonalDec.hasCell(northWest)){
+            diagonalDec.considerCell(northWest, true);
+        }
+        if(!diagonalDec.hasCell(southEast))
+            diagonalDec.considerCell(southEast,false);
+        return diagonalDec;
+    }
+    private Quest findHorizontalQuest(){
+        if(this.horizontal == null){
+            horizontal = new Quest(this, HORIZONTAL);
+            model.addQuest(horizontal);
+        }
+        if(!horizontal.hasCell(west)){
+            horizontal.considerCell(west, true);
+        }
+        if(!horizontal.hasCell(east))
+            horizontal.considerCell(east,false);
+        return horizontal;
+    }
+    private Quest findVerticalQuest(){
+        if(this.vertical == null){
+            vertical = new Quest(this, VERTICAL);
+            model.addQuest(vertical);
+        }
+        if(!vertical.hasCell(south)){
+            vertical.considerCell(south, true);
+        }
+        if(!vertical.hasCell(north))
+            vertical.considerCell(north,false);
+        return vertical;
+    }
+    private void questSearch(){
+        findDiagonalIncQuest();
+        findDiagonalDecQuest();
+        findHorizontalQuest();
+        findVerticalQuest();
     }
     /**
      * Returns a string representation of this Cell's current state.
@@ -343,7 +386,8 @@ public class Cell {
      */
     @Override
     public String toString(){
-        String cellString = "Cell "+"("+x+", "+y+") : ";
+        String coordinates = "("+x+","+y+")  ";
+        String cellString ="";
         if( this.isNull )
             return cellString + "is NULL";
         else if( !this.isAllSet() ){
@@ -365,13 +409,13 @@ public class Cell {
             if(northWest == null)
                 cellString = cellString + "NorthWest ";
             return cellString;
-        }else if(isOpen)
-            return cellString + "is linked and open";
-        else if(isHuman)
-            return cellString + "is HUMAN";
+        }else if(isHuman)
+            return "HUMN:"+coordinates;
         else if(isTimbot)
-            return cellString + "is TIMBOT";
+            return "TBOT:"+coordinates;
+        else if(isOpen)
+            return "OPEN:"+coordinates;
         else
-            return cellString + "is divergent";
+            return cellString + "Divergent;";
     }
 }

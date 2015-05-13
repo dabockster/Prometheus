@@ -23,6 +23,8 @@
  */
 package timbot.brain;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Timothy Ernst
@@ -31,7 +33,6 @@ public class Move {
     public boolean byHuman = false;
     public boolean byTimbot = false;
     
-    private int playedBy;
     private Cell cell;
     
     private final Move prior;    
@@ -43,16 +44,15 @@ public class Move {
      * Default Constructor
      * @param player
      */
-    public Move( int player, Cell cellPlayed, Move priorMove){
+    public Move( int player, Cell cellPlayed, Move priorMove ){
         if(priorMove != null){
             this.count = priorMove.getCount()+1;
         }else
             this.count = 1;
         this.prior = priorMove;
-        playedBy = player;
-        if(playedBy == HUMAN)
+        if(player == HUMAN)
             byHuman = true;
-        else if(playedBy == TIMBOT)
+        else if(player == TIMBOT)
             byTimbot = true;
         cell = new Cell(cellPlayed);
     }
@@ -70,7 +70,6 @@ public class Move {
         moveString = moveString + player + "on cell ("+cell.x+", "+cell.y+")";
         return moveString;
     }
-    
     /**
      * Returns this move count
      * @return 
@@ -78,19 +77,17 @@ public class Move {
     public int getCount(){
         return this.count;
     }
-    
     /**
      * Returns true if this was played by the player
      * @param player
      * @return 
      */
     public boolean playedBy(int player){
-        if(playedBy == player)
-            return true;
+        if( player == TIMBOT)
+            return byTimbot;
         else
-            return false;
+            return byHuman;
     }
-    
     /**
      * Returns true if this has a prior move
      * @return 
@@ -98,6 +95,10 @@ public class Move {
     public boolean hasPrior(){
         return prior != null;
     }
-    
-    
+    /**
+     * Checks for new quests
+     */
+    private void checkNewQuests(){
+        
+    }
 }

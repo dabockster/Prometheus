@@ -45,6 +45,7 @@ public class HumanController {
         wentFirstLast = true; //method for picking
         model = new OfflineGameModel(this);
         timbot = new TimbotController(this);
+        myTurn(true);
     }
     
     public void toLogin(){
@@ -59,6 +60,7 @@ public class HumanController {
     }
     
     public void botPlay(int x, int y){
+        view.playMove(x,y);
         model.playMove(x,y,-1);
         myTurn(true);
     }

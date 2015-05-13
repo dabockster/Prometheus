@@ -77,7 +77,6 @@ public class AIView extends javax.swing.JFrame {
      * @param column
      */
     public void playMove(int row, int column){
-        unselect();
         cellGrid[row][column].playMove(false);
     }
     

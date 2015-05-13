@@ -65,7 +65,7 @@ public class OfflineGameModel {
      * @param y the column that was played in
      * @param player 
      */
-    public void playMove(int x, int y, int player){
+    public void playMove(int y, int x, int player){
         if(board[x][y] != 0){
             System.out.println("Move has already been selected.");
         }else{
@@ -169,7 +169,6 @@ public class OfflineGameModel {
         else if( x!=0 && y!=columns-1){
             if( board[x][y] == player ){
                 inSequence++;
-                System.out.println("DiagonalBack: "+x+","+y+","+player+","+inSequence);
                 return checkDiagonalBack(x-1,y+1,player,inSequence);
             }else
                 return false;
@@ -183,7 +182,6 @@ public class OfflineGameModel {
         else if(y!=columns-1){
             if( board[x][y] == player ){
                 inSequence++;
-                System.out.println("Horizontal: "+x+","+y+","+player+","+inSequence);
                 return checkHorizontal(x,y+1,player,inSequence);
             }else
                 return false;
@@ -197,7 +195,6 @@ public class OfflineGameModel {
         else if( x!=rows-1 && y!=columns-1 ){
             if( board[x][y] == player ){
                 inSequence++;
-                System.out.println("DiagonalForward: "+x+","+y+","+player+","+inSequence);
                 return checkDiagonalForward(x+1,y+1,player,inSequence);
             }else
                 return false;
@@ -211,7 +208,6 @@ public class OfflineGameModel {
         else if( x!=rows-1 ){
             inSequence++;
             if( board[x][y] == player ){
-                System.out.println("Vertical: "+x+","+y+","+player+","+inSequence);
                 return checkVertical(x+1,y,player,inSequence);
             }else
                 return false;

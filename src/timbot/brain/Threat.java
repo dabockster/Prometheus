@@ -23,59 +23,10 @@
  */
 package timbot.brain;
 
-import AISimulationEnvironment.BotInterface;
-import timbot.HumanController;
-
 /**
  *
  * @author Timothy Ernst
  */
-public class TimbotController implements BotInterface{
-    private HumanController human;
-    private TimbotModel model;
-    private int gamePhase;
+public class Threat {
     
-    final int WAITING_FOR_OPPONENT_MOVE = 0;
-    
-    private final int HUMAN = 1;
-    private final int TIMBOT = 2;    
-    
-    
-    
-    /**
-     * Constructor
-     * @param controller 
-     */
-    public TimbotController(HumanController controller){
-        this.human = controller;
-        model = new TimbotModel(this,30);
-        gamePhase = WAITING_FOR_OPPONENT_MOVE;
-    }
-
-    
-    /**
-     * Receives a human play and adds it to the model
-     * @param x
-     * @param y 
-     */
-    public void humanPlay(int x, int y){
-        model.humanMove(x,y);
-        timbotPlay(x+1,y+1);
-    }
-    
-    /**
-     * Sends timbot's play to human
-     * @param x
-     * @param y 
-     */
-    public void timbotPlay(int x, int y){
-        human.botPlay(x,y);
-    }
-
-    @Override
-    public int[] fetchMove(int[][] boardState) {
-        return null;
-    }
-    
-
 }
