@@ -8,7 +8,7 @@ import java.util.ArrayList;
  *
  * @author Ermenildo V. Castro, Jr.
  * GoMoKu AI: SunTzu
- * Version 0.0.0
+ * Version 1.0.0
  * 
  * Description:
  * You cannot hide. 
@@ -26,6 +26,7 @@ public class SunTzu implements BotInterface{
     int playerID;
     int opponentID;
     int difficulty; //0: easy; 1: meadium; 2: hard
+    private boolean DEBUGMODE = false;
     //constructor
     public SunTzu(boolean playerID, int[][] gameBoard, int difficulty){
         gameState = gameBoard;
@@ -49,16 +50,18 @@ public class SunTzu implements BotInterface{
         //3) calculus by StrategyCorpus : TODO
         
         AICell[] solutions = findOptimalMoves(grcMatrix);
+        if(DEBUGMODE){
         System.out.println("SunTzu SOLUTIONS: ");
         System.out.println("Easy: X : Y ---" +solutions[0].getCoordinates()[0] + " : "+solutions[0].getCoordinates()[1]);
-        System.out.println("Normal: X : ---Y " +solutions[1].getCoordinates()[0] + " : "+solutions[0].getCoordinates()[1]);
+        System.out.println("Normal: X : Y---" +solutions[1].getCoordinates()[0] + " : "+solutions[0].getCoordinates()[1]);
         System.out.println("Hard: X : Y ---" +solutions[2].getCoordinates()[0] + " : "+solutions[0].getCoordinates()[1]);
+        }
         switch (difficulty){
             case 0: return solutions[0].getCoordinates();
             case 1: return solutions[1].getCoordinates();
             case 2: return solutions[2].getCoordinates();
         }
-        System.out.println("SunTzu: Failed to find optimal solution");
+        if(DEBUGMODE){System.out.println("SunTzu: Failed to find optimal solution");}
         int[] fail = {-1 , -1};
         return fail;
     }
@@ -67,7 +70,7 @@ public class SunTzu implements BotInterface{
         grc.updateGameState(gameState);
         grc.constructWeightedMatrix();
         int[][] grcMatrix = grc.getWeightedMatrix();
-        System.out.println("SunTzu: grc matrix returned.");
+        if(DEBUGMODE){System.out.println("SunTzu: grc matrix returned.");}
         return grcMatrix;
     }
     
@@ -127,10 +130,12 @@ public class SunTzu implements BotInterface{
         boolean foundMin = false;
         if(weightCellList.isEmpty()){avgSearchCont = false;}
         //DEBUG CODE
+        if(DEBUGMODE){
         System.out.println("-------------------------");
         System.out.println("SunTzu: Finding Solution, Statistics");
         System.out.println("mean: " + mean);
         System.out.println("stdDeviation: " + stdDeviation);
+        }
         //END DEBUG CODE
         while(avgSearchCont){
             if(counter == weightCellList.size() - 1){avgSearchCont = false;}
@@ -148,8 +153,9 @@ public class SunTzu implements BotInterface{
             if(foundAvg && foundMin){avgSearchCont = false;}
             counter++;
         }
-        if(!foundMin){System.out.println("SunTzu: Unable to find subAvgCell");subAvgCell = avgCell;}
+        if(!foundMin){if(DEBUGMODE){System.out.println("SunTzu: Unable to find subAvgCell");}subAvgCell = avgCell;}
         AICell[] solutions = {subAvgCell, avgCell, optimalCell};
+        if(DEBUGMODE){grc.displayCellDataWeight(optimalCell.getCoordinates()[0], optimalCell.getCoordinates()[1]);}
         return solutions;
     }
     
