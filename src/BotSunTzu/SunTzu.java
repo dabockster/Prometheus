@@ -26,7 +26,7 @@ public class SunTzu implements BotInterface{
     int playerID;
     int opponentID;
     int difficulty; //0: easy; 1: meadium; 2: hard
-    private boolean DEBUGMODE = false;
+    private boolean DEBUGMODE = true;
     //constructor
     public SunTzu(boolean playerID, int[][] gameBoard, int difficulty){
         gameState = gameBoard;
@@ -155,7 +155,7 @@ public class SunTzu implements BotInterface{
         }
         if(!foundMin){if(DEBUGMODE){System.out.println("SunTzu: Unable to find subAvgCell");}subAvgCell = avgCell;}
         AICell[] solutions = {subAvgCell, avgCell, optimalCell};
-        if(DEBUGMODE){grc.displayCellDataWeight(optimalCell.getCoordinates()[0], optimalCell.getCoordinates()[1]);}
+        if(DEBUGMODE){grc.displayCellDataWeight(optimalCell.getCoordinates()[0], optimalCell.getCoordinates()[1]); grc.displayWeightedBoard(); grc.displayGameState();}
         return solutions;
     }
     

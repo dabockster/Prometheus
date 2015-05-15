@@ -27,7 +27,11 @@ public class GeneralRulesCorpus {
     private int boardX;
     private int boardY;
     private int[][] optimalMatrix; //the weighted matrix derived from gameState calculus.
-    private boolean DEBUGMODE = true; //to display debugging code
+    //debugging variables-------------------------------------------------------
+    private boolean DEBUGMODE = false; //to display debugging code
+    private CellDataWeight[][] infoMatrix;
+    //--------------------------------------------------------------------------
+    
     //method constants----------------------------------------------------------
     //constant declaration for leftHull and rightHull
     final int MINCONTAINMENT = 24;
@@ -58,19 +62,23 @@ public class GeneralRulesCorpus {
     //9) PRINCIPLE OF DRAGON'S TEETH
     //10) PRINCIPLE OF PROGRESS : ABS WEIGHT
     //11) PRINCIPLE OF BREAKOUT : DECREASING WEIGHT
+    //12) PRINCIPLE OF DESIRE : INCREASING WEIGHT
+    //13) PRINCIPLE OF OBSTRUCTION : INCREASING WEIGHT
     double[] c = {//scalars
-        1, //0
-        1, //1
+        .25, //0
+        2.25, //1
         100, //2
-        1, //3
+        .75, //3
         1, //4
         100, //5
         1, //6
         1, //7 
-        1, //8
-        1, //9
+        100, //8
+        1.5, //9
         100, //10
         1, //11
+        1, //12
+        .25 // 13
     }; 
     private double[] principleWeightModifiers = {
         VALMOD * c[0], //0
@@ -84,8 +92,9 @@ public class GeneralRulesCorpus {
         RESCIND * c[8], //8
         VALMOD * c[9], //9
         RESCIND * c[10], //10
-        DECVAL * c[11]
-        
+        DECVAL * c[11], //11
+        VALMOD * c[12],//12
+        VALMOD * c[13] //13
     };
     //--------------------------------------------------------------------------
     /**
@@ -101,6 +110,7 @@ public class GeneralRulesCorpus {
         boardX = this.gameState.length;
         boardY = this.gameState[0].length;
         optimalMatrix = new int[boardX][boardY];
+        infoMatrix = new CellDataWeight[boardX][boardY];
     }
     
     /**
@@ -133,6 +143,7 @@ public class GeneralRulesCorpus {
         }
         
     }
+    public void displayCellDataWeight(int x, int y){System.out.println(infoMatrix[x][y].retrieveCellData());}
     public int[][] getWeightedMatrix(){
         //DEBUG CODE
         if(DEBUGMODE){displayWeightedBoard();}
@@ -156,30 +167,49 @@ public class GeneralRulesCorpus {
      */
     private double weightByRule(int x, int y){
         double weight = 0;
+        infoMatrix[x][y] = new CellDataWeight(x, y);
         weight += poCENTRALITY(x, y);
         if(DEBUGMODE){System.out.println("Calculated poCENTRALITY " + weight);}
+        infoMatrix[x][y].addData("Calculated poCENTRALITY " + weight);
         weight += poCONSERVATION(x,y);
         if(DEBUGMODE){System.out.println("Calculated poCONSERVATION "+ weight);}
+        infoMatrix[x][y].addData("Calculated poCONSERVATION "+ weight);
         weight += poCONTAINMENT(x,y);
         if(DEBUGMODE){System.out.println("Calculated poCONTAINMENT "+ weight);}
+        infoMatrix[x][y].addData("Calculated poCONTAINMENT "+ weight);
         weight += poGRACE(x, y);
         if(DEBUGMODE){System.out.println("Calculated poGRACE "+ weight);}
+        infoMatrix[x][y].addData("Calculated poGRACE "+ weight);
         weight += poINTERDICTION(x,y);
         if(DEBUGMODE){System.out.println("Calculated poINTERDICTION "+ weight);}
+        infoMatrix[x][y].addData("Calculated poINTERDICTION "+ weight);
         weight += poINTERSECTION(x,y);
         if(DEBUGMODE){System.out.println("Calculated poINTERSECTION "+ weight);}
+        infoMatrix[x][y].addData("Calculated poINTERSECTION "+ weight);
         weight += poOPPORUNITY(x,y);
         if(DEBUGMODE){System.out.println("Calculated poOPPORUNITY "+ weight);}
+        infoMatrix[x][y].addData("Calculated poOPPORUNITY "+ weight);
         weight += poPRESERVATION(x,y);
         if(DEBUGMODE){System.out.println("Calculated poPRESERVATION "+ weight);}
+        infoMatrix[x][y].addData("Calculated poPRESERVATION "+ weight);
         weight += poUNITY(x, y);
         if(DEBUGMODE){System.out.println("Calculated poUNITY "+ weight);}
+        infoMatrix[x][y].addData("Calculated poUNITY "+ weight);
         weight += poPROGRESS(x, y);
         if(DEBUGMODE){System.out.println("Calculated poPROGRESS "+ weight);}
+        infoMatrix[x][y].addData("Calculated poPROGRESS "+ weight);
         weight += poTEETH(x, y);
         if(DEBUGMODE){System.out.println("Calculated poTEETH " + weight);}
+        infoMatrix[x][y].addData("Calculated poTEETH " + weight);
         weight += poBREAKOUT(x, y);
         if(DEBUGMODE){System.out.println("Calculated poBREAKOUT " + weight);}
+        infoMatrix[x][y].addData("Calculated poBREAKOUT " + weight);
+        weight += poDESIRE(x, y);
+        if(DEBUGMODE){System.out.println("Calculated poDESIRE " + weight);}
+        infoMatrix[x][y].addData("Calculated poDESIRE " + weight);
+        weight += poOBSTRUCTION(x, y);
+        if(DEBUGMODE){System.out.println("Calculated poOBSTRUCTION " + weight);}
+        infoMatrix[x][y].addData("Calculated poOBSTRUCTION " + weight);
         if(DEBUGMODE){System.out.println("Weight Calculated: " + weight);}
         return weight;
                 
@@ -247,7 +277,7 @@ public class GeneralRulesCorpus {
     //      other priorities are rescinded.
     private double poPRESERVATION(int x, int y){
         //absolute weight effect
-        if(winSequence(opponentID, x, y, 4) || winSequence(opponentID, x, y, 3)){return principleWeightModifiers[2];}
+        if(winSequence(opponentID, x, y, 4)){return principleWeightModifiers[2];}
         else{return MINVAL;}
     }
     //3) PRINCIPLE OF UNITY : INCREASING WEIGHT
@@ -305,8 +335,8 @@ public class GeneralRulesCorpus {
     //      Cells which can NEVER form a winning sequence for BOTH PLAYERS
     //      are relegated to the lowest priority.
     private double poCONSERVATION(int x, int y){
-        if(!winSequence(playerID, x, y, 4) && !winSequence(opponentID, x, y, 4)){return principleWeightModifiers[8];}
-        else{return 0;}
+        if(calculatePotentialWinDirections(playerID, x, y, opponentID) == 0 && calculatePotentialWinDirections(opponentID, x, y, playerID) == 0){return principleWeightModifiers[8];}
+        else{return MINVAL;}
     }
     //9) PRINCIPLE OF DRAGON'S TEETH : INCREASING WEIGHT
     //      All other principles are irrelevant, should the player engage in 
@@ -326,20 +356,45 @@ public class GeneralRulesCorpus {
     
     //11) PRINCIPLE OF BREAKOUT : DECREASING WEIGHT
     //      Cells which are encircled by hostile cells are unlikely to form winning combinations.
-    //      Therefore, the AI should devalue such cells, and select for cells which are exterior
+    //      Therefore, the AI should devalue such cells, and select cells which are exterior
     //      to the opposition encirclement, hence "BREAKOUT."
     private double poBREAKOUT(int x, int y){
         int op4 = 0;
         double weight = 0;
         //cell is completely encircled, set weight to minval
         op4 = neighborPlayerCount(opponentID, x, y, 1);
-        if(op4 == 8 ){return principleWeightModifiers[11];}
+        if(op4 == 8 ){return Math.pow(principleWeightModifiers[11], 3);}
         op4 = neighborPlayerCountDiagonalOnly(opponentID, x, y, 1);
         if(op4 == 4){return principleWeightModifiers[11];}
         op4 = neighborPlayerCountOrthogonalOnly(opponentID, x, y, 1);
         if(op4 == 4){return principleWeightModifiers[11];}
         return 0;
     }
+    
+    //12) PRINCIPLE OF DESIRE : INCREASING WEIGHT
+    //      The AI should attempt to the prioritize cells which have the potential
+    //      to form a winning sequence.
+    //      The conditions for prioritizing cells:
+    //          Consider all possible directions.
+    //          For each direction which is a possible win direction,
+    //              mulityple the ultimate PRINCIPLEWEIGHTMODIFIER by
+    //              the quantity of possible win directions
+    //      A possible WIN DIRECTION is constituted by
+    //          a WINCONDITION sequence depth that is UNINTERRUPTED by an opponent AI.
+    private double poDESIRE(int x, int y){
+        return calculatePotentialWinDirections(playerID, x, y, opponentID) * principleWeightModifiers[12];
+    }
+    //13) PRINCIPLE OF OP4 OBSTRUCTION : INCREASING WEIGHT
+    // The AI should attempt to prioritize cells which obstruct winning sequences
+    //      for the opponent.
+    private double poOBSTRUCTION(int x, int y){
+        double calcPotential = calculatePotentialWinDirections(opponentID, x, y, playerID) * principleWeightModifiers[13];
+        if(winSequence(opponentID, x, y, 3)){return Math.pow(calcPotential, 2);}
+        else{return calcPotential;}
+    }
+    
+    
+    
     //END ABSTRACT RULES--------------------------------------------------------
     
     /**
@@ -385,7 +440,7 @@ public class GeneralRulesCorpus {
             
             
         }
-        if((markUpLeft + markDownRight >= depth) || (markUpRight + markDownLeft >= depth)){win = true; return win;}
+        if((markUpLeft >= depth || markDownRight >= depth) || (markUpRight + markDownLeft >= depth)){win = true; return win;}
         //check vertical--------------------------------------------------------
         int markUp = 0;
         int markDown = 0;
@@ -396,7 +451,7 @@ public class GeneralRulesCorpus {
             cY = y + i;
             if(cY >= 0 && cY < boardY){if(gameState[cX][cY] == pID){markDown++;}}
         }
-        if(markUp + markDown >= depth){win = true; return win;}
+        if(markUp >= depth || markDown >= depth){win = true; return win;}
         
         //check horizontal------------------------------------------------------
         int markLeft = 0;
@@ -408,7 +463,7 @@ public class GeneralRulesCorpus {
             cX = x + i;
             if(cX >= 0 && cX < boardX){if(gameState[cX][cY] == pID){markRight++;}}
         }
-        if(markLeft + markRight >= depth){win = true;}
+        if(markLeft >= depth || markRight >= depth){win = true;}
         
         
         return win;
@@ -684,4 +739,88 @@ public class GeneralRulesCorpus {
         else{return false;}
     }
     
+    private int calculatePotentialWinDirections(int pID, int x, int y, int op4){
+        int potentialWinSequence = 0;
+        int depth = WINCONDITION;
+        int cX = 0;
+        int cY = 0;
+        //check diagonal--------------------------------------------------------
+        boolean foundUpLeftOp4 = false;
+        boolean foundUpRightOp4 = false;
+        boolean foundDownLeftOp4 = false;
+        boolean foundDownRightOp4 = false;
+        int markUpLeft = 0;
+        int markDownRight = 0;
+        int markUpRight = 0;
+        int markDownLeft = 0;
+        cY = y;
+        cX = x;
+        for(int i = 1; i <= depth; i++){
+            //searching up and to the left
+            cY = y - i;
+            cX = x - i;
+            if(!foundUpLeftOp4){
+                if((cY >= 0 && cY < boardY) && (cX >= 0 && cX < boardX)){if(gameState[cX][cY] == pID || gameState[cX][cY] != op4){markUpLeft++;}else{foundUpLeftOp4 = true;}}
+            }
+            //searching up and to the right
+            cY = y - i;
+            cX = x + i;
+            if(!foundUpRightOp4){
+                if((cY >= 0 && cY < boardY) && (cX >= 0 && cX < boardX)){if(gameState[cX][cY] == pID || gameState[cX][cY] != op4){markUpRight++;}else{foundUpRightOp4 = false;}}
+            }
+            //searching down and to the right
+            cY = y + i;
+            cX = x + i;
+            if(!foundDownRightOp4){
+                if((cY >= 0 && cY < boardY) && (cX >= 0 && cX < boardX)){if(gameState[cX][cY] == pID || gameState[cX][cY] != op4){markDownRight++;}else{foundDownRightOp4 = true;}}
+            }
+            //searching down and to the left
+            cY = y + i;
+            cX = x - i;
+            if(!foundDownLeftOp4){
+                if((cY >= 0 && cY < boardY) && (cX >= 0 && cX < boardX)){if(gameState[cX][cY] == pID || gameState[cX][cY] != op4){markDownLeft++;}else{foundDownLeftOp4 = true;}}
+            }
+            
+        }
+        if((markUpLeft + markDownRight >= depth)){potentialWinSequence++;}
+        if((markUpRight + markDownLeft >= depth)){potentialWinSequence++;}
+        //check vertical--------------------------------------------------------
+        boolean foundUpOp4 = false;
+        boolean foundDownOp4 = false;
+        int markUp = 0;
+        int markDown = 0;
+        cX = x;
+        for(int i = 1; i <= depth; i++){
+            cY = y - i;
+            if(!foundUpOp4){
+                if(cY >= 0 && cY < boardY){if(gameState[cX][cY] == pID || gameState[cX][cY] != op4){markUp++;}else{foundUpOp4 = true;}}
+            }
+            cY = y + i;
+            if(!foundDownOp4){
+                if(cY >= 0 && cY < boardY){if(gameState[cX][cY] == pID || gameState[cX][cY] != op4){markDown++;}else{foundDownOp4 = true;}}
+            }
+        }
+        if(markUp + markDown >= depth){potentialWinSequence++;}
+        
+        //check horizontal------------------------------------------------------
+        boolean foundLeftOp4 = false;
+        boolean foundRightOp4 = false;
+        int markLeft = 0;
+        int markRight = 0;
+        cY = y;
+        for(int i = 1; i <= depth; i++){
+            cX = x - i;
+            if(!foundLeftOp4){
+                if(cX >= 0 && cX < boardX){if(gameState[cX][cY] == pID || gameState[cX][cY] != op4){markLeft++;}else{foundLeftOp4 = true;}}
+            }
+            cX = x + i;
+            if(!foundRightOp4){
+                if(cX >= 0 && cX < boardX){if(gameState[cX][cY] == pID || gameState[cX][cY] != op4){markRight++;}else{foundRightOp4 = true;}}
+            }
+        }
+        if(markLeft + markRight >= depth){potentialWinSequence++;}
+        
+        
+        return potentialWinSequence;
+    }
 }
