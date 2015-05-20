@@ -24,7 +24,7 @@ public class ClientStartup {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(ClientStartup.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         ClientController client = new ClientController();
+        
     }
 }

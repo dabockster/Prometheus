@@ -27,7 +27,6 @@ public class ClientConnectionController {
     public ClientConnectionController(ClientController controller, String ip, int port){
         this.controller = controller;
         conAddr = new InetSocketAddress(ip, port);
-        this.newConnection(ip,port);
     }
 
     
@@ -101,12 +100,11 @@ public class ClientConnectionController {
      */
     private void connectionResponse(String response){
         if(response.equals("true")){
-            
             controller.connectResponse(true);
         }else if(response.equals("false")){
             controller.connectResponse(false);
         }else{
-            System.out.println("FAILED");
+            System.out.println("Unknown Error");
         }
     }
     

@@ -50,6 +50,7 @@ public class ServerStartup {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(ClientStartup.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         ServerController server = new ServerController();
     }
     

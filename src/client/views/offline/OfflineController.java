@@ -24,7 +24,6 @@
 package client.views.offline;
 
 import client.manager.ClientController;
-import client.views.dialogues.SurrenderDialog;
 
 /**
  * OfflineController class
@@ -34,7 +33,6 @@ public class OfflineController {
     
     private OfflineView view;
     private ClientController controller;
-    private SurrenderDialog surrender;
     private OfflineDefeatDialog defeat;
     private OfflineGameController gameController;
     
@@ -77,14 +75,7 @@ public class OfflineController {
         disposeView();
         controller.refreshClient();        
     }
-    
-    /**
-     * Opens the Surrender Dialog
-     */
-    public void surrender(){
-        surrender = new SurrenderDialog(this);
-    }
-    
+
     /**
      * Opens the defeat Dialog
      */

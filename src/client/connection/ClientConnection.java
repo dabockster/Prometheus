@@ -82,21 +82,22 @@ public class ClientConnection implements Runnable{
     public void run(){
         synchronized(this){
             this.listeningToServer = Thread.currentThread();
+            open();
         }
-        open();
         serverRequest("connect");
         while(connected){
             try{
                 String request = streamIn.readUTF();
                 String response[] = request.split("<&>");
-  //Tracer              System.out.println("Received Response: "+response[0]);
+                System.out.println("Received Response: "+response[0]);
                 if(response[0].equals("disconnect")){
                         connected = false;
                         this.close();
                 }
                 controller.interpretResponse(response);
             }catch(IOException ioe){
-                System.out.println("Connection Closed");
+                controller.interpretResponse(connectionFailure);
+                System.out.println("Connection Closed "+ioe);
                 connected = false; 
             }
         } 

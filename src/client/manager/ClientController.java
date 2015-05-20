@@ -19,8 +19,6 @@ public final class ClientController {
     String username;
     
     private MainMenuController mainMenu = null;
-    //MODIFIED 05/08/15
-    //private TimbotController offline;
     private OfflineController offline;
     private ClientModel model;
     private LobbyController lobby;
@@ -30,7 +28,7 @@ public final class ClientController {
     private String ip = "localhost";
     private int port = 8080;
     
-    int attemptsToConnect = 0;
+
     
     /**
      * ClientController constructor
@@ -80,14 +78,13 @@ public final class ClientController {
         }
         ip=newIp;
         port=newPort;
-        if(cController == null){
+        if(cController == null)
             cController = new ClientConnectionController(this,newIp,newPort);
-        }else{
-            if(cController.connectedToServer())
-                cController.close();
-            cController.newConnection(newIp,newPort);
-        }
-        System.out.print("Connecting to server");
+        else if(cController.connectedToServer())
+            cController.close();
+        
+        cController.newConnection(ip,port);
+        System.out.println("Connecting to server");
     }
     
     /**
@@ -95,9 +92,7 @@ public final class ClientController {
      */
     public void offlineGame(){
         offline = new OfflineController(this);
-        
-        //MODIFIED 05/08/15 
-        //offline = new TimbotController(this);
+       
     }
 
     /**
@@ -119,19 +114,8 @@ public final class ClientController {
             displayLoginMessage("Connected to Server");
             connectedToServer = true;
         }else{
-            attemptsToConnect++;
-            if(attemptsToConnect == 5){
-                System.out.println("Cannot Connect");
-            }else if(attemptsToConnect < 5){
-                System.out.print("."); 
-                try {
-                    Thread.sleep(1000 * attemptsToConnect);
-                    cController.serverRequest("connect");
-                } catch (InterruptedException ex) {
-                   System.out.println("ClientController: connectResponse: InterruptedException: "+ex);
-                }
-            }
-        displayLoginMessage("NOT Connected to Server");
+            System.out.println("Cannot Connect");
+            displayLoginMessage("NOT Connected to Server");
         }   
     }    
     
