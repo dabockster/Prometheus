@@ -117,15 +117,6 @@ public class LobbyController {
      */
     public void dispose(){
         view.dispose();
-    }
-    
-    public void leaderboardRequest(){
-        controller.leaderboardRequest();
-    }
-    
-    public void leaders(String[] leaders){
-        view.updateLeaderboard(leaders);
-    }
-     
+    }    
      
 }

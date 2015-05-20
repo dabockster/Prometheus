@@ -69,7 +69,6 @@ public class LobbyView extends javax.swing.JFrame {
         optionInterfacePanel = new javax.swing.JPanel();
         challengeButton = new javax.swing.JButton();
         logoutButton = new javax.swing.JButton();
-        leaderboardButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         onlinePlayersList = new javax.swing.JList();
         jLabel1 = new javax.swing.JLabel();
@@ -111,7 +110,6 @@ public class LobbyView extends javax.swing.JFrame {
         challengeButton.setForeground(new java.awt.Color(204, 0, 51));
         challengeButton.setText("Challenge");
         challengeButton.setBorderPainted(false);
-        challengeButton.setOpaque(true);
         challengeButton.setPreferredSize(new java.awt.Dimension(79, 177));
         challengeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,22 +122,9 @@ public class LobbyView extends javax.swing.JFrame {
         logoutButton.setForeground(new java.awt.Color(255, 255, 255));
         logoutButton.setText("Logout");
         logoutButton.setBorderPainted(false);
-        logoutButton.setOpaque(true);
         logoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logoutButtonActionPerformed(evt);
-            }
-        });
-
-        leaderboardButton.setBackground(new java.awt.Color(102, 102, 102));
-        leaderboardButton.setFont(new java.awt.Font("Trajan Pro", 1, 12)); // NOI18N
-        leaderboardButton.setForeground(new java.awt.Color(255, 255, 255));
-        leaderboardButton.setText("Leaderboard");
-        leaderboardButton.setBorderPainted(false);
-        leaderboardButton.setOpaque(true);
-        leaderboardButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                leaderboardButtonActionPerformed(evt);
             }
         });
 
@@ -181,7 +166,7 @@ public class LobbyView extends javax.swing.JFrame {
         );
         updatePanelLayout.setVerticalGroup(
             updatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 223, Short.MAX_VALUE)
+            .addGap(0, 226, Short.MAX_VALUE)
         );
 
         gamesPlayedTextLabel.setFont(new java.awt.Font("Magneto", 1, 16)); // NOI18N
@@ -212,7 +197,6 @@ public class LobbyView extends javax.swing.JFrame {
                     .addComponent(logoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
                     .addComponent(challengeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(leaderboardButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(optionInterfacePanelLayout.createSequentialGroup()
                         .addGroup(optionInterfacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,9 +227,7 @@ public class LobbyView extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(challengeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(leaderboardButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(48, 48, 48)
                 .addComponent(updatePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(logoutButton)
@@ -402,10 +384,6 @@ public class LobbyView extends javax.swing.JFrame {
         System.gc();
     }//GEN-LAST:event_logoutButtonActionPerformed
 
-    private void leaderboardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaderboardButtonActionPerformed
-        controller.leaderboardRequest();
-    }//GEN-LAST:event_leaderboardButtonActionPerformed
-
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLayeredPane basePanel;
@@ -416,7 +394,6 @@ public class LobbyView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton leaderboardButton;
     private javax.swing.JButton logoutButton;
     private javax.swing.JLabel onlineLabel;
     private javax.swing.JList onlinePlayersList;

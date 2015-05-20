@@ -298,12 +298,6 @@ public final class ClientController {
         cController.serverRequest("endGame<&>"+result);
     }
     
-    public void leaderboardRequest(){
-        cController.serverRequest("leaders");
-    }
-    
-    public void leaders(String[] leaders){
-        lobby.leaders(leaders);
-    }
+
 
 }
