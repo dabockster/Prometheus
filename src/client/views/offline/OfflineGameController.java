@@ -52,17 +52,20 @@ public class OfflineGameController {
     public OfflineGameController(int player1Type, int player2Type, int bSizeX, int bSizeY, ClientController control){
         this.controller = control;
         this.opName = "Generic Player";
+        int difficulty = 0;
         
         view = new OfflineGameView(this, bSizeX, bSizeY);
         model = new OfflineGameModel(this, bSizeX, bSizeY);
         
         //check if player1 is AI
         if(player1Type != 0){
-            this.setBot(2, player1Type);
+            if(player1Type == 1){difficulty = 0;}else if (player1Type == 2){difficulty = 1;} else {difficulty = 2;}
+            this.setBot(2, difficulty);
         }
         //check if player2 is AI
         else if(player2Type != 0){
-            this.setBot(3, player2Type);
+            if(player2Type == 1){difficulty = 0;}else if (player2Type == 2){difficulty = 1;} else {difficulty = 2;}
+            this.setBot(3, difficulty);
         }
         
         playing = true;
@@ -92,7 +95,7 @@ public class OfflineGameController {
              //Player 1 is bot, retrieve botMove
             }
         //TODO: difficulty modifier for bot;
-        bot = new SunTzu(botPlayerDesignationBOOL, model.getBoard(), 2);
+        bot = new SunTzu(botPlayerDesignationBOOL, model.getBoard(), difficulty);
         if(botPlayerDesignationBOOL){
             this.verifyMove();
             myTurn(true);

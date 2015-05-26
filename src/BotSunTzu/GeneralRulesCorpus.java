@@ -68,17 +68,17 @@ public class GeneralRulesCorpus {
         .25, //0
         2.25, //1
         100, //2
-        .75, //3
+        .5, //3
         1, //4
         100, //5
         1, //6
         1, //7 
         100, //8
-        1.5, //9
+        2.25, //9
         100, //10
         1, //11
         1, //12
-        .25 // 13
+        .75 // 13
     }; 
     private double[] principleWeightModifiers = {
         VALMOD * c[0], //0

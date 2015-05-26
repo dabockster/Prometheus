@@ -102,10 +102,8 @@
                           <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="P1jCBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="P2jCBox" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="P2jCBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="P1jCBox" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="50" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">

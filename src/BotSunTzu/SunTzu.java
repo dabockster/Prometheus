@@ -27,6 +27,7 @@ public class SunTzu implements BotInterface{
     int opponentID;
     int difficulty; //0: easy; 1: meadium; 2: hard
     private boolean DEBUGMODE = true;
+    final int MANDATORYWEIGHT = 800;
     //constructor
     public SunTzu(boolean playerID, int[][] gameBoard, int difficulty){
         gameState = gameBoard;
@@ -109,54 +110,88 @@ public class SunTzu implements BotInterface{
                 
             }
         }
+        
+        
         //declare cell for optimal move
         AICell optimalCell = new AICell(playerID, maxXC, maxYC, maxWeight);
-        //find average move
+        ArrayList<AICell> aicells = this.sortAICells(weightCellList);
+        if(DEBUGMODE){
+            //print values of sorted cell
+            for(AICell cell : aicells){System.out.print(cell.getWeight() + " ");}
+        }
+        AICell avgCell = aicells.get(1);
+        AICell subAvgCell = aicells.get(2);
+        //find average move, and min move
+        /*
         //calculate average
         if(weightCellList.size() != 0){mean = weightSum / weightCellList.size();}
         //calculate standard deviation
         for(AICell cell : weightCellList){
             meanDif += (Math.pow((cell.getWeight() - mean), 2));
         }
-        stdDeviation = Math.sqrt((meanDif / weightCellList.size()));
-        
+        //stdDeviation = Math.sqrt((meanDif / weightCellList.size()));
+        */
         
         //find a cell that is within at-least one standard deviation away
-        AICell avgCell = new AICell(0, 0);
-        AICell subAvgCell = new AICell(0, 0); //incorporate standard deviation
+        //AICell avgCell = new AICell(0, 0);
+        //AICell subAvgCell = new AICell(0, 0); //incorporate standard deviation
+        /*
         boolean avgSearchCont = true;
         int counter = 0;
         boolean foundAvg = false;
         boolean foundMin = false;
         if(weightCellList.isEmpty()){avgSearchCont = false;}
+        */
         //DEBUG CODE
         if(DEBUGMODE){
         System.out.println("-------------------------");
         System.out.println("SunTzu: Finding Solution, Statistics");
         System.out.println("mean: " + mean);
         System.out.println("stdDeviation: " + stdDeviation);
+        System.out.println("maxWeight: " + maxWeight);
         }
         //END DEBUG CODE
+        //if optimal solution is MANDATORY - id est, the AI MUST PLAY THE OPTIMAL SOLUTION
+        if(maxWeight >= MANDATORYWEIGHT){avgCell = optimalCell; subAvgCell = optimalCell;}
+        /*
         while(avgSearchCont){
             if(counter == weightCellList.size() - 1){avgSearchCont = false;}
             int cWeight = weightCellList.get(counter).getWeight();
-            //must be within one standard deviation, up or down
-            if(!foundAvg && cWeight >= mean - stdDeviation && cWeight <= mean + stdDeviation){
+            //must be within one standard deviation, down, from the optimal solution
+            if(!foundAvg && cWeight >= maxWeight - stdDeviation && cWeight < maxWeight && cWeight >= 0){
                 avgCell = weightCellList.get(counter);
                 foundAvg = true;
             }
             // two standard deviations, down - minimal optimal solution
-            if(!foundMin && (cWeight >= mean - (stdDeviation * 2)) && (cWeight <= mean)){
+            if(!foundMin && (cWeight >= maxWeight - (stdDeviation * 2)) && (cWeight < maxWeight - stdDeviation) && cWeight >= 0){
                 subAvgCell = weightCellList.get(counter);
                 foundMin = true;
             }
             if(foundAvg && foundMin){avgSearchCont = false;}
             counter++;
         }
-        if(!foundMin){if(DEBUGMODE){System.out.println("SunTzu: Unable to find subAvgCell");}subAvgCell = avgCell;}
+        */
+        //if(!foundMin){if(DEBUGMODE){System.out.println("SunTzu: Unable to find subAvgCell");}subAvgCell = avgCell;}
         AICell[] solutions = {subAvgCell, avgCell, optimalCell};
         if(DEBUGMODE){grc.displayCellDataWeight(optimalCell.getCoordinates()[0], optimalCell.getCoordinates()[1]); grc.displayWeightedBoard(); grc.displayGameState();}
         return solutions;
     }
+    
+    private ArrayList<AICell> sortAICells(ArrayList<AICell> aicells){
+        //sort list from largest to smallest
+        for(int i = 0; i < aicells.size() - 1; i++){
+            AICell currentCell = aicells.get(i);
+            for(int j = i + 1; j < aicells.size(); j ++){
+                AICell nextCell = aicells.get(j);
+                if(currentCell.getWeight() < nextCell.getWeight()){
+                    //swap the currentCell with nextCell
+                    AICell tempcell = currentCell;
+                    currentCell = nextCell;
+                    aicells.set(i, nextCell);
+                    aicells.set(j, tempcell);
+                }
+            }
+        }
+        return aicells;}
     
 }
